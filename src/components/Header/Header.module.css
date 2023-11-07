@@ -1,0 +1,75 @@
+@import "../../styles/variables.css";
+
+.header {
+  padding: 15px 0;
+  box-shadow: 0 10px 63px 0 rgba(0, 0, 0, 0.07);
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link {
+  display: flex;
+  transition: transform .1s;
+}
+
+.logo {
+  margin-right: 12px;
+}
+
+.left-link {
+  align-items: center;
+}
+
+.right-link {
+  align-items: flex-end;
+}
+
+.right-svg {
+  margin-right: 5px;
+}
+
+.link-text {
+  color: var(--red);
+  transition: color .3s;
+}
+
+.link:focus {
+  outline-color: var(--red);
+  outline-offset: 5px;
+  outline-width: 1px;
+}
+
+.link:hover .link-text {
+  color: var(--dark-red);
+}
+
+.link:hover .right-svg g path {
+  fill: var(--dark-red);
+}
+
+.link:active {
+  transform: scale(0.95);
+}
+
+.left-text {
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 24px;
+}
+
+
+@media(max-width: 560px) {
+  .header {
+    padding: 5px 0;
+  }
+  .left-text {
+    font-size: 16px;
+  }
+  .right-text {
+    font-size: 14px;
+  }
+}

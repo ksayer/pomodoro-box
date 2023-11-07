@@ -1,0 +1,44 @@
+@font-face {
+  font-family: 'SF UI Display';
+  src: url('../fonts/sf-ui-display-bold-webfont.woff2') format('woff2'),
+  url('../fonts/sf-ui-display-bold-webfont.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Display';
+  src: url('../fonts/sf-ui-display-light-webfont.woff2') format('woff2'),
+  url('../fonts/sf-ui-display-light-webfont.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Display';
+  src: url('../fonts/sf-ui-display-medium-webfont.woff2') format('woff2'),
+  url('../fonts/sf-ui-display-medium-webfont.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Display';
+  src: url('../fonts/sf-ui-display-regular-webfont.woff2') format('woff2'),
+  url('../fonts/sf-ui-display-regular-webfont.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF UI Display';
+  src: url('../fonts/sf-ui-display-thin-webfont.woff2') format('woff2'),
+  url('../fonts/sf-ui-display-thin-webfont.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}

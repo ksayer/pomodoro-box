@@ -1,0 +1,28 @@
+.tasks {
+  max-width: 370px;
+  grid-column: 1 / 6
+}
+
+.list {
+  list-style: none;
+  margin-bottom: 19px;
+}
+
+.total-time {
+  color: var(--semi-grey);
+  font-weight: 300;
+  line-height: 17px;
+}
+
+@media(max-width: 1024px) {
+  .tasks {
+    grid-column: 1;
+    max-width: 1024px;
+  }
+}
+
+@media(max-width: 560px) {
+  .total-time {
+    font-size: 14px;
+  }
+}

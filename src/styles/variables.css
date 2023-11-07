@@ -1,0 +1,22 @@
+:root {
+  --red: #DC3E22;
+  --dark-red: #B7280F;
+  --grey: #C4C4C4;
+  --semi-grey: #999;;
+  --semi-light-grey: #E4E4E4;
+  --light-grey: #F4F4F4;
+  --dim-grey: #DEDEDE;
+  --white: #FFF;
+  --black: #333;
+  --green: #A8B64F;
+  --semi-dark-green: #899441;
+  --dark-green: #6b7330;
+  --peach: #FFDDA9;
+  --dark-peach: #FFAE35;
+  --purple: #DFDCFE;
+  --dark-purple: #9C97D7;
+  --cyan: #C5F1FF;
+  --dark-cyan: #7FC2D7;
+
+  --card-padding: 25px;
+}

@@ -1,0 +1,61 @@
+@import "./normalize.css";
+@import "./fonts.css";
+
+body {
+  min-width: 320px;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: 'SF UI Display', serif;
+  background-color: var(--white);
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+.btn {
+  padding: 19px 50px;
+  font-weight: 500;
+  line-height: 17px;
+}
+
+.btn--green {
+  background-color: var(--green);
+  color: var(--white);
+  transition: background-color .3s;
+}
+
+.btn--green:focus {
+  outline-color: var(--dark-green);
+  outline-offset: -1px;
+}
+
+.btn--green:hover {
+  background-color: var(--semi-dark-green);
+}
+
+.btn--green:active {
+  background-color: var(--dark-green);
+}
+
+@media(max-width: 1024px) {
+  .container {
+    padding: 0 30px
+  }
+}
+
+@media(max-width: 560px) {
+  .container {
+    padding: 0 10px
+  }
+  .timer__description {
+    font-size: 14px;
+  }
+  .btn {
+    padding: 13px 30px;
+    font-weight: 500;
+    font-size: 14px;
+  }
+}

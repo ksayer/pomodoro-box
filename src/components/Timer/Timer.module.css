@@ -1,0 +1,107 @@
+.timer-wrapper {
+  grid-column: span 7;
+  grid-row: span 3;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 19px 40px;
+  background-color: var(--grey);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 70px 0 115px 0;
+  background-color: var(--light-grey);
+}
+
+.counter-container {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.counter {
+  font-size: 150px;
+  font-weight: 200;
+}
+
+.description {
+  margin-bottom: 32px;
+  line-height: 17px;
+}
+
+.description__text {
+  color: var(--semi-grey)
+}
+
+.group_btn {
+  display: flex;
+  gap: 25px;
+}
+
+.right-btn {
+  color: var(--grey);
+  outline-offset: -2px;
+  outline: 2px solid var(--grey);
+  transition: outline-color .3s, color .3s, background-color .3s;
+}
+
+.right-btn:focus,
+.right-btn:hover {
+  outline-color: var(--red);
+  color: var(--red);
+}
+
+.right-btn:active {
+  outline-color: var(--red);
+  background-color: var(--red);
+  color: var(--white);
+}
+
+.plus-color circle{
+  transition: fill .3s;
+}
+
+.uptime-btn:focus {
+  outline: none;
+}
+
+.uptime-btn:focus .plus-color circle,
+.uptime-btn:hover .plus-color circle {
+  fill: var(--semi-dark-green);
+}
+
+.uptime-btn:active .plus-color circle {
+  fill: var(--dark-green);
+}
+
+@media (max-width: 1024px) {
+  .timer-wrapper {
+    grid-column: 1 span;
+    grid-row: auto;
+    order: -1;
+  }
+}
+
+@media (max-width: 560px) {
+
+  .body {
+    padding: 14px 0 30px 0;
+  }
+
+  .counter {
+    font-size: 80px;
+  }
+
+  .header {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+}
