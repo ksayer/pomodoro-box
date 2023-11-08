@@ -27,13 +27,16 @@
   margin-left: auto;
 }
 
+.btn:disabled svg path {
+  fill: var(--grey)
+}
+
 .main-btn::after {
   content: "";
   position: absolute;
   width: 35px;
   height: 35px;
   transform: translate(-30px, -6px);
-  z-index: -1;
   border-radius: 50%;
   background-color: var(--light-grey);
   transition: opacity .2s, background-color .2s;
@@ -68,8 +71,14 @@
 
 .icon {
   pointer-events: none;
+  position: relative;
+  z-index: 10;
 }
 
+.svg {
+  margin-right: 5px;
+  transition: transform .3s;
+}
 
 .btn:focus {
   outline-color: var(--green);

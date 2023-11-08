@@ -25,7 +25,7 @@ export function TasksList() {
   return (
     <div className={styles.tasks}>
       <ul className={styles.list}>
-        {tasks.map((task) => <Task key={task.id} name={task.name} countPomodoro={task.countPomodoro}/>)}
+        {tasks.map((task) => <Task key={task.id} task={task}/>)}
       </ul>
       <span className={styles['total-time']}>{minutes !== 0 && timeString}</span>
     </div>

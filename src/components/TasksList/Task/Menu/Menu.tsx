@@ -2,9 +2,25 @@ import React, {useState} from 'react';
 import styles from './Menu.module.css';
 import {Icon} from "../../../Icon";
 import {Dropdown} from "../../../Dropdown";
+import {updateCountPomodoro, removeTask, TaskType} from "../../../../store/slices/tasks";
+import {useDispatch} from "react-redux";
 
-export function Menu() {
+export function Menu({task}: {task: TaskType}) {
+  const dispatch = useDispatch();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const addPomodoro = () => {
+    dispatch(updateCountPomodoro({id: task.id, number: 1}))
+  }
+
+  const removePomodoro = () => {
+    dispatch(updateCountPomodoro({id: task.id, number: -1}))
+  }
+
+  const deleteTask = () => {
+    dispatch(removeTask({id: task.id}))
+  }
+
   return (
     <>
       <Dropdown
@@ -15,26 +31,26 @@ export function Menu() {
       >
         <ul className={styles.menu}>
           <li>
-            <button className={styles.btn}>
-              <Icon name={"plus"}/>
+            <button className={styles.btn} onClick={addPomodoro}>
+              <Icon name={"plus"} className={styles.svg}/>
               <span>Увеличить</span>
             </button>
           </li>
           <li>
-            <button className={styles.btn}>
-              <Icon name={"minus"}/>
+            <button className={styles.btn} onClick={removePomodoro} disabled={task.countPomodoro === 1}>
+              <Icon name={"minus"} className={styles.svg}/>
               <span>Уменьшить</span>
             </button>
           </li>
           <li>
             <button className={styles.btn}>
-              <Icon name={"edit"}/>
+              <Icon name={"edit"} className={styles.svg}/>
               <span>Редактировать</span>
             </button>
           </li>
           <li>
-            <button className={styles.btn}>
-              <Icon name={"delete"}/>
+            <button className={styles.btn} onClick={deleteTask}>
+              <Icon name={"delete"} className={styles.svg}/>
               <span>Удалить</span>
             </button>
           </li>

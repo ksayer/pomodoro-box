@@ -2,26 +2,43 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../store";
 
 
-export type Task = {
+export type TaskType = {
   id: string,
   name: string,
   countPomodoro: number;
 }
 
-const initialState: Task[] = [];
+const initialState: TaskType[] = [];
 
 export const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
-    add: (state, action: PayloadAction<Task>) => {
+    addNewTask: (state, action: PayloadAction<TaskType>) => {
       state.push(action.payload)
+    },
+    removeTask: (state, action: PayloadAction<{id: string}>) => {
+      return state.filter((item) => {
+        if (item.id !== action.payload.id) {
+          return item
+        }
+      })
+    },
+    updateCountPomodoro: (state, action: PayloadAction<{id: string, number: number}>) => {
+      return state.map((item) => {
+        if (item.id == action.payload.id) {
+          return {...item, countPomodoro: item.countPomodoro + action.payload.number}
+        }
+        else {
+          return item
+        }
+      })
     }
   }
 })
 
 
-export const { add } = tasksSlice.actions;
+export const { addNewTask, removeTask, updateCountPomodoro } = tasksSlice.actions;
 
 export const selectTasks = (state: RootState) => state.tasks;
 

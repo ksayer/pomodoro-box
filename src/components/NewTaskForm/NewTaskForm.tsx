@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
 import styles from './NewTaskForm.module.css';
 import {useDispatch, useSelector} from "react-redux";
-import {add} from "../../store/slices/tasks";
+import {addNewTask} from "../../store/slices/tasks";
 import {getRandomString} from "../../utils/randomString";
 
 export function NewTaskForm() {
@@ -12,7 +12,7 @@ export function NewTaskForm() {
   }
   function onSubmit(event: FormEvent) {
     event.preventDefault();
-    dispatch(add({id: getRandomString(), name: value, countPomodoro: 1}))
+    dispatch(addNewTask({id: getRandomString(), name: value, countPomodoro: 1}))
   }
 
   return (
