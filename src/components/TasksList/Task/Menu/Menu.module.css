@@ -1,9 +1,9 @@
 .menu {
   position: absolute;
-  display: none;
+  display: flex;
   flex-direction: column;
   z-index: 100;
-  transform: translate(270px, 100px);
+  transform: translate(-62px, 40px);
   border: 1px solid var(--grey);
   background-color: var(--white);
   list-style: none;
@@ -23,6 +23,42 @@
 }
 
 .btn {
+  position: relative;
+  margin-left: auto;
+}
+
+.main-btn::after {
+  content: "";
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  transform: translate(-30px, -6px);
+  z-index: -1;
+  border-radius: 50%;
+  background-color: var(--light-grey);
+  transition: opacity .2s, background-color .2s;
+  opacity: 0;
+}
+
+.main-btn:focus {
+  outline: none;
+}
+
+.main-btn:focus::after {
+  opacity: 1;
+}
+
+.main-btn:hover::after {
+  opacity: 1;
+}
+
+.main-btn:active::after {
+  background-color: var(--semi-light-grey);
+  opacity: 1;
+}
+
+
+.btn {
   display: flex;
   width: 100%;
   padding: 10px;
@@ -30,10 +66,10 @@
   transition: background-color .3s, transform .3s;
 }
 
-.svg {
-  margin-right: 5px;
-  transition: transform .3s;
+.icon {
+  pointer-events: none;
 }
+
 
 .btn:focus {
   outline-color: var(--green);
@@ -45,4 +81,10 @@
 
 .btn:active {
   background-color: var(--semi-light-grey);
+}
+
+@media(max-width: 1024px) {
+  .menu {
+    transform: translate(-126px, 40px);
+  }
 }

@@ -19,6 +19,7 @@ export function NewTaskForm() {
     <form className={styles.form} onSubmit={onSubmit}>
       <label htmlFor="new-task"></label>
       <input
+        required={true}
         className={styles.input}
         id="new-task"
         name={'new'}

@@ -10,10 +10,7 @@ export const Task: FC<{
   return (
     <li className={styles.item}>
       <div className={styles.counter}>{countPomodoro}</div>
-      {name}
-      <button className={styles.btn}>
-        <Icon name={"menu"}/>
-      </button>
+      <span className={styles.name}>{name}</span>
       <Menu/>
     </li>
   );
