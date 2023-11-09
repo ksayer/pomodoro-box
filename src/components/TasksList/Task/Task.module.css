@@ -31,6 +31,17 @@
 
 .name {
   margin-right: auto;
+  overflow: hidden;
+}
+
+.input {
+  position: relative;
+  margin-right: auto;
+  max-width: 250px;
+  width: 100%;
+  outline: none;
+  border: none;
+  background-color: var(--semi-light-grey);
 }
 
 @media(max-width: 560px) {

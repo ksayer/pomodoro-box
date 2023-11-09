@@ -24,6 +24,17 @@ export const tasksSlice = createSlice({
         }
       })
     },
+    updateTaskName: (state, action: PayloadAction<{id: string, name: string}>) => {
+      return state.map((item) => {
+        if (item.id == action.payload.id) {
+          console.log(1)
+          return {...item, name: action.payload.name}
+        }
+        else {
+          return item
+        }
+      })
+    },
     updateCountPomodoro: (state, action: PayloadAction<{id: string, number: number}>) => {
       return state.map((item) => {
         if (item.id == action.payload.id) {
@@ -38,7 +49,7 @@ export const tasksSlice = createSlice({
 })
 
 
-export const { addNewTask, removeTask, updateCountPomodoro } = tasksSlice.actions;
+export const { addNewTask, removeTask, updateTaskName, updateCountPomodoro } = tasksSlice.actions;
 
 export const selectTasks = (state: RootState) => state.tasks;
 
