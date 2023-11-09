@@ -1,0 +1,19 @@
+.counter {
+  font-size: 150px;
+  font-weight: 200;
+}
+
+.number {
+  text-align: center;
+  display: inline-block;
+  width: 83px;
+}
+
+@media (max-width: 560px) {
+  .counter {
+    font-size: 60px;
+  }
+  .number {
+    width: 38px;
+  }
+}

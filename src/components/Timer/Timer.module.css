@@ -27,11 +27,6 @@
   gap: 25px;
 }
 
-.counter {
-  font-size: 150px;
-  font-weight: 200;
-}
-
 .description {
   margin-bottom: 32px;
   line-height: 17px;
@@ -69,6 +64,11 @@
   transition: fill .3s;
 }
 
+.uptime-btn {
+  position: absolute;
+  transform: translateX(380px);
+}
+
 .uptime-btn:focus {
   outline: none;
 }
@@ -96,12 +96,17 @@
     padding: 14px 0 30px 0;
   }
 
-  .counter {
-    font-size: 80px;
-  }
-
   .header {
     padding: 10px 12px;
     font-size: 12px;
+  }
+
+  .uptime-btn {
+    transform: translateX(170px);
+  }
+
+  .uptime-btn svg{
+    width: 35px;
+    height: 35px;
   }
 }

@@ -4,7 +4,7 @@
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: auto;
   column-gap: 42px;
-  row-gap: 25px;
+  row-gap: 36px;
   grid-auto-flow: dense;
 }
 

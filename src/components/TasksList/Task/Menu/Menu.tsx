@@ -5,6 +5,7 @@ import {Dropdown} from "../../../Dropdown";
 import {updateCountPomodoro, removeTask, TaskType} from "../../../../store/slices/tasks";
 import {useDispatch} from "react-redux";
 import {IconName} from "../../../../svg-icons";
+import {getRandomString} from "../../../../utils/randomString";
 
 
 export function Menu(
@@ -45,7 +46,7 @@ export function Menu(
         <ul className={styles.menu}>
           {
             menuButtons.map((btn) => (
-              <button
+              <button key={getRandomString()}
                 className={styles.btn}
                 onClick={btn.onClick}
                 disabled={btn.name === 'Уменьшить' && task.countPomodoro === 1}>
