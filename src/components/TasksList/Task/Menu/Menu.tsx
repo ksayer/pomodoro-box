@@ -4,6 +4,8 @@ import {Icon} from "../../../Icon";
 import {Dropdown} from "../../../Dropdown";
 import {updateCountPomodoro, removeTask, TaskType} from "../../../../store/slices/tasks";
 import {useDispatch} from "react-redux";
+import {IconName} from "../../../../svg-icons";
+
 
 export function Menu(
   {task, setEditing}: {
@@ -25,6 +27,13 @@ export function Menu(
     dispatch(removeTask({id: task.id}))
   }
 
+  const menuButtons: {name: string, iconName: IconName, onClick: () => void}[] = [
+    {name: 'Увеличить', iconName: 'plus', onClick: addPomodoro},
+    {name: 'Уменьшить', iconName: 'minus', onClick: removePomodoro},
+    {name: 'Редактировать', iconName: 'edit', onClick: () => setEditing(true)},
+    {name: 'Удалить', iconName: 'delete', onClick: deleteTask},
+  ]
+
   return (
     <>
       <Dropdown
@@ -34,32 +43,17 @@ export function Menu(
         setIsDropdownOpen={setIsDropdownOpen}
       >
         <ul className={styles.menu}>
-          <li>
-            <button className={styles.btn} onClick={addPomodoro}>
-              <Icon name={"plus"} className={styles.svg}/>
-              <span>Увеличить</span>
-            </button>
-          </li>
-          <li>
-            <button className={styles.btn} onClick={removePomodoro} disabled={task.countPomodoro === 1}>
-              <Icon name={"minus"} className={styles.svg}/>
-              <span>Уменьшить</span>
-            </button>
-          </li>
-          <li>
-            <button className={styles.btn} onClick={() => {
-              setEditing(true);
-            }}>
-              <Icon name={"edit"} className={styles.svg}/>
-              <span>Редактировать</span>
-            </button>
-          </li>
-          <li>
-            <button className={styles.btn} onClick={deleteTask}>
-              <Icon name={"delete"} className={styles.svg}/>
-              <span>Удалить</span>
-            </button>
-          </li>
+          {
+            menuButtons.map((btn) => (
+              <button
+                className={styles.btn}
+                onClick={btn.onClick}
+                disabled={btn.name === 'Уменьшить' && task.countPomodoro === 1}>
+                <Icon name={btn.iconName}/>
+                <span>{btn.name}</span>
+              </button>
+            ))
+          }
         </ul>
       </Dropdown>
     </>
