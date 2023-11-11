@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
 import styles from './NewTaskForm.module.css';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {addNewTask} from "../../store/slices/tasks";
 import {getRandomString} from "../../utils/randomString";
 

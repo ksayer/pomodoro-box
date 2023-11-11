@@ -10,9 +10,9 @@
   line-height: 17px;
 }
 
-/*.item:first-child {*/
-/*  border-top: 1px solid var(--semi-light-grey);*/
-/*}*/
+.item--active {
+  border-color: var(--red);
+}
 
 .item__content {
   position: relative;
@@ -29,6 +29,10 @@
   border-radius: 50%;
   border: 1px solid var(--grey);
   margin-right: 18px;
+}
+
+.counter--active {
+  border-color: var(--red);
 }
 
 .total-time {

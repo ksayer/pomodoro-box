@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import styles from './Timer.module.css';
 import {Icon} from "../Icon";
 import {useDispatch, useSelector} from "react-redux";
-import {removeTask, selectTasks, TaskType, updateCountPomodoro} from "../../store/slices/tasks";
+import {removeTask, selectTasks, updateTask} from "../../store/slices/tasks";
 import {ClockFace} from "./ClockFace";
-import {reduceSecond, resetTask} from "../../store/slices/timer";
+import {reduceSecond, resetTime} from "../../store/slices/timer";
 
 
 function useIntervalCleanupBeforeUnmount(intervalId: ReturnType<typeof setInterval> | null) {
@@ -26,6 +26,7 @@ export function Timer() {
 
   const startTimer = () => {
     if (intervalId) return;
+    dispatcher(updateTask({...currentTask, active: true}))
     setIntervalId(setInterval(
       () => {
         dispatcher(reduceSecond())
@@ -36,21 +37,24 @@ export function Timer() {
   const stopTimer = () => {
     if (!intervalId) return;
     clearInterval(intervalId);
-    setIntervalId(null)
+    setIntervalId(null);
+    dispatcher(updateTask({...currentTask, active: false}))
   }
 
   const resetTimer = (e: React.MouseEvent<HTMLElement>) => {
     e.currentTarget.blur();
     stopTimer();
-    dispatcher(resetTask())
+    dispatcher(resetTime())
   }
 
   function clearTimerOnExceedsTime() {
     stopTimer();
-    setTimeout(() => dispatcher(resetTask()), 500)
+    setTimeout(() => dispatcher(resetTime()), 500)
     if (currentTask) {
       const id = currentTask.id;
-      dispatcher(currentTask.countPomodoro === 1 ? removeTask({ id }) : updateCountPomodoro({ id, number: -1 }));
+      dispatcher(
+        currentTask.countPomodoro === 1 ? removeTask({ id })
+          : updateTask({...currentTask, countPomodoro: currentTask.countPomodoro - 1, active: false}));
     }
   }
 

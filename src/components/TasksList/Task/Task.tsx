@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import styles from './Task.module.css';
 import {Menu} from "./Menu";
-import {TaskType, updateTaskName} from "../../../store/slices/tasks";
+import {TaskType, updateTask} from "../../../store/slices/tasks";
 import {useDispatch} from "react-redux";
 import {useSortable} from "@dnd-kit/sortable";
 import {CSS} from '@dnd-kit/utilities';
@@ -15,7 +15,7 @@ export const Task: FC<{ task: TaskType }> = ({task}) => {
 
   const onBlur = () => {
     const newName = !value ? task.name : value;
-    dispatch(updateTaskName({id: task.id, name: newName}))
+    dispatch(updateTask({...task, name: newName}))
     setEditing(false);
   }
 
@@ -25,7 +25,8 @@ export const Task: FC<{ task: TaskType }> = ({task}) => {
     setNodeRef,
     transform,
     transition,
-  } = useSortable({id: task.id});
+  } = useSortable({id: task.id, disabled: task.active});
+
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -33,9 +34,13 @@ export const Task: FC<{ task: TaskType }> = ({task}) => {
   };
 
   return (
-    <li className={styles.item} ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <li
+      className={styles.item}
+      ref={task.active ? null: setNodeRef}
+      style={style} {...attributes} {...listeners}
+    >
       <div className={styles['item__content']} >
-        <div className={styles.counter}>{task.countPomodoro}</div>
+        <div className={`${styles.counter} ${task.active? styles["counter--active"] : ""}`}>{task.countPomodoro}</div>
         {!editing ?
           (<div
             onDoubleClick={() => setEditing(true)}
@@ -43,7 +48,7 @@ export const Task: FC<{ task: TaskType }> = ({task}) => {
             {task.name}
           </div>)
           :
-          (<input data-no-dnd={true}
+          (<input data-no-dnd={false}
               style={{outline: "none", border: "none"}}
               className={`${styles.input}`}
               autoFocus={true}

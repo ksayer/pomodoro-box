@@ -1,8 +1,8 @@
-import React, {Dispatch, EventHandler, RefObject, SetStateAction, useState} from 'react';
+import React, {Dispatch, SetStateAction, useState} from 'react';
 import styles from './Menu.module.css';
 import {Icon} from "../../../Icon";
 import {Dropdown} from "../../../Dropdown";
-import {updateCountPomodoro, removeTask, TaskType} from "../../../../store/slices/tasks";
+import {removeTask, TaskType, updateTask} from "../../../../store/slices/tasks";
 import {useDispatch} from "react-redux";
 import {IconName} from "../../../../svg-icons";
 import {getRandomString} from "../../../../utils/randomString";
@@ -17,11 +17,11 @@ export function Menu(
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const addPomodoro = () => {
-    dispatch(updateCountPomodoro({id: task.id, number: 1}))
+    dispatch(updateTask({...task, countPomodoro: task.countPomodoro + 1}))
   }
 
   const removePomodoro = () => {
-    dispatch(updateCountPomodoro({id: task.id, number: -1}))
+    dispatch(updateTask({...task, countPomodoro: task.countPomodoro - 1}))
   }
 
   const deleteTask = () => {

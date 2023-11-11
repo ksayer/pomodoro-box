@@ -16,13 +16,13 @@ export const timerSlice = createSlice({
     reduceSecond: (state) => {
       state.seconds -= 1;
     },
-    resetTask: () => {
+    resetTime: () => {
       return  initialState
     }
   }
 })
 
-export const { reduceSecond, resetTask} = timerSlice.actions;
+export const { reduceSecond, resetTime} = timerSlice.actions;
 
 export const getTimer = (state: RootState) => state.timer;
 
