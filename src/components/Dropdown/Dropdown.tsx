@@ -51,7 +51,7 @@ export const Dropdown: FC<IDropdown> = ({isDropdownOpen, setIsDropdownOpen, chil
   if (!modalContainer) return null;
   return (
     <div ref={ref}>
-      <button
+      <button data-no-dnd={true}
         className={buttonStyles}
         onClick={(e) => {
           updateCoords(e);
@@ -60,7 +60,7 @@ export const Dropdown: FC<IDropdown> = ({isDropdownOpen, setIsDropdownOpen, chil
         {button}
       </button>
       {isDropdownOpen && ReactDOM.createPortal(
-        <div style={{ left: coords.left, top: coords.top, position: "absolute" }} className={styles.dropdown}>
+        <div data-no-dnd={true} style={{ left: coords.left, top: coords.top, position: "absolute" }} className={styles.dropdown}>
           {children}
         </div>, modalContainer
       )}

@@ -27,7 +27,6 @@ export const tasksSlice = createSlice({
     updateTaskName: (state, action: PayloadAction<{id: string, name: string}>) => {
       return state.map((item) => {
         if (item.id == action.payload.id) {
-          console.log(1)
           return {...item, name: action.payload.name}
         }
         else {
@@ -44,12 +43,18 @@ export const tasksSlice = createSlice({
           return item
         }
       })
+    },
+    moveTasks: (state, action: PayloadAction<{ activeId: string; overId: string }>) => {
+      const index1 = state.findIndex((task) => task.id === action.payload.activeId);
+      const index2 = state.findIndex((task) => task.id === action.payload.overId);
+      const movedTask = state.splice(index1, 1)[0];
+      state.splice(index2, 0, movedTask);
     }
   }
 })
 
 
-export const { addNewTask, removeTask, updateTaskName, updateCountPomodoro } = tasksSlice.actions;
+export const { addNewTask, removeTask, updateTaskName, updateCountPomodoro, moveTasks } = tasksSlice.actions;
 
 export const selectTasks = (state: RootState) => state.tasks;
 

@@ -3,6 +3,10 @@
   grid-column: 1 / 6
 }
 
+.tasks--green {
+  background-color: green;
+}
+
 .list {
   list-style: none;
   margin-bottom: 19px;
