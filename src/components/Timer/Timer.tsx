@@ -1,36 +1,73 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './Timer.module.css';
 import {Icon} from "../Icon";
 import {useDispatch, useSelector} from "react-redux";
-import {selectTasks} from "../../store/slices/tasks";
+import {removeTask, selectTasks, TaskType, updateCountPomodoro} from "../../store/slices/tasks";
 import {ClockFace} from "./ClockFace";
-import {reduce} from "../../store/slices/timer";
+import {reduceSecond, resetTask} from "../../store/slices/timer";
+
+
+function useIntervalCleanupBeforeUnmount(intervalId: ReturnType<typeof setInterval> | null) {
+  useEffect(() => {
+    return () =>  {
+      if (intervalId) {
+        clearInterval(intervalId)
+      }
+    }
+  }, [intervalId])
+}
 
 export function Timer() {
-  const tasks = useSelector(selectTasks);
-  const taskName = tasks[0]?.name || "Создайте задачу"
-  const dispatcher = useDispatch()
-  let interval: ReturnType<typeof setInterval> | null = null;
+  const currentTask = useSelector(selectTasks)[0];
+  const dispatcher = useDispatch();
+  const [intervalId, setIntervalId] = useState<ReturnType<typeof setInterval> | null>(null);
+  const taskName = currentTask?.name || "Создайте задачу"
+  useIntervalCleanupBeforeUnmount(intervalId)
+
   const startTimer = () => {
-    interval = setInterval(() =>dispatcher(reduce()), 1000)
+    if (intervalId) return;
+    setIntervalId(setInterval(
+      () => {
+        dispatcher(reduceSecond())
+      },
+      1000))
   }
 
   const stopTimer = () => {
-    if (!interval) return;
-    clearInterval(interval);
+    if (!intervalId) return;
+    clearInterval(intervalId);
+    setIntervalId(null)
+  }
+
+  const resetTimer = (e: React.MouseEvent<HTMLElement>) => {
+    e.currentTarget.blur();
+    stopTimer();
+    dispatcher(resetTask())
+  }
+
+  function clearTimerOnExceedsTime() {
+    stopTimer();
+    setTimeout(() => dispatcher(resetTask()), 500)
+    if (currentTask) {
+      const id = currentTask.id;
+      dispatcher(currentTask.countPomodoro === 1 ? removeTask({ id }) : updateCountPomodoro({ id, number: -1 }));
+    }
   }
 
   return (
     <div className={styles['timer-wrapper']}>
       <div>
-        <div className={styles.header}>
+        <div className={`${styles.header} ${intervalId ? styles['header--active'] : ""}`}>
           <span>{taskName}</span>
           <span>Помидор 1</span>
         </div>
         <div className={styles.body}>
           <div className={styles['counter-container']}>
-            <ClockFace/>
-            <button className={styles['uptime-btn']}>
+            <ClockFace stopHandler={clearTimerOnExceedsTime}/>
+            <button
+              className={styles['uptime-btn']}
+              onClick={resetTimer}
+            >
               <Icon name={"filledPlus"} className={styles['plus-color']}/>
             </button>
           </div>

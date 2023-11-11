@@ -7,22 +7,22 @@ export type TimerState = {
   seconds: number
 }
 
-const initialState: TimerState = {seconds: POMODORO_MINUTES * 60}
+const initialState: TimerState = {seconds: POMODORO_MINUTES * 5}
 
 export const timerSlice = createSlice({
   name: 'timer',
   initialState,
   reducers: {
-    reduce: (state) => {
+    reduceSecond: (state) => {
       state.seconds -= 1;
     },
-    reset: () => {
+    resetTask: () => {
       return  initialState
     }
   }
 })
 
-export const { reduce, reset} = timerSlice.actions;
+export const { reduceSecond, resetTask} = timerSlice.actions;
 
 export const getTimer = (state: RootState) => state.timer;
 

@@ -49,7 +49,7 @@ export function Menu(
               <button key={getRandomString()}
                 className={styles.btn}
                 onClick={btn.onClick}
-                disabled={btn.name === 'Уменьшить' && task.countPomodoro === 1}>
+                disabled={btn.name === 'Уменьшить' && task.countPomodoro <= 1}>
                 <Icon name={btn.iconName}/>
                 <span>{btn.name}</span>
               </button>

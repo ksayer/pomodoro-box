@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from "./ClockFace.module.css";
-import {getTimer} from "../../../store/slices/timer";
-import {useSelector} from "react-redux";
+import {getTimer, resetTask} from "../../../store/slices/timer";
+import {useDispatch, useSelector} from "react-redux";
+import {TaskType, updateCountPomodoro} from "../../../store/slices/tasks";
 
 
 function timeToString(time: number) {
@@ -17,10 +18,21 @@ function getClockString(totalSeconds: number) {
   return {minutesFirst, minutesSecond, secondsFirst, secondsSecond}
 }
 
+interface IClockFace {
+  stopHandler: () => void,
+}
 
-export const ClockFace = () => {
+export const ClockFace = ({stopHandler}: IClockFace) => {
   const timer = useSelector(getTimer);
+  const dispatcher = useDispatch();
   const {minutesFirst, minutesSecond, secondsFirst, secondsSecond} = getClockString(timer.seconds)
+
+  useEffect(() => {
+    if (timer.seconds <= 0) {
+      stopHandler()
+    }
+  }, [timer.seconds])
+
   return (
     <div className={styles.counter}>
       <span className={styles.number}>{minutesFirst}</span>

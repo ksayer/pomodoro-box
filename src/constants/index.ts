@@ -1,1 +1,1 @@
-export const POMODORO_MINUTES = 25;
+export const POMODORO_MINUTES = 1;
