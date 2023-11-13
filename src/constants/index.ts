@@ -1,1 +1,1 @@
-export const POMODORO_MINUTES = 1;
+export const POMODORO_START_SECONDS = 5;

@@ -3,7 +3,7 @@ import styles from './TasksList.module.css';
 import {Task} from "./Task";
 import {useDispatch, useSelector} from "react-redux";
 import {moveTasks, selectTasks} from "../../store/slices/tasks";
-import {POMODORO_MINUTES} from "../../constants";
+import {POMODORO_START_SECONDS} from "../../constants";
 import {closestCenter, DndContext, useSensor, useSensors} from "@dnd-kit/core";
 import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import {CustomMouseSensor, CustomTouchSensor} from "../../librariesCustomization/dndKit";
@@ -24,7 +24,7 @@ export function TasksList() {
   const dispatch = useDispatch();
   const minutes = tasks.reduce(
     (accumulator, currentValue) => (
-      accumulator + currentValue.countPomodoro * POMODORO_MINUTES
+      accumulator + currentValue.countPomodoro * POMODORO_START_SECONDS / 60
     ), 0)
   const timeString = getDurationString(minutes)
 

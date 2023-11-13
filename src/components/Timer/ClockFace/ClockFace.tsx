@@ -1,7 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styles from "./ClockFace.module.css";
-import {getTimer} from "../../../store/slices/timer";
-import {useSelector} from "react-redux";
+import {removeTask, TaskType, updateTask} from "../../../store/slices/tasks";
+import {useDispatch} from "react-redux";
+import {Icon} from "../../Icon";
+import {POMODORO_START_SECONDS} from "../../../constants";
 
 
 function timeToString(time: number) {
@@ -17,27 +19,71 @@ function getClockString(totalSeconds: number) {
   return {minutesFirst, minutesSecond, secondsFirst, secondsSecond}
 }
 
-interface IClockFace {
-  stopHandler: () => void,
-}
-
-export const ClockFace = ({stopHandler}: IClockFace) => {
-  const timer = useSelector(getTimer);
-  const {minutesFirst, minutesSecond, secondsFirst, secondsSecond} = getClockString(timer.seconds)
+function useInterval(callback: () => void, delay: number | null) {
+  const savedCallback = useRef<() => void>();
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
 
   useEffect(() => {
-    if (timer.seconds <= 0) {
-      stopHandler()
+    function tick() {
+      if (savedCallback.current) savedCallback.current();
     }
-  }, [timer.seconds])
+
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+
+interface IClockFace {
+  isRunning: boolean
+  currentTask: TaskType
+  stopHandler: () => void
+}
+
+export const ClockFace = ({isRunning, currentTask, stopHandler}: IClockFace) => {
+  const [seconds, setSeconds] = useState(POMODORO_START_SECONDS);
+  const dispatcher = useDispatch();
+  const {minutesFirst, minutesSecond, secondsFirst, secondsSecond} = getClockString(seconds)
+
+  useInterval(() => {
+    const newSeconds = seconds - 1
+    if (newSeconds <= 0) clearTimerOnExceedsTime();
+    setSeconds(newSeconds);
+  }, isRunning ? 1000 : null)
+
+  function clearTimerOnExceedsTime() {
+    stopHandler();
+    setTimeout(() => setSeconds(5), 500)
+    if (currentTask) {
+      const id = currentTask.id;
+      dispatcher(
+        currentTask.countPomodoro === 1 ? removeTask({id})
+          : updateTask({...currentTask, countPomodoro: currentTask.countPomodoro - 1, active: false}));
+    }
+  }
 
   return (
-    <div className={styles.counter}>
-      <span className={styles.number}>{minutesFirst}</span>
-      <span className={styles.number}>{minutesSecond}</span>
-      <span>:</span>
-      <span className={styles.number}>{secondsFirst}</span>
-      <span className={styles.number}>{secondsSecond}</span>
+    <div className={styles['counter-container']}>
+      <div className={styles.counter}>
+        <span className={styles.number}>{minutesFirst}</span>
+        <span className={styles.number}>{minutesSecond}</span>
+        <span>:</span>
+        <span className={styles.number}>{secondsFirst}</span>
+        <span className={styles.number}>{secondsSecond}</span>
+      </div>
+      <button
+        className={styles['uptime-btn']}
+        onClick={(e) => {
+          e.currentTarget.blur();
+          stopHandler();
+          setSeconds(POMODORO_START_SECONDS);
+        }}
+      >
+        <Icon name={"filledPlus"} className={styles['plus-color']}/>
+      </button>
     </div>
   )
 }

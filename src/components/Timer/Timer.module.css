@@ -25,12 +25,6 @@
   background-color: var(--light-grey);
 }
 
-.counter-container {
-  display: flex;
-  align-items: center;
-  gap: 25px;
-}
-
 .description {
   margin-bottom: 32px;
   line-height: 17px;
@@ -68,24 +62,6 @@
   transition: fill .3s;
 }
 
-.uptime-btn {
-  position: absolute;
-  transform: translateX(380px);
-}
-
-.uptime-btn:focus {
-  outline: none;
-}
-
-.uptime-btn:focus .plus-color circle,
-.uptime-btn:hover .plus-color circle {
-  fill: var(--semi-dark-green);
-}
-
-.uptime-btn:active .plus-color circle {
-  fill: var(--dark-green);
-}
-
 @media (max-width: 1024px) {
   .timer-wrapper {
     grid-column: 1 span;
@@ -105,12 +81,4 @@
     font-size: 12px;
   }
 
-  .uptime-btn {
-    transform: translateX(170px);
-  }
-
-  .uptime-btn svg{
-    width: 35px;
-    height: 35px;
-  }
 }

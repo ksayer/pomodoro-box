@@ -35,12 +35,15 @@ export const tasksSlice = createSlice({
       return state.map((task) => {
         return task.id === action.payload.id ? action.payload : task;
       })
+    },
+    deactivateTasks: (state) => {
+      return state.map(task => ({...task, active: false}))
     }
   }
 })
 
 
-export const { addNewTask, removeTask, moveTasks, updateTask } = tasksSlice.actions;
+export const { addNewTask, removeTask, moveTasks, updateTask, deactivateTasks } = tasksSlice.actions;
 
 export const selectTasks = (state: RootState) => state.tasks;
 
