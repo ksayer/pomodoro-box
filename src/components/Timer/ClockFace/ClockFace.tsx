@@ -1,7 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import styles from "./ClockFace.module.css";
 import {Icon} from "../../Icon";
-import {POMODORO_START_SECONDS} from "../../../constants";
 
 
 function timeToString(time: number) {
@@ -38,13 +37,14 @@ function useInterval(callback: () => void, delay: number | null) {
 interface IClockFace {
   seconds: number
   isRunning: boolean
+  secondsOnUpdate: number
   handlers: {
     finishTask: () => void
     setSeconds: (v: number) => void
   }
 }
 
-export const ClockFace = ({seconds, isRunning, handlers}: IClockFace) => {
+export const ClockFace = ({seconds, isRunning, secondsOnUpdate, handlers}: IClockFace) => {
   const {minutesFirst, minutesSecond, secondsFirst, secondsSecond} = getClockString(seconds)
 
   useInterval(() => {
@@ -54,6 +54,11 @@ export const ClockFace = ({seconds, isRunning, handlers}: IClockFace) => {
       setTimeout(() => handlers.finishTask(), 500);
     }
   }, isRunning ? 1000 : null)
+
+  const updateTimer = (e: React.MouseEvent<HTMLElement>) => {
+    e.currentTarget.blur();
+    handlers.setSeconds(secondsOnUpdate);
+  }
 
   return (
     <div className={styles['counter-container']}>
@@ -66,10 +71,7 @@ export const ClockFace = ({seconds, isRunning, handlers}: IClockFace) => {
       </div>
       <button
         className={styles['uptime-btn']}
-        onClick={(e) => {
-          e.currentTarget.blur();
-          handlers.setSeconds(POMODORO_START_SECONDS);
-        }}
+        onClick={updateTimer}
       >
         <Icon name={"filledPlus"} className={styles['plus-color']}/>
       </button>

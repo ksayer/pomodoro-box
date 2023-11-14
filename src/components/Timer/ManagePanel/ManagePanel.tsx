@@ -1,13 +1,11 @@
 import React from 'react';
 import styles from './ManagePanel.module.css';
-import {TaskType} from "../../../store/slices/tasks";
-import {BREAK_SECONDS, POMODORO_START_SECONDS} from "../../../constants";
 
 interface IManagePanel {
   isRunning: boolean,
   isBreak: boolean,
   pause: boolean,
-  currentTask: TaskType,
+  secondsOnUpdate: number,
   handlers: {
     stopTimer: (v: number) => void,
     startTimer: () => void
@@ -16,12 +14,11 @@ interface IManagePanel {
   }
 }
 
-export function ManagePanel({isRunning, isBreak, pause, handlers}: IManagePanel) {
-
+export function ManagePanel({isRunning, isBreak, secondsOnUpdate, pause, handlers}: IManagePanel) {
   let leftBtnText = 'Старт'
   let rightBtnText = 'Стоп'
   let leftBtnHandler = () => handlers.startTimer()
-  let rightBtnHandler = () => handlers.stopTimer(isBreak ? BREAK_SECONDS: POMODORO_START_SECONDS)
+  let rightBtnHandler = () => handlers.stopTimer(secondsOnUpdate)
 
   if (isRunning) {
     leftBtnText = 'Пауза'
