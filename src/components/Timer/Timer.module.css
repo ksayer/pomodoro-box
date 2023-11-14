@@ -3,25 +3,6 @@
   grid-row: span 3;
 }
 
-
-
-.body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 70px 0 115px 0;
-  background-color: var(--light-grey);
-}
-
-.description {
-  margin-bottom: 32px;
-  line-height: 17px;
-}
-
-.description__text {
-  color: var(--semi-grey)
-}
-
 .plus-color circle{
   transition: fill .3s;
 }

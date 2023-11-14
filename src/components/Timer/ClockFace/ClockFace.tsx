@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styles from "./ClockFace.module.css";
-import {useDispatch} from "react-redux";
 import {Icon} from "../../Icon";
 import {POMODORO_START_SECONDS} from "../../../constants";
 
@@ -37,26 +36,28 @@ function useInterval(callback: () => void, delay: number | null) {
 }
 
 interface IClockFace {
+  seconds: number
   isRunning: boolean
-  stopHandler: () => void
-  finishTask: () => void
+  handlers: {
+    stopHandler: () => void
+    finishTask: () => void
+    setSeconds: (v: number) => void
+  }
 }
 
-export const ClockFace = ({isRunning, finishTask, stopHandler}: IClockFace) => {
-  const [seconds, setSeconds] = useState(POMODORO_START_SECONDS);
-  const dispatcher = useDispatch();
+export const ClockFace = ({seconds, isRunning, handlers}: IClockFace) => {
   const {minutesFirst, minutesSecond, secondsFirst, secondsSecond} = getClockString(seconds)
 
   useInterval(() => {
     const newSeconds = seconds - 1
     if (newSeconds <= 0) clearTimerOnExceedsTime();
-    setSeconds(newSeconds);
+    handlers.setSeconds(newSeconds);
   }, isRunning ? 1000 : null)
 
   function clearTimerOnExceedsTime() {
-    stopHandler();
-    setTimeout(() => setSeconds(5), 500);
-    finishTask();
+    handlers.stopHandler();
+    setTimeout(() => handlers.setSeconds(5), 500);
+    handlers.finishTask();
   }
 
   return (
@@ -72,7 +73,7 @@ export const ClockFace = ({isRunning, finishTask, stopHandler}: IClockFace) => {
         className={styles['uptime-btn']}
         onClick={(e) => {
           e.currentTarget.blur();
-          setSeconds(POMODORO_START_SECONDS);
+          handlers.setSeconds(POMODORO_START_SECONDS);
         }}
       >
         <Icon name={"filledPlus"} className={styles['plus-color']}/>
