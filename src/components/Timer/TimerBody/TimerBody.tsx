@@ -5,7 +5,7 @@ import {ManagePanel} from "../ManagePanel";
 import {removeTask, TaskType, updateStatus, updateTask} from "../../../store/slices/tasks";
 import {useDispatch, useSelector} from "react-redux";
 import {POMODORO_START_SECONDS} from "../../../constants";
-import {getGlobalCounter, updateGlobalCounter} from "../../../store/slices/counter";
+import {getGlobalCounter, incrementFinishedTasks} from "../../../store/slices/counter";
 import {calculateNewSeconds} from "../calculateNewSeconds";
 
 interface ITimerBody {
@@ -49,10 +49,7 @@ export function TimerBody({currentTask, isPause, isBreak, isRunning, taskName, h
     handlers.setIsBreak(nextIsBreak)
     if (nextIsBreak) {
       finishedTasks = globalCounter.finishedTasks + 1
-      dispatcher(updateGlobalCounter({
-        ...globalCounter,
-        finishedTasks
-      }));
+      dispatcher(incrementFinishedTasks());
       if (currentTask) {
         dispatcher(
           currentTask.countPomodoro === 1 ?
