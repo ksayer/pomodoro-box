@@ -3,23 +3,24 @@ import styles from './TimerHeader.module.css';
 
 interface ITimerHeader {
   taskName: string,
-  pause: boolean,
+  isBreak: boolean,
+  isPause: boolean,
   isRunning: boolean,
   finishedPomodoro: number,
 }
 
-export function TimerHeader({taskName, isRunning, pause, finishedPomodoro}: ITimerHeader) {
+export function TimerHeader({taskName, isRunning, isBreak, isPause, finishedPomodoro}: ITimerHeader) {
   let styleHeader = '';
-  if (pause) {
+  if (isBreak) {
     styleHeader = styles['header--green']
-  } else if (isRunning) {
+  } else if (isRunning || isPause) {
     styleHeader = styles['header--red']
   }
 
   return (
     <div className={`${styles.header} ${styleHeader}`}>
       <span>{taskName}</span>
-      <span>Помидор {finishedPomodoro + 1}</span>
+      <span>{isBreak ? `Перерыв ${finishedPomodoro || ""}` : `Помидор ${finishedPomodoro + 1}`}</span>
     </div>
   );
 }

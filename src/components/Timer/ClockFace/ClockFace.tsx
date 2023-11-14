@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import styles from "./ClockFace.module.css";
 import {Icon} from "../../Icon";
 import {POMODORO_START_SECONDS} from "../../../constants";
@@ -39,7 +39,6 @@ interface IClockFace {
   seconds: number
   isRunning: boolean
   handlers: {
-    stopHandler: () => void
     finishTask: () => void
     setSeconds: (v: number) => void
   }
@@ -50,15 +49,11 @@ export const ClockFace = ({seconds, isRunning, handlers}: IClockFace) => {
 
   useInterval(() => {
     const newSeconds = seconds - 1
-    if (newSeconds <= 0) clearTimerOnExceedsTime();
     handlers.setSeconds(newSeconds);
+    if (newSeconds <= 0) {
+      setTimeout(() => handlers.finishTask(), 500);
+    }
   }, isRunning ? 1000 : null)
-
-  function clearTimerOnExceedsTime() {
-    handlers.stopHandler();
-    setTimeout(() => handlers.setSeconds(5), 500);
-    handlers.finishTask();
-  }
 
   return (
     <div className={styles['counter-container']}>

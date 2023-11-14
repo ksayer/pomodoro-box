@@ -4,20 +4,22 @@ import {ClockFace} from "../ClockFace";
 import {ManagePanel} from "../ManagePanel";
 import {removeTask, TaskType, updateTask} from "../../../store/slices/tasks";
 import {useDispatch} from "react-redux";
-import {POMODORO_START_SECONDS} from "../../../constants";
+import {BREAK_SECONDS, POMODORO_START_SECONDS} from "../../../constants";
 
 interface ITimerBody {
   currentTask: TaskType,
   isRunning: boolean,
-  pause: boolean,
+  isPause: boolean,
+  isBreak: boolean,
   taskName: string,
   handlers: {
     setIsRunning: (v: boolean) => void,
-    setPause: (v: boolean) => void,
+    setIsPause: (v: boolean) => void,
+    setIsBreak: (v: boolean) => void,
   }
 }
 
-export function TimerBody({currentTask, pause, isRunning, taskName, handlers}: ITimerBody) {
+export function TimerBody({currentTask, isPause, isBreak, isRunning, taskName, handlers}: ITimerBody) {
   const dispatcher = useDispatch();
   const [seconds, setSeconds] = useState(POMODORO_START_SECONDS);
 
@@ -27,21 +29,21 @@ export function TimerBody({currentTask, pause, isRunning, taskName, handlers}: I
   }
 
   const togglePause = () => {
-    handlers.setPause(!pause);
+    handlers.setIsPause(!isPause);
     handlers.setIsRunning(!isRunning);
   }
 
-  const stopTimer = () => {
+  const stopTimer = (newSeconds: number) => {
     handlers.setIsRunning(false);
-    handlers.setPause(false);
-    setSeconds(POMODORO_START_SECONDS);
+    handlers.setIsPause(false);
+    setSeconds(newSeconds);
     dispatcher(updateTask({...currentTask, active: false}))
   }
 
   const finishTask = () => {
-    handlers.setPause(false);
-    setSeconds(POMODORO_START_SECONDS);
-    if (currentTask) {
+    handlers.setIsBreak(!isBreak)
+    stopTimer(isBreak ? POMODORO_START_SECONDS : BREAK_SECONDS);
+    if (currentTask && !isBreak) {
       dispatcher(
         currentTask.countPomodoro === 1 ?
           removeTask({id: currentTask.id})
@@ -59,7 +61,7 @@ export function TimerBody({currentTask, pause, isRunning, taskName, handlers}: I
     <div className={styles.body}>
       <ClockFace
         key={currentTask?.id}
-        handlers={{setSeconds, stopHandler: stopTimer, finishTask}}
+        handlers={{setSeconds, finishTask}}
         isRunning={isRunning}
         seconds={seconds}
       />
@@ -70,7 +72,8 @@ export function TimerBody({currentTask, pause, isRunning, taskName, handlers}: I
       <ManagePanel
         currentTask={currentTask}
         isRunning={isRunning}
-        pause={pause}
+        isBreak={isBreak}
+        pause={isPause}
         handlers={{stopTimer, startTimer, togglePause, finishTask}}
       />
     </div>

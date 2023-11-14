@@ -1,32 +1,34 @@
 import React from 'react';
 import styles from './ManagePanel.module.css';
 import {TaskType} from "../../../store/slices/tasks";
+import {BREAK_SECONDS, POMODORO_START_SECONDS} from "../../../constants";
 
 interface IManagePanel {
   isRunning: boolean,
+  isBreak: boolean,
   pause: boolean,
   currentTask: TaskType,
   handlers: {
-    stopTimer: () => void,
+    stopTimer: (v: number) => void,
     startTimer: () => void
     togglePause: () => void
     finishTask: () => void
   }
 }
 
-export function ManagePanel({isRunning, pause, handlers}: IManagePanel) {
+export function ManagePanel({isRunning, isBreak, pause, handlers}: IManagePanel) {
 
   let leftBtnText = 'Старт'
   let rightBtnText = 'Стоп'
   let leftBtnHandler = () => handlers.startTimer()
-  let rightBtnHandler = () => handlers.stopTimer()
+  let rightBtnHandler = () => handlers.stopTimer(isBreak ? BREAK_SECONDS: POMODORO_START_SECONDS)
 
   if (isRunning) {
     leftBtnText = 'Пауза'
     leftBtnHandler = () => handlers.togglePause();
   } else if (pause) {
     leftBtnText = 'Продолжить'
-    rightBtnText = 'Сделано'
+    rightBtnText = isBreak ? 'Пропустить' : 'Сделано'
     leftBtnHandler = () => handlers.togglePause();
     rightBtnHandler = () => handlers.finishTask();
   }
