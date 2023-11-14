@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 import styles from './Timer.module.css';
 import {useDispatch, useSelector} from "react-redux";
-import {selectTasks, updateTask} from "../../store/slices/tasks";
+import {removeTask, selectTasks, updateTask} from "../../store/slices/tasks";
 import {ClockFace} from "./ClockFace";
+import {ManagePanel} from "./ManagePanel";
+import {TimerHeader} from "./TimerHeader";
 
 
 export function Timer() {
   const currentTask = useSelector(selectTasks)[0];
   const [isRunning, setIsRunning] = useState(false);
+  const [pause, setPause] = useState(false);
   const dispatcher = useDispatch();
   const taskName = currentTask?.name || "Создайте задачу";
 
@@ -16,34 +19,52 @@ export function Timer() {
     dispatcher(updateTask({...currentTask, active: true}))
   }
 
+  const pauseTimer = () => {
+    setPause(true);
+    setIsRunning(false);
+  }
+
+  const unpauseTimer = () => {
+    setPause(false);
+    setIsRunning(true);
+  }
+
   const stopTimer = () => {
     setIsRunning(false);
+    setPause(false);
     dispatcher(updateTask({...currentTask, active: false}))
+  }
+
+  const finishTask = () => {
+    if (currentTask) {
+      const id = currentTask.id;
+      dispatcher(
+        currentTask.countPomodoro === 1 ? removeTask({id})
+          : updateTask({...currentTask, countPomodoro: currentTask.countPomodoro - 1, active: false}));
+    }
   }
 
   return (
     <div className={styles['timer-wrapper']}>
       <div>
-        <div className={`${styles.header} ${isRunning ? styles['header--active'] : ""}`}>
-          <span>{taskName}</span>
-          <span>Помидор 1</span>
-        </div>
+        <TimerHeader taskName={taskName} isRunning={isRunning} pause={pause}/>
         <div className={styles.body}>
-          <ClockFace isRunning={isRunning} currentTask={currentTask} stopHandler={stopTimer}/>
+          <ClockFace
+            key={currentTask.id}
+            isRunning={isRunning}
+            stopHandler={stopTimer}
+            finishTask={finishTask}
+          />
           <div className={styles.description}>
             <span className={styles.description__text}>Задача 1 - </span>
             {taskName}
           </div>
-          <div className={styles.group_btn}>
-            <button
-              className="btn btn--green"
-              onClick={startTimer}
-            >Старт</button>
-            <button
-              className={`btn ${styles['right-btn']}`}
-              onClick={stopTimer}
-            >Стоп</button>
-          </div>
+          <ManagePanel
+            currentTask={currentTask}
+            isRunning={isRunning}
+            pause={pause}
+            handlers={{stopTimer, startTimer, pauseTimer, unpauseTimer, finishTask}}
+          />
         </div>
       </div>
     </div>

@@ -1,0 +1,28 @@
+.group_btn {
+  display: flex;
+  gap: 25px;
+}
+
+
+.right-btn {
+  color: var(--grey);
+  outline-offset: -2px;
+  outline: 2px solid var(--grey);
+  transition: outline-color .3s, color .3s, background-color .3s;
+}
+
+.right-btn:focus:not(:disabled),
+.right-btn:hover:not(:disabled) {
+  outline-color: var(--red);
+  color: var(--red);
+}
+
+.right-btn:active:not(:disabled) {
+  outline-color: var(--red);
+  background-color: var(--red);
+  color: var(--white);
+}
+
+.right-btn:disabled {
+  cursor: not-allowed;
+}

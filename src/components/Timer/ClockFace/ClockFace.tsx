@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styles from "./ClockFace.module.css";
-import {removeTask, TaskType, updateTask} from "../../../store/slices/tasks";
 import {useDispatch} from "react-redux";
 import {Icon} from "../../Icon";
 import {POMODORO_START_SECONDS} from "../../../constants";
@@ -39,11 +38,11 @@ function useInterval(callback: () => void, delay: number | null) {
 
 interface IClockFace {
   isRunning: boolean
-  currentTask: TaskType
   stopHandler: () => void
+  finishTask: () => void
 }
 
-export const ClockFace = ({isRunning, currentTask, stopHandler}: IClockFace) => {
+export const ClockFace = ({isRunning, finishTask, stopHandler}: IClockFace) => {
   const [seconds, setSeconds] = useState(POMODORO_START_SECONDS);
   const dispatcher = useDispatch();
   const {minutesFirst, minutesSecond, secondsFirst, secondsSecond} = getClockString(seconds)
@@ -56,13 +55,8 @@ export const ClockFace = ({isRunning, currentTask, stopHandler}: IClockFace) => 
 
   function clearTimerOnExceedsTime() {
     stopHandler();
-    setTimeout(() => setSeconds(5), 500)
-    if (currentTask) {
-      const id = currentTask.id;
-      dispatcher(
-        currentTask.countPomodoro === 1 ? removeTask({id})
-          : updateTask({...currentTask, countPomodoro: currentTask.countPomodoro - 1, active: false}));
-    }
+    setTimeout(() => setSeconds(5), 500);
+    finishTask();
   }
 
   return (
@@ -78,7 +72,6 @@ export const ClockFace = ({isRunning, currentTask, stopHandler}: IClockFace) => 
         className={styles['uptime-btn']}
         onClick={(e) => {
           e.currentTarget.blur();
-          stopHandler();
           setSeconds(POMODORO_START_SECONDS);
         }}
       >
