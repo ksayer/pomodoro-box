@@ -19,14 +19,9 @@ export function Timer() {
     dispatcher(updateTask({...currentTask, active: true}))
   }
 
-  const pauseTimer = () => {
-    setPause(true);
-    setIsRunning(false);
-  }
-
-  const unpauseTimer = () => {
-    setPause(false);
-    setIsRunning(true);
+  const togglePause = () => {
+    setPause(!pause);
+    setIsRunning(!isRunning);
   }
 
   const stopTimer = () => {
@@ -36,21 +31,33 @@ export function Timer() {
   }
 
   const finishTask = () => {
+    setPause(false);
     if (currentTask) {
-      const id = currentTask.id;
       dispatcher(
-        currentTask.countPomodoro === 1 ? removeTask({id})
-          : updateTask({...currentTask, countPomodoro: currentTask.countPomodoro - 1, active: false}));
+        currentTask.countPomodoro === 1 ?
+          removeTask({id: currentTask.id})
+          :
+          updateTask({
+            ...currentTask,
+            countPomodoro: currentTask.countPomodoro - 1,
+            finishedPomodoro: currentTask.finishedPomodoro + 1,
+            active: false
+          }));
     }
   }
 
   return (
     <div className={styles['timer-wrapper']}>
       <div>
-        <TimerHeader taskName={taskName} isRunning={isRunning} pause={pause}/>
+        <TimerHeader
+          taskName={taskName}
+          isRunning={isRunning}
+          pause={pause}
+          finishedPomodoro={currentTask?.finishedPomodoro || 0}
+        />
         <div className={styles.body}>
           <ClockFace
-            key={currentTask.id}
+            key={currentTask?.id}
             isRunning={isRunning}
             stopHandler={stopTimer}
             finishTask={finishTask}
@@ -63,7 +70,7 @@ export function Timer() {
             currentTask={currentTask}
             isRunning={isRunning}
             pause={pause}
-            handlers={{stopTimer, startTimer, pauseTimer, unpauseTimer, finishTask}}
+            handlers={{stopTimer, startTimer, togglePause, finishTask}}
           />
         </div>
       </div>

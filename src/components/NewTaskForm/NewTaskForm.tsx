@@ -12,7 +12,7 @@ export function NewTaskForm() {
   }
   function onSubmit(event: FormEvent) {
     event.preventDefault();
-    dispatch(addNewTask({id: getRandomString(), name: value, countPomodoro: 1}))
+    dispatch(addNewTask({id: getRandomString(), name: value, countPomodoro: 1, finishedPomodoro: 0}))
   }
 
   return (

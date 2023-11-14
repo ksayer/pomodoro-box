@@ -6,6 +6,7 @@ export type TaskType = {
   id: string,
   name: string,
   countPomodoro: number,
+  finishedPomodoro: number,
   active?: boolean,
 }
 

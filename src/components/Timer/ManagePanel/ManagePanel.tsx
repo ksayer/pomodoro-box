@@ -9,8 +9,7 @@ interface IManagePanel {
   handlers: {
     stopTimer: () => void,
     startTimer: () => void
-    pauseTimer: () => void
-    unpauseTimer: () => void
+    togglePause: () => void
     finishTask: () => void
   }
 }
@@ -24,11 +23,11 @@ export function ManagePanel({isRunning, pause, handlers}: IManagePanel) {
 
   if (isRunning) {
     leftBtnText = 'Пауза'
-    leftBtnHandler = () => handlers.pauseTimer();
+    leftBtnHandler = () => handlers.togglePause();
   } else if (pause) {
     leftBtnText = 'Продолжить'
     rightBtnText = 'Сделано'
-    leftBtnHandler = () => handlers.unpauseTimer();
+    leftBtnHandler = () => handlers.togglePause();
     rightBtnHandler = () => handlers.finishTask();
   }
 
