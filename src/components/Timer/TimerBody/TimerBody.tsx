@@ -5,7 +5,12 @@ import {ManagePanel} from "../ManagePanel";
 import {removeTask, TaskType, updateStatus, updateTask} from "../../../store/slices/tasks";
 import {useDispatch, useSelector} from "react-redux";
 import {POMODORO_START_SECONDS} from "../../../constants";
-import {getGlobalCounter, incrementFinishedTasks} from "../../../store/slices/counter";
+import {
+  addWorkingTime,
+  addPauseTime,
+  getGlobalCounter,
+  incrementFinishedTasks
+} from "../../../store/slices/counter";
 import {calculateNewSeconds} from "../calculateNewSeconds";
 
 interface ITimerBody {
@@ -21,23 +26,28 @@ interface ITimerBody {
   }
 }
 
+
 export function TimerBody({currentTask, isPause, isBreak, isRunning, taskName, handlers}: ITimerBody) {
   const dispatcher = useDispatch();
-  const globalCounter = useSelector(getGlobalCounter);
+  const {finishedTasks} = useSelector(getGlobalCounter);
   const [seconds, setSeconds] = useState(POMODORO_START_SECONDS);
-  let finishedTasks = globalCounter.finishedTasks;
+  const [startedAt, setStartedAt] = useState<number>(0)
 
   const startTimer = () => {
+    setStartedAt(Date.now())
     handlers.setIsRunning(true);
     dispatcher(updateTask({...currentTask, active: true}))
   }
 
   const togglePause = () => {
+    updateGlobalCounter();
+    setStartedAt(Date.now())
     handlers.setIsPause(!isPause);
     handlers.setIsRunning(!isRunning);
   }
 
   const stopTimer = (newSeconds: number) => {
+    updateGlobalCounter();
     handlers.setIsRunning(false);
     handlers.setIsPause(false);
     setSeconds(newSeconds);
@@ -45,10 +55,11 @@ export function TimerBody({currentTask, isPause, isBreak, isRunning, taskName, h
   }
 
   const finishTask = () => {
+    let nextFinishedTasks = finishedTasks;
     const nextIsBreak = !isBreak
     handlers.setIsBreak(nextIsBreak)
     if (nextIsBreak) {
-      finishedTasks = globalCounter.finishedTasks + 1
+      nextFinishedTasks = finishedTasks + 1
       dispatcher(incrementFinishedTasks());
       if (currentTask) {
         dispatcher(
@@ -63,7 +74,15 @@ export function TimerBody({currentTask, isPause, isBreak, isRunning, taskName, h
             }));
       }
     }
-    stopTimer(calculateNewSeconds(nextIsBreak, finishedTasks));
+    stopTimer(calculateNewSeconds(nextIsBreak, nextFinishedTasks));
+  }
+
+  const updateGlobalCounter = () => {
+    if (!isPause) {
+      dispatcher(addWorkingTime(Date.now() - startedAt))
+    } else {
+      dispatcher(addPauseTime(Date.now() - startedAt))
+    }
   }
 
   return (

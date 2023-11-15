@@ -51,7 +51,7 @@ export const ClockFace = ({seconds, isRunning, secondsOnUpdate, handlers}: ICloc
     const newSeconds = seconds - 1
     handlers.setSeconds(newSeconds);
     if (newSeconds <= 0) {
-      setTimeout(() => handlers.finishTask(), 500);
+      setTimeout(() => handlers.finishTask(), 100);
     }
   }, isRunning ? 1000 : null)
 

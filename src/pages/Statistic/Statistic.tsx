@@ -24,13 +24,13 @@ export function Statistic() {
           <Chart/>
         </div>
         <div className={`${styles.grid__item} ${styles['last-card']}`}>
-          <WideCard/>
+          <WideCard cardName={'focus'}/>
         </div>
         <div className={`${styles.grid__item} ${styles['last-card']}`}>
-          <WideCard/>
+          <WideCard cardName={'pause'}/>
         </div>
         <div className={`${styles.grid__item} ${styles['last-card']}`}>
-          <WideCard/>
+          <WideCard cardName={'stop'}/>
         </div>
       </div>
     </div>
