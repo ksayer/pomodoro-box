@@ -31,7 +31,8 @@ export function TimerBody({currentTask, isPause, isBreak, isRunning, taskName, h
   const dispatcher = useDispatch();
   const {finishedTasks} = useSelector(getGlobalCounter);
   const [seconds, setSeconds] = useState(POMODORO_START_SECONDS);
-  const [startedAt, setStartedAt] = useState<number>(0)
+  const [startedAt, setStartedAt] = useState<number>(0);
+
 
   const startTimer = () => {
     setStartedAt(Date.now())
@@ -40,14 +41,14 @@ export function TimerBody({currentTask, isPause, isBreak, isRunning, taskName, h
   }
 
   const togglePause = () => {
-    updateGlobalCounter();
+    updateGlobalTime();
     setStartedAt(Date.now())
     handlers.setIsPause(!isPause);
     handlers.setIsRunning(!isRunning);
   }
 
   const stopTimer = (newSeconds: number) => {
-    updateGlobalCounter();
+    updateGlobalTime();
     handlers.setIsRunning(false);
     handlers.setIsPause(false);
     setSeconds(newSeconds);
@@ -77,7 +78,7 @@ export function TimerBody({currentTask, isPause, isBreak, isRunning, taskName, h
     stopTimer(calculateNewSeconds(nextIsBreak, nextFinishedTasks));
   }
 
-  const updateGlobalCounter = () => {
+  const updateGlobalTime = () => {
     if (!isPause) {
       dispatcher(addWorkingTime(Date.now() - startedAt))
     } else {

@@ -4,6 +4,7 @@ import {Icon} from "../Icon";
 import {IconName} from "../../svg-icons";
 import {getGlobalCounter, GlobalCounter} from "../../store/slices/counter";
 import {useSelector} from "react-redux";
+import {convertSeconds} from "../../utils/convertSeconds";
 
 type Card = {
   title: string,
@@ -13,30 +14,42 @@ type Card = {
 
 type CardsData = {
   focus: Card,
-  pause: Card,
-  stop: Card,
+  pauseTime: Card,
+  stops: Card,
 }
 
 const cardsData: CardsData = {
   focus: {
     title: 'Фокус',
     icon: 'focus',
-    res: getFocusResult,
+    res: getStopsResult,
   },
-  pause: {
+  pauseTime: {
     title: 'Время на паузе',
     icon: 'pause',
-    res: getFocusResult,
+    res: getPauseResult,
   },
-  stop: {
+  stops: {
     title: 'Остановки',
     icon: 'stop',
-    res: getFocusResult
+    res: getStopsResult
   }
 }
 
-function getFocusResult(globalCounter: GlobalCounter) {
-  return globalCounter.finishedTasks
+function getStopsResult(globalCounter: GlobalCounter) {
+  return globalCounter.stops
+}
+
+function getPauseResult(globalCounter: GlobalCounter) {
+  const pauseSeconds = Math.floor(globalCounter.pauseTime / 1000)
+  if (pauseSeconds && pauseSeconds < 60) return '< 1м'
+
+  const {hours, minutes} = convertSeconds(globalCounter.pauseTime / 1000)
+  let result = '';
+  if (hours) result = `${hours}ч`
+  if (minutes) result = `${result} ${minutes}м`
+  if (!result) return '0м'
+  return result
 }
 
 export function WideCard({cardName}: {cardName: keyof CardsData}) {

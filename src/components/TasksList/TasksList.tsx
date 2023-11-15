@@ -7,15 +7,16 @@ import {POMODORO_START_SECONDS} from "../../constants";
 import {closestCenter, DndContext, useSensor, useSensors} from "@dnd-kit/core";
 import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import {CustomMouseSensor, CustomTouchSensor} from "../../librariesCustomization/dndKit";
+import {convertSeconds} from "../../utils/convertSeconds";
 
 
 
 const getDurationString = (totalMinutes: number) => {
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-  if (hours && !minutes) return `${hours} ч`;
-  if (hours) return `${hours} ч ${minutes} минут`;
-  return `${minutes} минут`;
+  const {hours, minutes} = convertSeconds(totalMinutes * 60)
+  let result = ''
+  if (hours) result = `${hours} ч`;
+  if (minutes) result =  `${result} ${minutes} минут`;
+  return result;
 }
 
 

@@ -27,10 +27,10 @@ export function Statistic() {
           <WideCard cardName={'focus'}/>
         </div>
         <div className={`${styles.grid__item} ${styles['last-card']}`}>
-          <WideCard cardName={'pause'}/>
+          <WideCard cardName={'pauseTime'}/>
         </div>
         <div className={`${styles.grid__item} ${styles['last-card']}`}>
-          <WideCard cardName={'stop'}/>
+          <WideCard cardName={'stops'}/>
         </div>
       </div>
     </div>
