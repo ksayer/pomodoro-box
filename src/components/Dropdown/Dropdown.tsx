@@ -60,7 +60,11 @@ export const Dropdown: FC<IDropdown> = ({isDropdownOpen, setIsDropdownOpen, chil
         {button}
       </button>
       {isDropdownOpen && ReactDOM.createPortal(
-        <div data-no-dnd={true} style={{ left: coords.left, top: coords.top, position: "absolute" }} className={styles.dropdown}>
+        <div
+          data-no-dnd={true}
+          style={{ left: coords.left, top: coords.top, position: "absolute"}}
+          className={styles.dropdown}
+        >
           {children}
         </div>, modalContainer
       )}
