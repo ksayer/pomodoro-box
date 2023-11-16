@@ -29,17 +29,20 @@ function geMinuteSuffix(minutes: number) {
 
 export function TextCard() {
   const {workingTime} = useSelector(getGlobalCounter)
-  const {minutes, hours} = convertSeconds(workingTime / 1000)
+  const {minutes, hours, seconds} = convertSeconds(workingTime / 1000)
+
+  const text = "Вы работали над задачами"
   return (
     <div className={styles.card}>
       <h3 className={styles.card__title}>Понедельник</h3>
       <p className={styles.card__text}>
         {minutes || hours
-          ? "Вы работали над задачами в течение "
+          ? `${text} в течение `
+          : seconds ? `${text} менее`
           : "Нет данных"
         }
-        {minutes > 0 && (
-          <b className={styles['card__text--red']}> {(minutes || hours) && formatTime(minutes, hours)}</b>
+        {(minutes || hours || seconds) && (
+          <b className={styles['card__text--red']}> {minutes || hours ? formatTime(minutes, hours) : seconds ? '1\u00A0минуты' : ""}</b>
         )}
       </p>
     </div>
