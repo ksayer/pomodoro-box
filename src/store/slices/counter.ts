@@ -2,24 +2,28 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../store";
 
 
-export type GlobalCounter = {
+export type TimerStore = {
   finishedTasks: number,
   stops: number,
   workingTime: number,
   pauseTime: number,
   timeOnFinishedTasks: number,
+  isRunning: boolean,
+  isPause: boolean,
 }
 
-const initialState: GlobalCounter = {
+const initialState: TimerStore = {
   finishedTasks: 0,
   stops: 0,
   pauseTime: 0,
   workingTime: 0,
   timeOnFinishedTasks: 0,
+  isRunning: false,
+  isPause: false,
 }
 
-export const globalCounterSlice = createSlice({
-  name: 'globalCounter',
+export const timerSlice = createSlice({
+  name: 'timer',
   initialState,
   reducers: {
     incrementFinishedTasks: (state) => {
@@ -37,6 +41,12 @@ export const globalCounterSlice = createSlice({
     addTimeOnFinishedTasks: (state, action: PayloadAction<number>) => {
       state.timeOnFinishedTasks += action.payload
     },
+    setIsRunning: (state, action: PayloadAction<boolean>) => {
+      state.isRunning = action.payload;
+    },
+    setIsPause: (state, action: PayloadAction<boolean>) => {
+      state.isPause = action.payload;
+    }
   }
 })
 
@@ -47,8 +57,10 @@ export const {
   addPauseTime,
   addWorkingTime,
   addTimeOnFinishedTasks,
-} = globalCounterSlice.actions;
+  setIsRunning,
+  setIsPause,
+} = timerSlice.actions;
 
-export const getGlobalCounter = (state: RootState) => state.globalCounter;
+export const getTimerStore = (state: RootState) => state.timer;
 
-export const globalCounterReducer = globalCounterSlice.reducer;
+export const timerReducer = timerSlice.reducer;

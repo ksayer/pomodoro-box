@@ -1,10 +1,9 @@
 import React from 'react';
 import styles from './ManagePanel.module.css';
-import {useDispatch} from "react-redux";
-import {incrementStops} from "../../../store/slices/counter";
+import {useDispatch, useSelector} from "react-redux";
+import {getTimerStore, incrementStops} from "../../../../store/slices/counter";
 
 interface IManagePanel {
-  isRunning: boolean,
   isBreak: boolean,
   pause: boolean,
   secondsOnUpdate: number,
@@ -16,8 +15,9 @@ interface IManagePanel {
   }
 }
 
-export function ManagePanel({isRunning, isBreak, secondsOnUpdate, pause, handlers}: IManagePanel) {
+export function ManagePanel({isBreak, secondsOnUpdate, pause, handlers}: IManagePanel) {
   const dispatcher = useDispatch();
+  const { isRunning } = useSelector(getTimerStore);
   let leftBtnText = 'Старт'
   let rightBtnText = 'Стоп'
   const handleStop = () => {

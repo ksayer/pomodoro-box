@@ -8,9 +8,7 @@ import {TimerBody} from "./TimerBody";
 
 export function Timer() {
   const currentTask = useSelector(selectTasks)[0];
-  const [isRunning, setIsRunning] = useState(false);
   const [isBreak, setIsBreak] = useState(false);
-  const [isPause, setIsPause] = useState(false);
   const taskName = currentTask?.name || "Создайте задачу";
 
   return (
@@ -18,18 +16,14 @@ export function Timer() {
       <div>
         <TimerHeader
           taskName={taskName}
-          isPause={isPause}
-          isRunning={isRunning}
           isBreak={isBreak}
           finishedPomodoro={currentTask?.finishedPomodoro || 0}
         />
         <TimerBody
           currentTask={currentTask}
-          isRunning={isRunning}
-          isPause={isPause}
           isBreak={isBreak}
           taskName={taskName}
-          handlers={{setIsPause, setIsRunning, setIsBreak}}
+          handlers={{setIsBreak}}
         />
       </div>
     </div>

@@ -1,6 +1,8 @@
 import React, {useEffect, useRef} from 'react';
 import styles from "./ClockFace.module.css";
-import {Icon} from "../../Icon";
+import {Icon} from "../../../Icon";
+import {useSelector} from "react-redux";
+import {getTimerStore} from "../../../../store/slices/counter";
 
 
 function timeToString(time: number) {
@@ -36,7 +38,6 @@ function useInterval(callback: () => void, delay: number | null) {
 
 interface IClockFace {
   seconds: number
-  isRunning: boolean
   secondsOnUpdate: number
   handlers: {
     finishTask: () => void
@@ -44,8 +45,9 @@ interface IClockFace {
   }
 }
 
-export const ClockFace = ({seconds, isRunning, secondsOnUpdate, handlers}: IClockFace) => {
+export const ClockFace = ({seconds, secondsOnUpdate, handlers}: IClockFace) => {
   const {minutesFirst, minutesSecond, secondsFirst, secondsSecond} = getClockString(seconds)
+  const { isRunning } = useSelector(getTimerStore);
 
   useInterval(() => {
     const newSeconds = seconds - 1

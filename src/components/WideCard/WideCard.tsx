@@ -2,14 +2,14 @@ import React from 'react';
 import styles from './WideCard.module.css';
 import {Icon} from "../Icon";
 import {IconName} from "../../svg-icons";
-import {getGlobalCounter, GlobalCounter} from "../../store/slices/counter";
+import {getTimerStore, TimerStore} from "../../store/slices/counter";
 import {useSelector} from "react-redux";
 import {convertSeconds} from "../../utils/convertSeconds";
 
 type Card = {
   title: string,
   icon: IconName,
-  res: (globalCounter: GlobalCounter) => string | number;
+  res: (globalCounter: TimerStore) => string | number;
 }
 
 type CardsData = {
@@ -36,18 +36,18 @@ const cardsData: CardsData = {
   }
 }
 
-function getFocusResult(globalCounter: GlobalCounter) {
+function getFocusResult(globalCounter: TimerStore) {
   const {pauseTime, workingTime, timeOnFinishedTasks} = globalCounter
   if (!timeOnFinishedTasks) return '0%';
   const result = `${Math.round(timeOnFinishedTasks / (workingTime + pauseTime) * 100)}`
   return `${result}\u00A0%`;
 }
 
-function getStopsResult(globalCounter: GlobalCounter) {
+function getStopsResult(globalCounter: TimerStore) {
   return globalCounter.stops
 }
 
-function getPauseResult(globalCounter: GlobalCounter) {
+function getPauseResult(globalCounter: TimerStore) {
   const pauseSeconds = Math.floor(globalCounter.pauseTime / 1000)
   if (pauseSeconds && pauseSeconds < 60) return '< 1м'
 
@@ -61,7 +61,7 @@ function getPauseResult(globalCounter: GlobalCounter) {
 
 export function WideCard({cardName}: {cardName: keyof CardsData}) {
   const card = cardsData[cardName]
-  const globalCounter = useSelector(getGlobalCounter)
+  const globalCounter = useSelector(getTimerStore)
   return (
     <div className={`${styles.card}`}>
       <div className={styles.card__content}>

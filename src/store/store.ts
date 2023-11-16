@@ -3,13 +3,13 @@ import {tasksReducer} from "./slices/tasks";
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from "redux-persist/es/constants";
-import {globalCounterReducer} from "./slices/counter";
+import {timerReducer} from "./slices/counter";
 
 
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,
-  globalCounter: globalCounterReducer,
+  timer: timerReducer,
 })
 
 const persistConfig = {
