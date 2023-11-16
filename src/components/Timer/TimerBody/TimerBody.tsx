@@ -9,7 +9,7 @@ import {
   addWorkingTime,
   addPauseTime,
   getGlobalCounter,
-  incrementFinishedTasks
+  incrementFinishedTasks, addTimeOnFinishedTasks
 } from "../../../store/slices/counter";
 import {calculateNewSeconds} from "../calculateNewSeconds";
 
@@ -32,7 +32,7 @@ export function TimerBody({currentTask, isPause, isBreak, isRunning, taskName, h
   const {finishedTasks} = useSelector(getGlobalCounter);
   const [seconds, setSeconds] = useState(POMODORO_START_SECONDS);
   const [startedAt, setStartedAt] = useState<number>(0);
-
+  const [spentOnPomodoroTime, setSpentOnPomodoroTime] = useState<number>(0);
 
   const startTimer = () => {
     setStartedAt(Date.now())
@@ -41,6 +41,7 @@ export function TimerBody({currentTask, isPause, isBreak, isRunning, taskName, h
   }
 
   const togglePause = () => {
+    if (!isBreak && !isPause) setSpentOnPomodoroTime(spentOnPomodoroTime + Date.now() - startedAt)
     updateGlobalTime();
     setStartedAt(Date.now())
     handlers.setIsPause(!isPause);
@@ -51,11 +52,21 @@ export function TimerBody({currentTask, isPause, isBreak, isRunning, taskName, h
     updateGlobalTime();
     handlers.setIsRunning(false);
     handlers.setIsPause(false);
+    setSpentOnPomodoroTime(0)
     setSeconds(newSeconds);
     dispatcher(updateStatus({id: currentTask?.id, active: false}))
   }
 
   const finishTask = () => {
+    if (!isBreak) {
+      let spentTime;
+      if (isPause)  {
+        spentTime = spentOnPomodoroTime
+      } else {
+        spentTime = spentOnPomodoroTime + Date.now() - startedAt
+      }
+      dispatcher(addTimeOnFinishedTasks(spentTime));
+    }
     let nextFinishedTasks = finishedTasks;
     const nextIsBreak = !isBreak
     handlers.setIsBreak(nextIsBreak)
@@ -85,6 +96,7 @@ export function TimerBody({currentTask, isPause, isBreak, isRunning, taskName, h
       dispatcher(addPauseTime(Date.now() - startedAt))
     }
   }
+
 
   return (
     <div className={styles.body}>

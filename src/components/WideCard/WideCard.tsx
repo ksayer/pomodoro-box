@@ -22,7 +22,7 @@ const cardsData: CardsData = {
   focus: {
     title: 'Фокус',
     icon: 'focus',
-    res: getStopsResult,
+    res: getFocusResult,
   },
   pauseTime: {
     title: 'Время на паузе',
@@ -34,6 +34,13 @@ const cardsData: CardsData = {
     icon: 'stop',
     res: getStopsResult
   }
+}
+
+function getFocusResult(globalCounter: GlobalCounter) {
+  const {pauseTime, workingTime, timeOnFinishedTasks} = globalCounter
+  if (!timeOnFinishedTasks) return '0%';
+  const result = `${Math.round(timeOnFinishedTasks / (workingTime + pauseTime) * 100)}`
+  return `${result}\u00A0%`;
 }
 
 function getStopsResult(globalCounter: GlobalCounter) {

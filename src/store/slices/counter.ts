@@ -7,9 +7,16 @@ export type GlobalCounter = {
   stops: number,
   workingTime: number,
   pauseTime: number,
+  timeOnFinishedTasks: number,
 }
 
-const initialState: GlobalCounter = {finishedTasks: 0, stops: 0, pauseTime: 0, workingTime: 0}
+const initialState: GlobalCounter = {
+  finishedTasks: 0,
+  stops: 0,
+  pauseTime: 0,
+  workingTime: 0,
+  timeOnFinishedTasks: 0,
+}
 
 export const globalCounterSlice = createSlice({
   name: 'globalCounter',
@@ -27,11 +34,20 @@ export const globalCounterSlice = createSlice({
     addPauseTime: (state, action: PayloadAction<number>) => {
       state.pauseTime += action.payload
     },
+    addTimeOnFinishedTasks: (state, action: PayloadAction<number>) => {
+      state.timeOnFinishedTasks += action.payload
+    },
   }
 })
 
 
-export const { incrementFinishedTasks, incrementStops, addPauseTime, addWorkingTime } = globalCounterSlice.actions;
+export const {
+  incrementFinishedTasks,
+  incrementStops,
+  addPauseTime,
+  addWorkingTime,
+  addTimeOnFinishedTasks,
+} = globalCounterSlice.actions;
 
 export const getGlobalCounter = (state: RootState) => state.globalCounter;
 
