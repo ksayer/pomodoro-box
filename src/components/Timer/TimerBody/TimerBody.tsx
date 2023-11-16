@@ -42,14 +42,14 @@ export function TimerBody({currentTask, isPause, isBreak, isRunning, taskName, h
 
   const togglePause = () => {
     if (!isBreak && !isPause) setSpentOnPomodoroTime(spentOnPomodoroTime + Date.now() - startedAt)
-    updateGlobalTime();
+    updateWorkingPauseTime();
     setStartedAt(Date.now())
     handlers.setIsPause(!isPause);
     handlers.setIsRunning(!isRunning);
   }
 
   const stopTimer = (newSeconds: number) => {
-    updateGlobalTime();
+    updateWorkingPauseTime();
     handlers.setIsRunning(false);
     handlers.setIsPause(false);
     setSpentOnPomodoroTime(0)
@@ -58,15 +58,7 @@ export function TimerBody({currentTask, isPause, isBreak, isRunning, taskName, h
   }
 
   const finishTask = () => {
-    if (!isBreak) {
-      let spentTime;
-      if (isPause)  {
-        spentTime = spentOnPomodoroTime
-      } else {
-        spentTime = spentOnPomodoroTime + Date.now() - startedAt
-      }
-      dispatcher(addTimeOnFinishedTasks(spentTime));
-    }
+    updateTimeOnFinishedTasks();
     let nextFinishedTasks = finishedTasks;
     const nextIsBreak = !isBreak
     handlers.setIsBreak(nextIsBreak)
@@ -89,14 +81,25 @@ export function TimerBody({currentTask, isPause, isBreak, isRunning, taskName, h
     stopTimer(calculateNewSeconds(nextIsBreak, nextFinishedTasks));
   }
 
-  const updateGlobalTime = () => {
+  const updateWorkingPauseTime = () => {
     if (!isPause) {
-      dispatcher(addWorkingTime(Date.now() - startedAt))
+      if (!isBreak) dispatcher(addWorkingTime(Date.now() - startedAt))
     } else {
       dispatcher(addPauseTime(Date.now() - startedAt))
     }
   }
 
+  const updateTimeOnFinishedTasks = () => {
+    if (!isBreak) {
+      let spentTime;
+      if (isPause)  {
+        spentTime = spentOnPomodoroTime
+      } else {
+        spentTime = spentOnPomodoroTime + Date.now() - startedAt
+      }
+      dispatcher(addTimeOnFinishedTasks(spentTime));
+    }
+  }
 
   return (
     <div className={styles.body}>
