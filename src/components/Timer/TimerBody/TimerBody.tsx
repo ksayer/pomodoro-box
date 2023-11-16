@@ -31,6 +31,7 @@ export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody
   const [seconds, setSeconds] = useState(POMODORO_START_SECONDS);
   const [startedAt, setStartedAt] = useState<number>(0);
   const [spentOnPomodoroTime, setSpentOnPomodoroTime] = useState<number>(0);
+  const [isStopDown, setIsStopDown] = useState<boolean>(false);
 
   const startTimer = () => {
     setStartedAt(Date.now())
@@ -105,6 +106,8 @@ export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody
         key={currentTask?.id}
         handlers={{setSeconds, finishTask}}
         seconds={seconds}
+        isStopDown={isStopDown}
+        isBreak={isBreak}
         secondsOnUpdate={
           calculateNewSeconds(isBreak, finishedTasks)
         }
@@ -116,7 +119,7 @@ export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody
       <ManagePanel
         isBreak={isBreak}
         pause={isPause}
-        handlers={{stopTimer, startTimer, togglePause, finishTask}}
+        handlers={{stopTimer, startTimer, togglePause, finishTask, setIsStopDown}}
         secondsOnUpdate={
           calculateNewSeconds(isBreak, finishedTasks)
         }

@@ -39,15 +39,17 @@ function useInterval(callback: () => void, delay: number | null) {
 interface IClockFace {
   seconds: number
   secondsOnUpdate: number
+  isBreak: boolean
+  isStopDown: boolean
   handlers: {
     finishTask: () => void
     setSeconds: (v: number) => void
   }
 }
 
-export const ClockFace = ({seconds, secondsOnUpdate, handlers}: IClockFace) => {
+export const ClockFace = ({seconds, secondsOnUpdate, isBreak, isStopDown, handlers}: IClockFace) => {
   const {minutesFirst, minutesSecond, secondsFirst, secondsSecond} = getClockString(seconds)
-  const { isRunning } = useSelector(getTimerStore);
+  const { isRunning, isPause } = useSelector(getTimerStore);
 
   useInterval(() => {
     const newSeconds = seconds - 1
@@ -64,7 +66,10 @@ export const ClockFace = ({seconds, secondsOnUpdate, handlers}: IClockFace) => {
 
   return (
     <div className={styles['counter-container']}>
-      <div className={styles.counter}>
+      <div className={`${styles.counter} ${isBreak && !isPause ? 
+        styles['counter--break'] : isRunning ? 
+          isStopDown ? styles['counter--stop'] : styles['counter--running'] 
+          : ""}`}>
         <span className={styles.number}>{minutesFirst}</span>
         <span className={styles.number}>{minutesSecond}</span>
         <span>:</span>

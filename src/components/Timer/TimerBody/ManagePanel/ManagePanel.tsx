@@ -13,6 +13,7 @@ interface IManagePanel {
     startTimer: () => void
     togglePause: () => void
     finishTask: () => void
+    setIsStopDown: (isd: boolean) => void
   }
 }
 
@@ -48,6 +49,9 @@ export function ManagePanel({isBreak, secondsOnUpdate, pause, handlers}: IManage
         className={`btn ${styles['right-btn']}`}
         onClick={rightBtnHandler}
         disabled={!isRunning && !pause}
+        onMouseDown={() => handlers.setIsStopDown(true)}
+        onMouseUp={() => handlers.setIsStopDown(false)}
+        onMouseOutCapture={() => handlers.setIsStopDown(false)}
       >{rightBtnText}</button>
     </div>
   );

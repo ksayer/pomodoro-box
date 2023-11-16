@@ -9,6 +9,18 @@
   font-weight: 200;
 }
 
+.counter--running {
+  color: var(--red);
+}
+
+.counter--break {
+  color: var(--green);
+}
+
+.counter--stop {
+  color: var(--dark-red);
+}
+
 .number {
   text-align: center;
   display: inline-block;
