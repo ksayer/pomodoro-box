@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import styles from "./ClockFace.module.css";
 import {Icon} from "../../../Icon";
 import {useSelector} from "react-redux";
-import {getTimerStore} from "../../../../store/slices/counter";
+import {getTimerStore} from "../../../../store/slices/timer";
 
 
 function timeToString(time: number) {

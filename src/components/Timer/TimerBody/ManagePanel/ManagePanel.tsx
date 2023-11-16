@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './ManagePanel.module.css';
 import {useDispatch, useSelector} from "react-redux";
-import {getTimerStore, incrementStops} from "../../../../store/slices/counter";
+import {incrementStops} from "../../../../store/slices/statistic";
+import {getTimerStore} from "../../../../store/slices/timer";
 
 interface IManagePanel {
   isBreak: boolean,

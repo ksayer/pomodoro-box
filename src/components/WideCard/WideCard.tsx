@@ -2,14 +2,14 @@ import React from 'react';
 import styles from './WideCard.module.css';
 import {Icon} from "../Icon";
 import {IconName} from "../../svg-icons";
-import {getTimerStore, TimerStore} from "../../store/slices/counter";
+import {getStatistic, Statistic} from "../../store/slices/statistic";
 import {useSelector} from "react-redux";
 import {convertSeconds} from "../../utils/convertSeconds";
 
 type Card = {
   title: string,
   icon: IconName,
-  res: (globalCounter: TimerStore) => string | number;
+  res: (globalCounter: Statistic) => string | number;
 }
 
 type CardsData = {
@@ -36,22 +36,22 @@ const cardsData: CardsData = {
   }
 }
 
-function getFocusResult(globalCounter: TimerStore) {
-  const {pauseTime, workingTime, timeOnFinishedTasks} = globalCounter
+function getFocusResult(statistic: Statistic) {
+  const {pauseTime, workingTime, timeOnFinishedTasks} = statistic
   if (!timeOnFinishedTasks) return '0%';
   const result = `${Math.round(timeOnFinishedTasks / (workingTime + pauseTime) * 100)}`
   return `${result}\u00A0%`;
 }
 
-function getStopsResult(globalCounter: TimerStore) {
-  return globalCounter.stops
+function getStopsResult(statistic: Statistic) {
+  return statistic.stops
 }
 
-function getPauseResult(globalCounter: TimerStore) {
-  const pauseSeconds = Math.floor(globalCounter.pauseTime / 1000)
+function getPauseResult(statistic: Statistic) {
+  const pauseSeconds = Math.floor(statistic.pauseTime / 1000)
   if (pauseSeconds && pauseSeconds < 60) return '< 1м'
 
-  const {hours, minutes} = convertSeconds(globalCounter.pauseTime / 1000)
+  const {hours, minutes} = convertSeconds(statistic.pauseTime / 1000)
   let result = '';
   if (hours) result = `${hours}ч`
   if (minutes) result = `${result} ${minutes}м`
@@ -61,7 +61,7 @@ function getPauseResult(globalCounter: TimerStore) {
 
 export function WideCard({cardName}: {cardName: keyof CardsData}) {
   const card = cardsData[cardName]
-  const globalCounter = useSelector(getTimerStore)
+  const statistic = useSelector(getStatistic)
   return (
     <div className={`${styles.card}`}>
       <div className={styles.card__content}>
@@ -69,7 +69,7 @@ export function WideCard({cardName}: {cardName: keyof CardsData}) {
           {card.title}
         </h3>
         <p className={styles.card__text}>
-          {card.res(globalCounter)}
+          {card.res(statistic)}
         </p>
       </div>
       <Icon name={card.icon} className={styles.card__svg}/>

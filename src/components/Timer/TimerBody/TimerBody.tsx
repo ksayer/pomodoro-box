@@ -8,13 +8,11 @@ import {POMODORO_START_SECONDS} from "../../../constants";
 import {
   addWorkingTime,
   addPauseTime,
-  getTimerStore,
   incrementFinishedTasks,
-  addTimeOnFinishedTasks,
-  setIsRunning,
-  setIsPause,
-} from "../../../store/slices/counter";
+  addTimeOnFinishedTasks, getStatistic,
+} from "../../../store/slices/statistic";
 import {calculateNewSeconds} from "../calculateNewSeconds";
+import {getTimerStore, setIsPause, setIsRunning} from "../../../store/slices/timer";
 
 interface ITimerBody {
   currentTask: TaskType,
@@ -28,7 +26,7 @@ interface ITimerBody {
 
 export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody) {
   const dispatcher = useDispatch();
-  const {finishedTasks} = useSelector(getTimerStore);
+  const {finishedTasks} = useSelector(getStatistic);
   const { isRunning, isPause } = useSelector(getTimerStore);
   const [seconds, setSeconds] = useState(POMODORO_START_SECONDS);
   const [startedAt, setStartedAt] = useState<number>(0);

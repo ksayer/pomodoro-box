@@ -2,28 +2,24 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../store";
 
 
-export type TimerStore = {
+export type Statistic = {
   finishedTasks: number,
   stops: number,
   workingTime: number,
   pauseTime: number,
   timeOnFinishedTasks: number,
-  isRunning: boolean,
-  isPause: boolean,
 }
 
-const initialState: TimerStore = {
+const initialState: Statistic = {
   finishedTasks: 0,
   stops: 0,
   pauseTime: 0,
   workingTime: 0,
   timeOnFinishedTasks: 0,
-  isRunning: false,
-  isPause: false,
 }
 
-export const timerSlice = createSlice({
-  name: 'timer',
+export const statisticSlice = createSlice({
+  name: 'statistic',
   initialState,
   reducers: {
     incrementFinishedTasks: (state) => {
@@ -41,12 +37,6 @@ export const timerSlice = createSlice({
     addTimeOnFinishedTasks: (state, action: PayloadAction<number>) => {
       state.timeOnFinishedTasks += action.payload
     },
-    setIsRunning: (state, action: PayloadAction<boolean>) => {
-      state.isRunning = action.payload;
-    },
-    setIsPause: (state, action: PayloadAction<boolean>) => {
-      state.isPause = action.payload;
-    }
   }
 })
 
@@ -57,10 +47,8 @@ export const {
   addPauseTime,
   addWorkingTime,
   addTimeOnFinishedTasks,
-  setIsRunning,
-  setIsPause,
-} = timerSlice.actions;
+} = statisticSlice.actions;
 
-export const getTimerStore = (state: RootState) => state.timer;
+export const getStatistic = (state: RootState) => state.statistic;
 
-export const timerReducer = timerSlice.reducer;
+export const statisticReducer = statisticSlice.reducer;

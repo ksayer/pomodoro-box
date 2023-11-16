@@ -17,7 +17,7 @@ export const tasksSlice = createSlice({
   initialState,
   reducers: {
     addNewTask: (state, action: PayloadAction<TaskType>) => {
-      state.push({...action.payload, active: false})
+      state.push(action.payload)
     },
     removeTask: (state, action: PayloadAction<{id: string}>) => {
       return state.filter((item) => {

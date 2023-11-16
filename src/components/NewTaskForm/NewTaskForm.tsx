@@ -1,18 +1,22 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
 import styles from './NewTaskForm.module.css';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {addNewTask} from "../../store/slices/tasks";
 import {getRandomString} from "../../utils/randomString";
+import {getTimerStore} from "../../store/slices/timer";
 
 export function NewTaskForm() {
   const [value, setValue] = useState('');
   const dispatch = useDispatch();
+  const { isRunning, isPause } = useSelector(getTimerStore);
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setValue(event.target.value);
   }
   function onSubmit(event: FormEvent) {
     event.preventDefault();
-    dispatch(addNewTask({id: getRandomString(), name: value, countPomodoro: 1, finishedPomodoro: 0}))
+    const newTask = {id: getRandomString(), name: value, countPomodoro: 1, finishedPomodoro: 0, active: false}
+    if (isRunning || isPause) newTask.active = true;
+    dispatch(addNewTask(newTask))
   }
 
   return (

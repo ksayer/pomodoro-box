@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './TextCard.module.css';
 import {useSelector} from "react-redux";
-import {getTimerStore} from "../../store/slices/counter";
+import {getStatistic} from "../../store/slices/statistic";
 import {convertSeconds} from "../../utils/convertSeconds";
 
 function formatTime(minutes: number, hours: number) {
@@ -28,7 +28,7 @@ function geMinuteSuffix(minutes: number) {
 }
 
 export function TextCard() {
-  const {workingTime} = useSelector(getTimerStore)
+  const {workingTime} = useSelector(getStatistic)
   const {minutes, hours, seconds} = convertSeconds(workingTime / 1000)
 
   const text = "Вы работали над задачами"
@@ -41,7 +41,7 @@ export function TextCard() {
           : seconds ? `${text} менее`
           : "Нет данных"
         }
-        {(minutes || hours || seconds) && (
+        {(minutes > 0 || hours > 0 || seconds > 0) && (
           <b className={styles['card__text--red']}> {minutes || hours ? formatTime(minutes, hours) : seconds ? '1\u00A0минуты' : ""}</b>
         )}
       </p>
