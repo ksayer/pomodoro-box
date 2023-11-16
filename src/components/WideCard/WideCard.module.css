@@ -21,6 +21,24 @@
   font-size: 64px;
 }
 
+.card--peach,
+.card--peach path {
+  stroke: var(--dark-peach);
+  background-color: var(--peach);
+}
+
+.card--purple,
+.card--purple path {
+  stroke: var(--dark-purple);
+  background-color: var(--purple);
+}
+
+.card--cyan,
+.card--cyan path {
+  stroke: var(--dark-cyan);
+  background-color: var(--cyan);
+}
+
 @media (max-width: 1024px) {
   .card__title {
     margin-bottom: 20px;

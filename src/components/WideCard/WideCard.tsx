@@ -8,6 +8,7 @@ import {convertSeconds} from "../../utils/convertSeconds";
 
 type Card = {
   title: string,
+  activeClass: string,
   icon: IconName,
   res: (globalCounter: Statistic) => string | number;
 }
@@ -22,16 +23,19 @@ const cardsData: CardsData = {
   focus: {
     title: 'Фокус',
     icon: 'focus',
+    activeClass: `${styles['card--peach']}`,
     res: getFocusResult,
   },
   pauseTime: {
     title: 'Время на паузе',
     icon: 'pause',
+    activeClass: `${styles['card--purple']}`,
     res: getPauseResult,
   },
   stops: {
     title: 'Остановки',
     icon: 'stop',
+    activeClass: `${styles['card--cyan']}`,
     res: getStopsResult
   }
 }
@@ -63,7 +67,7 @@ export function WideCard({cardName}: {cardName: keyof CardsData}) {
   const card = cardsData[cardName]
   const statistic = useSelector(getStatistic)
   return (
-    <div className={`${styles.card}`}>
+    <div className={`${styles.card} ${statistic.workingTime ? card.activeClass : ""}`}>
       <div className={styles.card__content}>
         <h3 className={styles.card__title}>
           {card.title}
