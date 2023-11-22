@@ -8,6 +8,7 @@ interface IDropdown {
   setIsDropdownOpen: Dispatch<SetStateAction<boolean>>,
   children: React.ReactNode,
   button: React.ReactNode,
+  disabled?: boolean | undefined,
   buttonStyles: any,
 }
 
@@ -16,7 +17,7 @@ interface ICoords {
   top: number,
 }
 
-export const Dropdown: FC<IDropdown> = ({isDropdownOpen, setIsDropdownOpen, children, button, buttonStyles}) => {
+export const Dropdown: FC<IDropdown> = ({isDropdownOpen, setIsDropdownOpen, children, button, disabled, buttonStyles}) => {
   const ref = useRef<HTMLDivElement>(null);
   const [coords, setCoords] = useState<ICoords>({ left: 0, top: 0 });
   useClickOutside({ref, setIsOpen: setIsDropdownOpen, isOpen: isDropdownOpen});
@@ -29,8 +30,10 @@ export const Dropdown: FC<IDropdown> = ({isDropdownOpen, setIsDropdownOpen, chil
   if (!modalContainer) return null;
   return (
     <div ref={ref}>
-      <button data-no-dnd={true}
-        className={buttonStyles}
+      <button
+        data-no-dnd={true}
+        disabled={disabled}
+        className={`${buttonStyles} ${disabled && styles['btn--disabled']}`}
         onClick={(e) => {
           updateCoords(e);
           setIsDropdownOpen(!isDropdownOpen)

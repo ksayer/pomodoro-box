@@ -35,6 +35,7 @@ export const Task: FC<{ task: TaskType }> = ({task}) => {
 
   return (
     <li
+      data-no-dnd={editing}
       className={styles.item}
       ref={task.active ? null: setNodeRef}
       style={style} {...attributes} {...listeners}

@@ -44,6 +44,7 @@ export function Menu(
         buttonStyles={styles['main-btn']}
         isDropdownOpen={isDropdownOpen}
         setIsDropdownOpen={setIsDropdownOpen}
+        disabled={task.active}
       >
         <ul className={styles.menu}>
           {
