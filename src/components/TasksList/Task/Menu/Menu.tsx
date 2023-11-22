@@ -6,6 +6,7 @@ import {removeTask, TaskType, updateTask} from "../../../../store/slices/tasks";
 import {useDispatch} from "react-redux";
 import {IconName} from "../../../../svg-icons";
 import {getRandomString} from "../../../../utils/randomString";
+import {Modal} from "../../../Modal";
 
 
 export function Menu(
@@ -15,6 +16,7 @@ export function Menu(
 ) {
   const dispatch = useDispatch();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false)
 
   const addPomodoro = () => {
     dispatch(updateTask({...task, countPomodoro: task.countPomodoro + 1}))
@@ -25,7 +27,7 @@ export function Menu(
   }
 
   const deleteTask = () => {
-    dispatch(removeTask({id: task.id}))
+    setIsDeleteModalOpened(true)
   }
 
   const menuButtons: {name: string, iconName: IconName, onClick: () => void}[] = [
@@ -57,6 +59,20 @@ export function Menu(
           }
         </ul>
       </Dropdown>
+      {isDeleteModalOpened && <Modal setIsModalOpen={setIsDeleteModalOpened} isModalOpen={isDeleteModalOpened}>
+        <div data-no-dnd={true} className={styles.modal}>
+          <span className={styles.modal__icon}></span>
+          <h3 className={styles.modal__title}>Удалить задачу?</h3>
+          <button
+            className={`${styles['modal__first-btn']} btn btn--red`}
+            onClick={() => dispatch(removeTask({id: task.id})) }
+          >Удалить</button>
+          <button
+            className={styles['modal__second-btn']}
+            onClick={() => setIsDeleteModalOpened(false)}
+          >Отмена</button>
+        </div>
+      </Modal>}
     </>
   );
 }

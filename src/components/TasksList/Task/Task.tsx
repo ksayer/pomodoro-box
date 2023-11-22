@@ -43,7 +43,6 @@ export const Task: FC<{ task: TaskType }> = ({task}) => {
         <div className={`${styles.counter} ${task.active? styles["counter--active"] : ""}`}>{task.countPomodoro}</div>
         {!editing ?
           (<div
-            onDoubleClick={() => setEditing(true)}
             className={`${styles.name}`}>
             {task.name}
           </div>)

@@ -40,6 +40,19 @@ body {
   background-color: var(--dark-green);
 }
 
+.btn--red {
+  background-color: var(--red);
+  color: var(--white);
+  transition: background-color .3s;
+}
+
+.btn--red:hover {
+  background-color: var(--dark-red);
+}
+.btn--red:active {
+  background-color: var(--very-red);
+}
+
 @media(max-width: 1024px) {
   .container {
     padding: 0 30px

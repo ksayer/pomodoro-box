@@ -1,29 +1,7 @@
-import React, {Dispatch, FC, SetStateAction, useEffect, useRef, useState} from 'react';
+import React, {Dispatch, FC, SetStateAction, useRef, useState} from 'react';
 import styles from './Dropdown.module.css';
 import ReactDOM from 'react-dom';
-
-
-interface IUseClickOutside {
-  ref:React.RefObject<HTMLDivElement>,
-  setIsDropdownOpen: Dispatch<SetStateAction<boolean>>
-}
-
-const useClickOutside = ({ref, setIsDropdownOpen}: IUseClickOutside) => {
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as HTMLElement)){
-        setIsDropdownOpen(false);
-      }
-    }
-    const closeHandler = () => setIsDropdownOpen(false)
-    document.addEventListener('click', handleClickOutside)
-    window.addEventListener('resize', closeHandler);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-      window.removeEventListener('resize', closeHandler);
-    }
-  }, [ref])
-}
+import {useClickOutside} from '../../hooks/useClickOutside'
 
 interface IDropdown {
   isDropdownOpen: boolean,
@@ -41,7 +19,7 @@ interface ICoords {
 export const Dropdown: FC<IDropdown> = ({isDropdownOpen, setIsDropdownOpen, children, button, buttonStyles}) => {
   const ref = useRef<HTMLDivElement>(null);
   const [coords, setCoords] = useState<ICoords>({ left: 0, top: 0 });
-  useClickOutside({ref, setIsDropdownOpen});
+  useClickOutside({ref, setIsOpen: setIsDropdownOpen, isOpen: isDropdownOpen});
 
   const updateCoords: React.MouseEventHandler<HTMLElement> = (e) => {
     const rect = (e.target as HTMLElement).getBoundingClientRect();
