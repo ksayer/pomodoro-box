@@ -2,7 +2,12 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../store";
 
 
-export type Statistic = {
+const currentDate = () => {
+  const today = new Date();
+  return today.toISOString().split('T')[0]
+}
+
+export type DayStatistic = {
   finishedTasks: number,
   stops: number,
   workingTime: number,
@@ -10,12 +15,24 @@ export type Statistic = {
   timeOnFinishedTasks: number,
 }
 
-const initialState: Statistic = {
+const initialDayStatistic: DayStatistic = {
   finishedTasks: 0,
   stops: 0,
-  pauseTime: 0,
   workingTime: 0,
+  pauseTime: 0,
   timeOnFinishedTasks: 0,
+}
+
+export type Statistic = {
+  days: {
+    [key: string]: DayStatistic
+  },
+  selectedDay: string
+}
+
+const initialState: Statistic = {
+  days: {[currentDate()]: initialDayStatistic},
+  selectedDay: currentDate()
 }
 
 export const statisticSlice = createSlice({
@@ -23,19 +40,19 @@ export const statisticSlice = createSlice({
   initialState,
   reducers: {
     incrementFinishedTasks: (state) => {
-      state.finishedTasks += 1
+      state.days[currentDate()].finishedTasks += 1
     },
     incrementStops: (state) => {
-      state.stops += 1
+      state.days[currentDate()].stops += 1
     },
     addWorkingTime: (state, action: PayloadAction<number>) => {
-      state.workingTime += action.payload
+      state.days[currentDate()].workingTime += action.payload
     },
     addPauseTime: (state, action: PayloadAction<number>) => {
-      state.pauseTime += action.payload
+      state.days[currentDate()].pauseTime += action.payload
     },
     addTimeOnFinishedTasks: (state, action: PayloadAction<number>) => {
-      state.timeOnFinishedTasks += action.payload
+      state.days[currentDate()].timeOnFinishedTasks += action.payload
     },
   }
 })
@@ -50,5 +67,6 @@ export const {
 } = statisticSlice.actions;
 
 export const getStatistic = (state: RootState) => state.statistic;
+export const getSelectedStatistic = (state: RootState) => state.statistic.days[state.statistic.selectedDay];
 
 export const statisticReducer = statisticSlice.reducer;

@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './WideCard.module.css';
 import {Icon} from "../Icon";
 import {IconName} from "../../svg-icons";
-import {getStatistic, Statistic} from "../../store/slices/statistic";
+import {DayStatistic, getSelectedStatistic, getStatistic, Statistic} from "../../store/slices/statistic";
 import {useSelector} from "react-redux";
 import {convertSeconds} from "../../utils/convertSeconds";
 
@@ -10,7 +10,7 @@ type Card = {
   title: string,
   activeClass: string,
   icon: IconName,
-  res: (globalCounter: Statistic) => string | number;
+  res: (globalCounter: DayStatistic) => string | number;
 }
 
 type CardsData = {
@@ -40,18 +40,18 @@ const cardsData: CardsData = {
   }
 }
 
-function getFocusResult(statistic: Statistic) {
+function getFocusResult(statistic: DayStatistic) {
   const {pauseTime, workingTime, timeOnFinishedTasks} = statistic
   if (!timeOnFinishedTasks) return '0%';
   const result = `${Math.round(timeOnFinishedTasks / (workingTime + pauseTime) * 100)}`
   return `${result}\u00A0%`;
 }
 
-function getStopsResult(statistic: Statistic) {
+function getStopsResult(statistic: DayStatistic) {
   return statistic.stops
 }
 
-function getPauseResult(statistic: Statistic) {
+function getPauseResult(statistic: DayStatistic) {
   const pauseSeconds = Math.floor(statistic.pauseTime / 1000)
   if (pauseSeconds && pauseSeconds < 60) return '< 1м'
 
@@ -65,7 +65,7 @@ function getPauseResult(statistic: Statistic) {
 
 export function WideCard({cardName}: {cardName: keyof CardsData}) {
   const card = cardsData[cardName]
-  const statistic = useSelector(getStatistic)
+  const statistic = useSelector(getSelectedStatistic)
   return (
     <div className={`${styles.card} ${statistic.workingTime ? card.activeClass : ""}`}>
       <div className={styles.card__content}>

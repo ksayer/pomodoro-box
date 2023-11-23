@@ -9,7 +9,7 @@ import {
   addWorkingTime,
   addPauseTime,
   incrementFinishedTasks,
-  addTimeOnFinishedTasks, getStatistic,
+  addTimeOnFinishedTasks, getStatistic, getSelectedStatistic,
 } from "../../../store/slices/statistic";
 import {calculateNewSeconds} from "../calculateNewSeconds";
 import {getTimerStore, setIsPause, setIsRunning} from "../../../store/slices/timer";
@@ -26,7 +26,7 @@ interface ITimerBody {
 
 export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody) {
   const dispatcher = useDispatch();
-  const {finishedTasks} = useSelector(getStatistic);
+  const {finishedTasks} = useSelector(getSelectedStatistic);
   const { isRunning, isPause } = useSelector(getTimerStore);
   const [seconds, setSeconds] = useState(POMODORO_START_SECONDS);
   const [startedAt, setStartedAt] = useState<number>(0);
