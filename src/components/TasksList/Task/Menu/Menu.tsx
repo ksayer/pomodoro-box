@@ -60,7 +60,7 @@ export function Menu(
           }
         </ul>
       </Dropdown>
-      {isDeleteModalOpened && <Modal setIsModalOpen={setIsDeleteModalOpened} isModalOpen={isDeleteModalOpened}>
+      {isDeleteModalOpened && <Modal setIsModalOpen={setIsDeleteModalOpened}>
         <div data-no-dnd={true} className={styles.modal}>
           <span className={styles.modal__icon}></span>
           <h3 className={styles.modal__title}>Удалить задачу?</h3>
