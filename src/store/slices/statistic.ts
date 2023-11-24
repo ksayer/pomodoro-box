@@ -59,11 +59,9 @@ export const statisticSlice = createSlice({
     },
     addWorkingTime: (state, action: PayloadAction<number>) => {
       incrementByValue({state, field: "workingTime", value: action.payload})
-
     },
     addPauseTime: (state, action: PayloadAction<number>) => {
       incrementByValue({state, field: "pauseTime", value: action.payload})
-
     },
     addTimeOnFinishedTasks: (state, action: PayloadAction<number>) => {
       incrementByValue({state, field: "timeOnFinishedTasks", value: action.payload})
@@ -80,7 +78,9 @@ export const {
   addTimeOnFinishedTasks,
 } = statisticSlice.actions;
 
-export const getStatistic = (state: RootState) => state.statistic;
+export const getTodayStatistic = (state: RootState) => {
+  return state.statistic.days[currentDate()] || {...initialDayStatistic}
+};
 export const getSelectedStatistic = (state: RootState) => state.statistic.days[state.statistic.selectedDay];
 
 export const statisticReducer = statisticSlice.reducer;

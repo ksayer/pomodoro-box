@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './WideCard.module.css';
 import {Icon} from "../Icon";
 import {IconName} from "../../svg-icons";
-import {DayStatistic, getSelectedStatistic, getStatistic, Statistic} from "../../store/slices/statistic";
+import {DayStatistic, getSelectedStatistic} from "../../store/slices/statistic";
 import {useSelector} from "react-redux";
 import {convertSeconds} from "../../utils/convertSeconds";
 

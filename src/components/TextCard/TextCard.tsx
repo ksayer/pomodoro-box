@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './TextCard.module.css';
 import {useSelector} from "react-redux";
-import {getSelectedStatistic, getStatistic} from "../../store/slices/statistic";
+import {getSelectedStatistic} from "../../store/slices/statistic";
 import {convertSeconds} from "../../utils/convertSeconds";
 
 function formatTime(minutes: number, hours: number) {
@@ -18,12 +18,12 @@ function formatTime(minutes: number, hours: number) {
 }
 
 function getHourSuffix(hours: number) {
-  if (hours == 1 || (hours % 10 === 1 && hours % 100 !== 11)) return 'а';
+  if (hours === 1 || (hours % 10 === 1 && hours % 100 !== 11)) return 'а';
   return 'ов'
 }
 
 function geMinuteSuffix(minutes: number) {
-  if (minutes == 1 || minutes % 10 === 1 && minutes !== 11) return 'ы';
+  if (minutes === 1 || (minutes % 10 === 1 && minutes !== 11)) return 'ы';
   return ''
 }
 

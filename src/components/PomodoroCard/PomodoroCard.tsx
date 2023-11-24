@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './PomodoroCard.module.css';
 import {Icon} from "../Icon";
 import {useSelector} from "react-redux";
-import {DayStatistic, getSelectedStatistic, getStatistic} from "../../store/slices/statistic";
+import {getSelectedStatistic} from "../../store/slices/statistic";
 
 function getPomodoroString(count:number) {
   let ending;
