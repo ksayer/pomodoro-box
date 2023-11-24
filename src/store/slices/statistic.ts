@@ -1,11 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../store";
+import {currentDate} from "../../utils/datetime";
 
-
-const currentDate = () => {
-  const today = new Date();
-  return today.toISOString().split('T')[0]
-}
 
 export type DayStatistic = {
   finishedTasks: number,
@@ -13,6 +9,13 @@ export type DayStatistic = {
   workingTime: number,
   pauseTime: number,
   timeOnFinishedTasks: number,
+}
+
+export type Statistic = {
+  days: {
+    [key: string]: DayStatistic
+  },
+  selectedDay: string
 }
 
 const initialDayStatistic: DayStatistic = {
@@ -23,16 +26,25 @@ const initialDayStatistic: DayStatistic = {
   timeOnFinishedTasks: 0,
 }
 
-export type Statistic = {
-  days: {
-    [key: string]: DayStatistic
-  },
-  selectedDay: string
-}
-
 const initialState: Statistic = {
   days: {[currentDate()]: initialDayStatistic},
   selectedDay: currentDate()
+}
+
+const addDayStatistic = (state: Statistic) => {
+  if (!state.days[currentDate()]) {
+    state.days[currentDate()] = {...initialDayStatistic}
+  }
+}
+
+const incrementByOne = ({state, field}: {state: Statistic, field: keyof DayStatistic}) => {
+  addDayStatistic(state);
+  state.days[currentDate()][field] += 1;
+}
+
+const incrementByValue = ({state, field, value}: {state: Statistic, field: keyof DayStatistic, value: number}) => {
+  addDayStatistic(state);
+  state.days[currentDate()][field] += value;
 }
 
 export const statisticSlice = createSlice({
@@ -40,19 +52,21 @@ export const statisticSlice = createSlice({
   initialState,
   reducers: {
     incrementFinishedTasks: (state) => {
-      state.days[currentDate()].finishedTasks += 1
+      incrementByOne({state, field: "finishedTasks"})
     },
     incrementStops: (state) => {
-      state.days[currentDate()].stops += 1
+      incrementByOne({state, field: "stops"})
     },
     addWorkingTime: (state, action: PayloadAction<number>) => {
-      state.days[currentDate()].workingTime += action.payload
+      incrementByValue({state, field: "workingTime", value: action.payload})
+
     },
     addPauseTime: (state, action: PayloadAction<number>) => {
-      state.days[currentDate()].pauseTime += action.payload
+      incrementByValue({state, field: "pauseTime", value: action.payload})
+
     },
     addTimeOnFinishedTasks: (state, action: PayloadAction<number>) => {
-      state.days[currentDate()].timeOnFinishedTasks += action.payload
+      incrementByValue({state, field: "timeOnFinishedTasks", value: action.payload})
     },
   }
 })
