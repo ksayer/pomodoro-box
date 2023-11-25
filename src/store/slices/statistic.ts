@@ -31,19 +31,19 @@ const initialState: Statistic = {
   selectedDay: currentDate()
 }
 
-const addDayStatistic = (state: Statistic) => {
-  if (!state.days[currentDate()]) {
-    state.days[currentDate()] = {...initialDayStatistic}
+const addDayStatistic = (state: Statistic, date: string) => {
+  if (!state.days[date]) {
+    state.days[date] = {...initialDayStatistic}
   }
 }
 
 const incrementByOne = ({state, field}: {state: Statistic, field: keyof DayStatistic}) => {
-  addDayStatistic(state);
+  addDayStatistic(state, currentDate());
   state.days[currentDate()][field] += 1;
 }
 
 const incrementByValue = ({state, field, value}: {state: Statistic, field: keyof DayStatistic, value: number}) => {
-  addDayStatistic(state);
+  addDayStatistic(state, currentDate());
   state.days[currentDate()][field] += value;
 }
 
@@ -66,6 +66,10 @@ export const statisticSlice = createSlice({
     addTimeOnFinishedTasks: (state, action: PayloadAction<number>) => {
       incrementByValue({state, field: "timeOnFinishedTasks", value: action.payload})
     },
+    setSelectedDay: (state, action: PayloadAction<string>) => {
+      addDayStatistic(state, action.payload);
+      state.selectedDay = action.payload;
+    }
   }
 })
 
@@ -76,11 +80,14 @@ export const {
   addPauseTime,
   addWorkingTime,
   addTimeOnFinishedTasks,
+  setSelectedDay,
 } = statisticSlice.actions;
 
 export const getTodayStatistic = (state: RootState) => {
   return state.statistic.days[currentDate()] || {...initialDayStatistic}
 };
 export const getSelectedStatistic = (state: RootState) => state.statistic.days[state.statistic.selectedDay];
+
+export const getStatistic = (state: RootState) => state.statistic;
 
 export const statisticReducer = statisticSlice.reducer;

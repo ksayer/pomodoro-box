@@ -10,6 +10,7 @@ body {
   font-size: 16px;
   font-weight: 400;
   font-family: 'SF UI Display', serif;
+  color: var(--black);
   background-color: var(--white);
 }
 

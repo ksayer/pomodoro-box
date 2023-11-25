@@ -1,4 +1,8 @@
 export const currentDate = () => {
   const today = new Date();
-  return today.toISOString().split('T')[0]
+  return dateToStoreFormat(today);
+}
+
+export const dateToStoreFormat = (date: Date) => {
+  return date.toISOString().split('T')[0]
 }
