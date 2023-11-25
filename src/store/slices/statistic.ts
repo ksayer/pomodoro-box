@@ -18,7 +18,7 @@ export type Statistic = {
   selectedDay: string
 }
 
-const initialDayStatistic: DayStatistic = {
+export const initialDayStatistic: DayStatistic = {
   finishedTasks: 0,
   stops: 0,
   workingTime: 0,
@@ -69,7 +69,7 @@ export const statisticSlice = createSlice({
     setSelectedDay: (state, action: PayloadAction<string>) => {
       addDayStatistic(state, action.payload);
       state.selectedDay = action.payload;
-    }
+    },
   }
 })
 

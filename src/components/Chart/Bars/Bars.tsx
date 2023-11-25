@@ -5,8 +5,8 @@ import {getStatistic} from "../../../store/slices/statistic";
 import {useSelector} from "react-redux";
 import {dateToStoreFormat} from "../../../utils/datetime";
 
-const getDays = () => {
-  return [0, 1, 2, 3, 4, 5, 6].map(weekday => {
+const getDays = (selectedDay: string) => {
+  return [1, 2, 3, 4, 5, 6, 7].map(weekday => {
     const today = new Date();
     const differenceWithToday = weekday - today.getDay();
     const dateWeekday = new Date(today.setDate(today.getDate() + differenceWithToday))
@@ -16,7 +16,7 @@ const getDays = () => {
 
 export function Bars() {
   const { selectedDay } = useSelector(getStatistic)
-  const days = getDays();
+  const days = getDays(selectedDay);
   return (
     <div className={styles.bars}>
       {
