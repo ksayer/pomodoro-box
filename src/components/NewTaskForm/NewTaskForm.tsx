@@ -10,14 +10,20 @@ export function NewTaskForm() {
   const dispatch = useDispatch();
   const status = useSelector(getTimerStatus);
   const tasks = useSelector(selectTasks);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    setErrorMessage('');
     setValue(event.target.value);
   }
   function onSubmit(event: FormEvent) {
     event.preventDefault();
     const newTask = {id: getRandomString(), name: value, countPomodoro: 1, finishedPomodoro: 0, active: false}
     if (status !== 'isStop' && !tasks) newTask.active = true;
+    if (tasks.find(obj => obj.name === value)) {
+      setErrorMessage('Такая задача уже есть в списке')
+      return
+    }
     dispatch(addNewTask(newTask))
   }
 
@@ -33,7 +39,9 @@ export function NewTaskForm() {
         placeholder="Название задачи"
         value={value}
         onChange={handleChange}
+        aria-invalid={!!errorMessage}
       />
+      {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
       <button className="btn btn--green" type="submit">Добавить</button>
     </form>
   );
