@@ -1,8 +1,9 @@
 import React from 'react';
 import styles from './TextCard.module.css';
 import {useSelector} from "react-redux";
-import {getSelectedStatistic} from "../../store/slices/statistic";
+import {getSelectedStatistic, getStatistic} from "../../store/slices/statistic";
 import {convertSeconds} from "../../utils/convertSeconds";
+import {getDayIndexWithMondayAsFirstDay, WeekDaysFull} from "../../utils/datetime";
 
 function formatTime(minutes: number, hours: number) {
   let result = "";
@@ -29,12 +30,13 @@ function geMinuteSuffix(minutes: number) {
 
 export function TextCard() {
   const {workingTime} = useSelector(getSelectedStatistic)
+  const {selectedDay} = useSelector(getStatistic)
   const {minutes, hours, seconds} = convertSeconds(workingTime / 1000)
 
   const text = "Вы работали над задачами"
   return (
     <div className={styles.card}>
-      <h3 className={styles.card__title}>Понедельник</h3>
+      <h3 className={styles.card__title}>{WeekDaysFull[getDayIndexWithMondayAsFirstDay(new Date(selectedDay))]}</h3>
       <p className={styles.card__text}>
         {minutes || hours
           ? `${text} в течение `
