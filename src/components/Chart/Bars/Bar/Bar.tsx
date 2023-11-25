@@ -30,7 +30,6 @@ const getBarPercent = (workingTime: number) => {
 export function Bar({date, selected}: IBar) {
   const dispatch = useDispatch();
   const { days } = useSelector(getStatistic)
-
   const weekDay = WeekDays[new Date(date).getDay()]
   const barStatistic = days[date] || {...initialDayStatistic}
   const barHeight = `${getBarPercent(barStatistic.workingTime) || 1.3}%`

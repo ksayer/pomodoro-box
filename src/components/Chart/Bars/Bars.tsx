@@ -3,12 +3,12 @@ import styles from './Bars.module.css';
 import {Bar} from "./Bar";
 import {getStatistic} from "../../../store/slices/statistic";
 import {useSelector} from "react-redux";
-import {dateToStoreFormat} from "../../../utils/datetime";
+import {dateToStoreFormat, getDayIndexWithMondayAsFirstDay} from "../../../utils/datetime";
 
 const getDays = (selectedDay: string) => {
-  return [1, 2, 3, 4, 5, 6, 7].map(weekday => {
-    const today = new Date();
-    const differenceWithToday = weekday - today.getDay();
+  return [0, 1, 2, 3, 4, 5, 6].map(weekday => {
+    const today = new Date(selectedDay);
+    const differenceWithToday = weekday - getDayIndexWithMondayAsFirstDay(today);
     const dateWeekday = new Date(today.setDate(today.getDate() + differenceWithToday))
     return {date: dateToStoreFormat(dateWeekday)};
   })

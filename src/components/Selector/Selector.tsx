@@ -2,9 +2,9 @@ import React, {useRef, useState} from 'react';
 import styles from './Selector.module.css';
 import {Dropdown} from "../Dropdown";
 import {getRandomString} from "../../utils/randomString";
-import {useDispatch} from "react-redux";
-import {setSelectedDay} from "../../store/slices/statistic";
-import {currentDate, dateToStoreFormat} from "../../utils/datetime";
+import {useDispatch, useSelector} from "react-redux";
+import {getStatistic, setSelectedDay} from "../../store/slices/statistic";
+import {dateToStoreFormat} from "../../utils/datetime";
 
 type TypeMenuButton = {
   name: string,
@@ -21,14 +21,15 @@ export function Selector() {
   const [selectorOpened, setSelectorOpened] = useState(false);
   const [selected, setSelected] = useState(menuButtons[0]);
   const dispatch = useDispatch();
+  const {selectedDay} = useSelector(getStatistic)
   const ref = useRef<HTMLDivElement>(null);
 
   const selectorButtons = menuButtons.filter(b => b.name != selected.name)
 
   const handleClickSelector = (btn: TypeMenuButton) => {
     setSelected(btn);
-    const dateOnSelectedWeek = new Date()
-    dateOnSelectedWeek.setDate(dateOnSelectedWeek.getDate() + btn.weekNumber * 7)
+    const dateOnSelectedWeek = new Date(selectedDay)
+    dateOnSelectedWeek.setDate(dateOnSelectedWeek.getDate() + (btn.weekNumber - selected.weekNumber) * 7)
     dispatch(setSelectedDay(dateToStoreFormat(dateOnSelectedWeek)))
   }
 
