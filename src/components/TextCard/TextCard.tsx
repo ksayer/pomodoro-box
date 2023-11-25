@@ -11,7 +11,7 @@ function formatTime(minutes: number, hours: number) {
   }
 
   if (minutes > 0) {
-    result += `${minutes} минут${geMinuteSuffix(minutes)}`;
+    result += ` ${minutes} минут${geMinuteSuffix(minutes)}`;
   }
 
   return result;
