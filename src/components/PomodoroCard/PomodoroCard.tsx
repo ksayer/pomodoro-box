@@ -24,7 +24,7 @@ export function PomodoroCard() {
     <div className={styles.card}>
       <div className={styles.card__body}>
         <Icon name={"tomato"}/>
-        <span className={styles.card__count}>x {finishedTasks}</span>
+        <span className={styles.card__count}>{`x\u00A0${finishedTasks}`}</span>
       </div>
       <p className={styles.card__footer}>{finishedTasks} {getPomodoroString(finishedTasks)}</p>
     </div>

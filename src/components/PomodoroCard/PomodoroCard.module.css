@@ -20,11 +20,12 @@
   font-weight: 700;
   line-height: 33px;
   transform: translateY(7px);
+  width: 35px;
 }
 
 .card__footer {
   width: 100%;
-  padding: 9px 0;
+  padding: 8px 0;
   text-align: center;
   background-color: var(--red);
   color: var(--white);
