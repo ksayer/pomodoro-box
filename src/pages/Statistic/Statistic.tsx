@@ -1,12 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './Statistic.module.css';
 import {Selector} from "../../components/Selector";
 import {TextCard} from "../../components/TextCard";
 import {PomodoroCard} from "../../components/PomodoroCard";
 import {Chart} from "../../components/Chart";
 import {WideCard} from "../../components/WideCard";
+import {useDispatch} from "react-redux";
+import {setSelectedDay} from "../../store/slices/statistic";
+import {currentDate} from "../../utils/datetime";
 
 export function Statistic() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setSelectedDay(currentDate()))
+  }, []);
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
