@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import styles from "./ClockFace.module.css";
 import {Icon} from "../../../Icon";
 import {useSelector} from "react-redux";
-import {getTimerStore} from "../../../../store/slices/timer";
+import {getTimerStatus} from "../../../../store/slices/timer";
 
 
 function timeToString(time: number) {
@@ -49,7 +49,7 @@ interface IClockFace {
 
 export const ClockFace = ({seconds, secondsOnUpdate, isBreak, isStopDown, handlers}: IClockFace) => {
   const {minutesFirst, minutesSecond, secondsFirst, secondsSecond} = getClockString(seconds)
-  const { isRunning, isPause } = useSelector(getTimerStore);
+  const status = useSelector(getTimerStatus);
 
   useInterval(() => {
     const newSeconds = seconds - 1
@@ -57,7 +57,7 @@ export const ClockFace = ({seconds, secondsOnUpdate, isBreak, isStopDown, handle
     if (newSeconds <= 0) {
       setTimeout(() => handlers.finishTask(), 100);
     }
-  }, isRunning ? 1000 : null)
+  }, status === 'isWork' ? 1000 : null)
 
   const updateTimer = (e: React.MouseEvent<HTMLElement>) => {
     e.currentTarget.blur();
@@ -66,8 +66,8 @@ export const ClockFace = ({seconds, secondsOnUpdate, isBreak, isStopDown, handle
 
   return (
     <div className={styles['counter-container']}>
-      <div className={`${styles.counter} ${isBreak && !isPause ? 
-        styles['counter--break'] : isRunning ? 
+      <div className={`${styles.counter} ${isBreak && status === 'isWork' ? 
+        styles['counter--break'] : status === 'isWork' ? 
           isStopDown ? styles['counter--stop'] : styles['counter--running'] 
           : ""}`}>
         <span className={styles.number}>{minutesFirst}</span>

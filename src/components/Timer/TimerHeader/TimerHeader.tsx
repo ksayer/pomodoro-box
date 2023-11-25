@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './TimerHeader.module.css';
 import {useSelector} from "react-redux";
-import {getTimerStore} from "../../../store/slices/timer";
+import {getTimerStatus} from "../../../store/slices/timer";
 
 interface ITimerHeader {
   taskName: string,
@@ -10,12 +10,12 @@ interface ITimerHeader {
 }
 
 export function TimerHeader({taskName, isBreak, finishedPomodoro}: ITimerHeader) {
-  const { isRunning, isPause } = useSelector(getTimerStore);
+  const status = useSelector(getTimerStatus);
 
   let styleHeader = '';
   if (isBreak) {
     styleHeader = styles['header--green']
-  } else if (isRunning || isPause) {
+  } else if (status !== 'isStop') {
     styleHeader = styles['header--red']
   }
 

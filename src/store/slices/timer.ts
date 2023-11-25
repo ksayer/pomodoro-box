@@ -1,14 +1,14 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../store";
 
+export type TStatus = 'isWork' | 'isStop' | 'isPause';
+
 export type TimerStore = {
-  isRunning: boolean,
-  isPause: boolean,
+  status: TStatus,
 }
 
 const initialState: TimerStore = {
-  isRunning: false,
-  isPause: false,
+  status: 'isStop',
 }
 
 
@@ -16,21 +16,17 @@ export const timerSlice = createSlice({
   name: 'timer',
   initialState,
   reducers: {
-    setIsRunning: (state, action: PayloadAction<boolean>) => {
-      state.isRunning = action.payload;
+    setStatus: (state, action: PayloadAction<TStatus>) => {
+      state.status = action.payload;
     },
-    setIsPause: (state, action: PayloadAction<boolean>) => {
-      state.isPause = action.payload;
-    }
   }
 })
 
 
 export const {
-  setIsRunning,
-  setIsPause,
+  setStatus,
 } = timerSlice.actions;
 
-export const getTimerStore = (state: RootState) => state.timer;
+export const getTimerStatus = (state: RootState) => state.timer.status;
 
 export const timerReducer = timerSlice.reducer;

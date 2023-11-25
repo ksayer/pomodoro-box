@@ -13,7 +13,7 @@ import {
   getTodayStatistic,
 } from "../../../store/slices/statistic";
 import {calculateNewSeconds} from "../calculateNewSeconds";
-import {getTimerStore, setIsPause, setIsRunning} from "../../../store/slices/timer";
+import {getTimerStatus, setStatus} from "../../../store/slices/timer";
 
 interface ITimerBody {
   currentTask: TaskType,
@@ -28,7 +28,7 @@ interface ITimerBody {
 export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody) {
   const dispatcher = useDispatch();
   const {finishedTasks} = useSelector(getTodayStatistic);
-  const { isRunning, isPause } = useSelector(getTimerStore);
+  const status = useSelector(getTimerStatus);
   const [seconds, setSeconds] = useState(POMODORO_START_SECONDS);
   const [startedAt, setStartedAt] = useState<number>(0);
   const [spentOnPomodoroTime, setSpentOnPomodoroTime] = useState<number>(0);
@@ -36,22 +36,20 @@ export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody
 
   const startTimer = () => {
     setStartedAt(Date.now())
-    dispatcher(setIsRunning(true));
+    dispatcher(setStatus('isWork'));
     dispatcher(updateTask({...currentTask, active: true}))
   }
 
   const togglePause = () => {
-    if (!isBreak && !isPause) setSpentOnPomodoroTime(spentOnPomodoroTime + Date.now() - startedAt)
+    if (!isBreak && status !== 'isPause') setSpentOnPomodoroTime(spentOnPomodoroTime + Date.now() - startedAt)
     updateWorkingPauseTime();
     setStartedAt(Date.now())
-    dispatcher(setIsPause(!isPause));
-    dispatcher(setIsRunning(!isRunning));
+    dispatcher(setStatus(status == 'isPause' ? 'isWork' : 'isPause'))
   }
 
   const stopTimer = (newSeconds: number) => {
     updateWorkingPauseTime();
-    dispatcher(setIsRunning(false));
-    dispatcher(setIsPause(false));
+    dispatcher(setStatus('isStop'))
     setSpentOnPomodoroTime(0)
     setSeconds(newSeconds);
     dispatcher(updateStatus({id: currentTask?.id, active: false}))
@@ -82,7 +80,7 @@ export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody
   }
 
   const updateWorkingPauseTime = () => {
-    if (!isPause) {
+    if (status !== 'isPause') {
       if (!isBreak) dispatcher(addWorkingTime(Date.now() - startedAt))
     } else {
       dispatcher(addPauseTime(Date.now() - startedAt))
@@ -92,7 +90,7 @@ export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody
   const updateTimeOnFinishedTasks = () => {
     if (!isBreak) {
       let spentTime;
-      if (isPause)  {
+      if (status === 'isPause')  {
         spentTime = spentOnPomodoroTime
       } else {
         spentTime = spentOnPomodoroTime + Date.now() - startedAt
@@ -119,7 +117,6 @@ export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody
       </div>
       <ManagePanel
         isBreak={isBreak}
-        pause={isPause}
         handlers={{stopTimer, startTimer, togglePause, finishTask, setIsStopDown}}
         secondsOnUpdate={
           calculateNewSeconds(isBreak, finishedTasks)

@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectTasks} from "../../store/slices/tasks";
 import {TimerHeader} from "./TimerHeader";
 import {TimerBody} from "./TimerBody";
-import {setIsPause, setIsRunning} from "../../store/slices/timer";
+import {setStatus} from "../../store/slices/timer";
 
 
 export function Timer() {
@@ -15,8 +15,7 @@ export function Timer() {
 
   useEffect(() => {
     return () => {
-      dispatcher(setIsRunning(false));
-      dispatcher(setIsPause(false));
+      dispatcher(setStatus('isStop'));
     }
   }, []);
 

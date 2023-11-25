@@ -2,11 +2,10 @@ import React from 'react';
 import styles from './ManagePanel.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {incrementStops} from "../../../../store/slices/statistic";
-import {getTimerStore} from "../../../../store/slices/timer";
+import {getTimerStatus} from "../../../../store/slices/timer";
 
 interface IManagePanel {
   isBreak: boolean,
-  pause: boolean,
   secondsOnUpdate: number,
   handlers: {
     stopTimer: (v: number) => void,
@@ -17,9 +16,9 @@ interface IManagePanel {
   }
 }
 
-export function ManagePanel({isBreak, secondsOnUpdate, pause, handlers}: IManagePanel) {
+export function ManagePanel({isBreak, secondsOnUpdate, handlers}: IManagePanel) {
   const dispatcher = useDispatch();
-  const { isRunning } = useSelector(getTimerStore);
+  const status = useSelector(getTimerStatus);
   let leftBtnText = 'Старт'
   let rightBtnText = 'Стоп'
   const handleStop = () => {
@@ -29,10 +28,10 @@ export function ManagePanel({isBreak, secondsOnUpdate, pause, handlers}: IManage
   let leftBtnHandler = () => handlers.startTimer()
   let rightBtnHandler = handleStop;
 
-  if (isRunning) {
+  if (status === 'isWork') {
     leftBtnText = 'Пауза'
     leftBtnHandler = () => handlers.togglePause();
-  } else if (pause) {
+  } else if (status == 'isPause') {
     leftBtnText = 'Продолжить'
     rightBtnText = isBreak ? 'Пропустить' : 'Сделано'
     leftBtnHandler = () => handlers.togglePause();
@@ -48,7 +47,7 @@ export function ManagePanel({isBreak, secondsOnUpdate, pause, handlers}: IManage
       <button
         className={`btn ${styles['right-btn']}`}
         onClick={rightBtnHandler}
-        disabled={!isRunning && !pause}
+        disabled={status == 'isStop'}
         onMouseDown={() => handlers.setIsStopDown(true)}
         onMouseUp={() => handlers.setIsStopDown(false)}
         onMouseOutCapture={() => handlers.setIsStopDown(false)}
