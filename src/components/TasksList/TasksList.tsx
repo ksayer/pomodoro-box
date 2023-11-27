@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {createRef} from 'react';
+import './transition.css';
 import styles from './TasksList.module.css';
 import {Task} from "./Task";
 import {useDispatch, useSelector} from "react-redux";
@@ -8,7 +9,7 @@ import {closestCenter, DndContext, useSensor, useSensors} from "@dnd-kit/core";
 import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import {CustomMouseSensor, CustomTouchSensor} from "../../librariesCustomization/dndKit";
 import {convertSeconds} from "../../utils/convertSeconds";
-
+import {CSSTransition, TransitionGroup} from "react-transition-group";
 
 
 const getDurationString = (totalMinutes: number) => {
@@ -43,9 +44,21 @@ export function TasksList() {
     <div className={styles.tasks}>
       <DndContext sensors={sensors} onDragEnd={onDragEnd} collisionDetection={closestCenter}>
         <SortableContext strategy={verticalListSortingStrategy} items={tasks} >
-          <ul className={styles.list}>
-            {tasks.map((task) => <Task key={task.id} task={task}/>)}
-          </ul>
+            <TransitionGroup  className={styles.list}>
+              {tasks.map((task) => {
+                const nodeRef = createRef<HTMLDivElement>();
+                return <CSSTransition
+                  key={task.id}
+                  nodeRef={nodeRef}
+                  timeout={500}
+                  classNames="item"
+                >
+                    <div ref={nodeRef}>
+                      <Task key={task.id} task={task}/>
+                    </div>
+                </CSSTransition>
+              })}
+            </TransitionGroup>
         </SortableContext>
       </DndContext>
       <span className={styles['total-time']}>{minutes !== 0 && timeString}</span>
