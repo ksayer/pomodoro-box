@@ -5,6 +5,7 @@
 }
 
 .counter {
+  display: flex;
   font-size: 150px;
   font-weight: 200;
 }
@@ -23,8 +24,12 @@
 
 .number {
   text-align: center;
-  display: inline-block;
+  display: flex;
   width: 83px;
+}
+
+.transition {
+  transition: all .5s;
 }
 
 .uptime-btn {

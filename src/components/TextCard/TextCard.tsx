@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './TextCard.module.css';
 import {useSelector} from "react-redux";
 import {getSelectedStatistic, getStatistic} from "../../store/slices/statistic";
@@ -32,7 +32,6 @@ export function TextCard() {
   const {workingTime} = useSelector(getSelectedStatistic)
   const {selectedDay} = useSelector(getStatistic)
   const {minutes, hours, seconds} = convertSeconds(workingTime / 1000)
-
   const text = "Вы работали над задачами"
   return (
     <div className={styles.card}>

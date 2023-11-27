@@ -1,8 +1,22 @@
 import React, {useEffect, useRef} from 'react';
+import './transition.css';
 import styles from "./ClockFace.module.css";
 import {Icon} from "../../../Icon";
 import {useSelector} from "react-redux";
 import {getTimerStatus} from "../../../../store/slices/timer";
+import {CSSTransition, TransitionGroup} from "react-transition-group";
+
+
+interface IClockFace {
+  seconds: number
+  secondsOnUpdate: number
+  isBreak: boolean
+  isStopDown: boolean
+  handlers: {
+    finishTask: () => void
+    setSeconds: (v: number) => void
+  }
+}
 
 
 function timeToString(time: number) {
@@ -36,17 +50,6 @@ function useInterval(callback: () => void, delay: number | null) {
   }, [delay]);
 }
 
-interface IClockFace {
-  seconds: number
-  secondsOnUpdate: number
-  isBreak: boolean
-  isStopDown: boolean
-  handlers: {
-    finishTask: () => void
-    setSeconds: (v: number) => void
-  }
-}
-
 export const ClockFace = ({seconds, secondsOnUpdate, isBreak, isStopDown, handlers}: IClockFace) => {
   const {minutesFirst, minutesSecond, secondsFirst, secondsSecond} = getClockString(seconds)
   const status = useSelector(getTimerStatus);
@@ -63,18 +66,26 @@ export const ClockFace = ({seconds, secondsOnUpdate, isBreak, isStopDown, handle
     e.currentTarget.blur();
     handlers.setSeconds(secondsOnUpdate);
   }
-
   return (
     <div className={styles['counter-container']}>
       <div className={`${styles.counter} ${isBreak && status === 'isWork' ? 
         styles['counter--break'] : status === 'isWork' ? 
           isStopDown ? styles['counter--stop'] : styles['counter--running'] 
           : ""}`}>
-        <span className={styles.number}>{minutesFirst}</span>
-        <span className={styles.number}>{minutesSecond}</span>
-        <span>:</span>
-        <span className={styles.number}>{secondsFirst}</span>
-        <span className={styles.number}>{secondsSecond}</span>
+        {[minutesFirst, minutesSecond, secondsFirst, secondsSecond].map((number, index) =>
+          <React.Fragment key={index}>
+            <TransitionGroup className={styles.number}>
+              <CSSTransition
+                key={number}
+                timeout={900}
+                classNames="transition"
+              >
+                <span className={styles.transition}>{number}</span>
+              </CSSTransition>
+            </TransitionGroup>
+            {index === 1 && <span>:</span>}
+          </React.Fragment>
+        )}
       </div>
       <button
         className={styles['uptime-btn']}
