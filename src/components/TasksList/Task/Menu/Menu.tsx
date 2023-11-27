@@ -1,5 +1,6 @@
 import React, {Dispatch, SetStateAction, useState} from 'react';
 import styles from './Menu.module.css';
+import './transition.css';
 import {Icon} from "../../../Icon";
 import {Dropdown} from "../../../Dropdown";
 import {removeTask, TaskType, updateTask} from "../../../../store/slices/tasks";
@@ -8,6 +9,8 @@ import {IconName} from "../../../../svg-icons";
 import {getRandomString} from "../../../../utils/randomString";
 import {Modal} from "../../../Modal";
 import {getTimerStatus} from "../../../../store/slices/timer";
+import {CSSTransition} from "react-transition-group";
+
 
 
 type TMenuButton = {
@@ -77,22 +80,32 @@ export function Menu(
           }
         </ul>
       </Dropdown>
-      {isDeleteModalOpened && <Modal setIsModalOpen={setIsDeleteModalOpened}>
-        <div data-no-dnd={true} className={styles.modal}>
-          <span className={styles.modal__icon}></span>
-          <h3 className={styles.modal__title}>Удалить задачу?</h3>
-          <button
-            className={`${styles['modal__first-btn']} btn btn--red`}
-            onClick={() => dispatch(removeTask({id: task.id}))}
-          >Удалить
-          </button>
-          <button
-            className={styles['modal__second-btn']}
-            onClick={() => setIsDeleteModalOpened(false)}
-          >Отмена
-          </button>
-        </div>
-      </Modal>}
+        <CSSTransition
+          in={isDeleteModalOpened}
+          timeout={500}
+          classNames="modal"
+          unmountOnExit
+        >
+            <Modal setIsModalOpen={setIsDeleteModalOpened}>
+              <div data-no-dnd={true} className={styles.modal}>
+                <span className={styles.modal__icon}></span>
+                <h3 className={styles.modal__title}>Удалить задачу?</h3>
+                <button
+                  className={`${styles['modal__first-btn']} btn btn--red`}
+                  onClick={() => {
+                    setIsDeleteModalOpened(false);
+                    dispatch(removeTask({id: task.id}));
+                  }}
+                >Удалить
+                </button>
+                <button
+                  className={styles['modal__second-btn']}
+                  onClick={() => setIsDeleteModalOpened(false)}
+                >Отмена
+                </button>
+              </div>
+            </Modal>
+        </CSSTransition>
     </>
   );
 }

@@ -22,9 +22,6 @@ export const Modal: FC<IModal> = ({children, setIsModalOpen}) => {
     ReactDOM.createPortal(
       <div
         data-no-dnd={true}
-        style={{
-          animation: `${styles.fadeIn} 0.3s`,
-        }}
         onClick={onWrapperClick}
         ref={ref} className={`${styles.modal}`}>{children}
       </div>
