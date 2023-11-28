@@ -41,7 +41,7 @@
 }
 
 .transition {
-  transition: all var(--transition), color 0s;
+  transition: all .3s, color 0s;
 }
 
 .uptime-btn {

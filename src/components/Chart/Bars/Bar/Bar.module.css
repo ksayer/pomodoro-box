@@ -8,6 +8,16 @@
   background-color: var(--grey);
   cursor: pointer;
   transition: background-color 0.3s;
+  animation: growHeight 0.8s;
+}
+
+@keyframes growHeight {
+  from {
+    height: 10%;
+  }
+  to {
+    height: 100%;
+  }
 }
 
 .bar--filled {

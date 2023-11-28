@@ -27,7 +27,7 @@ export function Bar({date, selected}: IBar) {
     <div
       className={`${styles.bar} ${selected && styles['bar--selected']} ${barStatistic.workingTime && styles['bar--filled']}`}
       onClick={() => dispatch(setSelectedDay(date))}
-      style={{height: barHeight}}
+      style={{maxHeight: barHeight, height: barHeight}}
     >
       <div className={`${styles.day} ${selected && styles['day--selected']}`}>{weekDay}</div>
     </div>
