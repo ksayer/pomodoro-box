@@ -7,13 +7,24 @@
   font-size: 16px;
   font-weight: 700;
 }
-
 .header--red {
   background-color: var(--red);
 }
 
 .header--green {
   background-color: var(--green);
+}
+
+[data-theme='dark'] .header:not(.header--red):not(.header--green) {
+  background-color: var(--dark-2b2);
+}
+
+[data-theme='dark'] .header--red {
+  background-color: var(--very-dark-red);
+}
+
+[data-theme='dark'] .header--green {
+  background-color: var(--very-dark-green);
 }
 
 @media (max-width: 560px) {

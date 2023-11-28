@@ -82,6 +82,11 @@
   background-color: var(--semi-light-grey);
 }
 
+[data-theme='dark'] .input {
+  background-color: var(--dark-423);
+  color: var(--white);
+}
+
 @media(max-width: 560px) {
   .item {
     font-size: 14px;

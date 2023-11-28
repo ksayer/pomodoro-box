@@ -3,6 +3,8 @@
   padding: var(--card-padding);
   display: flex;
   justify-content: space-between;
+  height: 100%;
+  transition: all var(--transition);
 }
 
 .card__content {
@@ -27,16 +29,32 @@
   background-color: var(--peach);
 }
 
+[data-theme='dark'] .card--peach,
+[data-theme='dark'] .card--peach path {
+  background-color: var(--very-dark-peach);
+}
+
 .card--purple,
 .card--purple path {
   stroke: var(--dark-purple);
   background-color: var(--purple);
 }
 
+[data-theme='dark'] .card--purple,
+[data-theme='dark'] .card--purple path {
+  background-color: var(--very-dark-purple);
+}
+
 .card--cyan,
 .card--cyan path {
   stroke: var(--dark-cyan);
   background-color: var(--cyan);
+}
+
+[data-theme='dark'] .card--cyan,
+[data-theme='dark'] .card--cyan path {
+  background-color: var(--very-dark-red);
+
 }
 
 @media (max-width: 1024px) {

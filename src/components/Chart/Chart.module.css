@@ -18,12 +18,22 @@
   padding-bottom: 80px;
   padding-right: 20px;
   background-color: var(--light-grey);
+  transition: all var(--transition);
+}
+
+[data-theme='dark'] .chart__top {
+  background-color: var(--dark-423);
 }
 
 .chart__footer {
   width: 100%;
   height: 47px;
   background-color: var(--average-grey);
+  transition: all var(--transition);
+}
+
+[data-theme='dark'] .chart__footer {
+  background-color: var(--dark-2b2);
 }
 
 .line {

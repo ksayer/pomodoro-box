@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from "redux-persist/es/constants";
 import {timerReducer} from "./slices/timer";
 import {statisticReducer} from "./slices/statistic";
+import {settingsReducer} from "./slices/settings";
 
 
 
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   tasks: tasksReducer,
   timer: timerReducer,
   statistic: statisticReducer,
+  settings: settingsReducer,
 })
 
 const persistConfig = {

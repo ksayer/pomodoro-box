@@ -15,6 +15,11 @@
   transition: background-color .3s;
 }
 
+[data-theme='dark'] .input {
+  background-color: var(--dark-423);
+  color: var(--white)
+}
+
 .input[aria-invalid=true] {
   outline: 1px solid var(--red);
 }
@@ -28,8 +33,16 @@
   background-color: var(--semi-light-grey);
 }
 
+[data-theme='dark'] .input:hover {
+  background-color: var(--dark-2b2);
+}
+
 .input:focus {
   outline-color: var(--green);
+}
+
+[data-theme='dark'] .input:focus {
+  outline: 2px solid var(--very-red);
 }
 
 .errorMessage {

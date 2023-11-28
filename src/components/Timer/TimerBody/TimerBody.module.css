@@ -4,8 +4,12 @@
   align-items: center;
   padding: 70px 0 115px 0;
   background-color: var(--light-grey);
+  transition: all var(--transition);
 }
 
+[data-theme='dark'] .body {
+  background-color: var(--dark-423);
+}
 
 .description {
   margin-bottom: 32px;

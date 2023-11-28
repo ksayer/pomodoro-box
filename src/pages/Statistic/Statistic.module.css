@@ -23,6 +23,11 @@
 
 .grid__item {
   background-color: var(--light-grey);
+  transition: all var(--transition);
+}
+
+[data-theme='dark'] .grid__item {
+  background-color: var(--dark-423);
 }
 
 .first-grid-item {

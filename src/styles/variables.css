@@ -23,4 +23,17 @@
   --dark-cyan: #7FC2D7;
 
   --card-padding: 25px;
+
+  --dark-171: #1a1a1a;
+  --dark-423: #423F3E;
+  --dark-2b2: #2B2B2B;
+  --brown: #362222;
+  --very-dark-red: #3b0202;
+  --very-dark-green: #142114;
+
+  --very-dark-peach: #31250b;
+  --very-dark-purple: #162c48;
+  --very-dark-cyan: #162c48;
+
+  --transition: .1s;
 }

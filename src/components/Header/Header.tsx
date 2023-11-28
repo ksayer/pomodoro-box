@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Header.module.css'
 import {Icon} from "../Icon";
 import {Link} from "react-router-dom";
+import {Theme} from "../Theme";
 
 export function Header() {
   return (
@@ -11,6 +12,7 @@ export function Header() {
           <Icon name={"logo"} className={styles.logo}/>
           <span className={`${styles['left-text']} ${styles['link-text']}`}>pomodoro_box</span>
         </Link>
+        <Theme/>
         <Link to={'statistic'} className={`${styles.link} ${styles['right-link']}`}>
           <Icon name={"statistic"} className={styles.rightSvg}/>
           <span className={`${styles['right-text']} ${styles['link-text']}`}>Статистика</span>
