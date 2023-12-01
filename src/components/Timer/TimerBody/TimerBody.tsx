@@ -14,7 +14,8 @@ import {
 } from "../../../store/slices/statistic";
 import {calculateNewSeconds} from "../calculateNewSeconds";
 import {getTimerStatus, setStatus} from "../../../store/slices/timer";
-
+import {Modal} from "../../Modal";
+import {Notification} from "./Notification";
 interface ITimerBody {
   currentTask: TaskType,
   isBreak: boolean,
@@ -33,6 +34,7 @@ export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody
   const [startedAt, setStartedAt] = useState<number>(0);
   const [spentOnPomodoroTime, setSpentOnPomodoroTime] = useState<number>(0);
   const [isStopDown, setIsStopDown] = useState<boolean>(false);
+  const [showNotification, setShowNotification] = useState(false);
 
   const startTimer = () => {
     setStartedAt(Date.now())
@@ -77,6 +79,9 @@ export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody
       }
     }
     stopTimer(calculateNewSeconds(nextIsBreak, nextFinishedTasks));
+    if (status !== 'isPause') {
+      setShowNotification(true)
+    }
   }
 
   const updateWorkingPauseTime = () => {
@@ -121,6 +126,11 @@ export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody
         secondsOnUpdate={
           calculateNewSeconds(isBreak, finishedTasks)
         }
+      />
+      <Notification
+        setShowNotification={setShowNotification}
+        showNotification={showNotification}
+        text={isBreak ? 'Пора отдохнуть!': 'Перерыв окончен!' }
       />
     </div>
   );

@@ -1,0 +1,21 @@
+.modal {
+  position: fixed;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 350px;
+  padding: 25px 0;
+  margin: 0 auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--white);
+}
+
+.title {
+  margin-bottom: 25px;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 17px;
+}

@@ -12,7 +12,6 @@ import {getTimerStatus} from "../../../../store/slices/timer";
 import {CSSTransition} from "react-transition-group";
 
 
-
 type TMenuButton = {
   name: string,
   iconName: IconName,
@@ -86,7 +85,7 @@ export function Menu(
           classNames="modal"
           unmountOnExit
         >
-            <Modal setIsModalOpen={setIsDeleteModalOpened}>
+            <Modal close={() => setIsDeleteModalOpened(false)}>
               <div data-no-dnd={true} className={styles.modal}>
                 <span className={styles.modal__icon}></span>
                 <h3 className={styles.modal__title}>Удалить задачу?</h3>
