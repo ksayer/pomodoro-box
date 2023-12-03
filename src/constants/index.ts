@@ -1,5 +1,5 @@
-export const POMODORO_START_SECONDS = 5;
-export const BREAK_SECONDS = 3;
-export const LONG_BREAK_SECONDS = 7;
+export const POMODORO_DURATION_MINUTES = 25;
+export const BREAK_DURATION_MINUTES = 5;
+export const LONG_BREAK_DURATION_MINUTES = 15;
 
-export const TASKS_BETWEEN_BIG_BREAK = 4;
+export const POMODORO_BETWEEN_LONG_BREAK = 4;

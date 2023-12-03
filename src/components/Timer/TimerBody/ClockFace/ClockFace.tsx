@@ -76,7 +76,7 @@ export const ClockFace = ({seconds, secondsOnUpdate, isBreak, isStopDown, handle
           <React.Fragment key={index}>
             <TransitionGroup className={styles.number}>
               <CSSTransition
-                key={number}
+                key={index}
                 timeout={900}
                 classNames="transition"
               >

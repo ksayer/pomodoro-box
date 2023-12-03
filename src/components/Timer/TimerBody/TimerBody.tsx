@@ -4,7 +4,6 @@ import {ClockFace} from "./ClockFace";
 import {ManagePanel} from "./ManagePanel";
 import {removeTask, TaskType, updateStatus, updateTask} from "../../../store/slices/tasks";
 import {useDispatch, useSelector} from "react-redux";
-import {POMODORO_START_SECONDS} from "../../../constants";
 import {
   addWorkingTime,
   addPauseTime,
@@ -12,10 +11,10 @@ import {
   addTimeOnFinishedTasks,
   getTodayStatistic,
 } from "../../../store/slices/statistic";
-import {calculateNewSeconds} from "../calculateNewSeconds";
 import {getTimerStatus, setStatus} from "../../../store/slices/timer";
-import {Modal} from "../../Modal";
 import {Notification} from "./Notification";
+import {Settings} from "./Settings";
+import {getSettings} from "../../../store/slices/settings";
 interface ITimerBody {
   currentTask: TaskType,
   isBreak: boolean,
@@ -29,12 +28,25 @@ interface ITimerBody {
 export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody) {
   const dispatcher = useDispatch();
   const {finishedTasks} = useSelector(getTodayStatistic);
+  const {
+    pomodoroDurationMinutes,
+    longBreakDurationMinutes,
+    pomodoroBetweenLongBreak,
+    shortBreakDurationMinutes
+  } = useSelector(getSettings)
   const status = useSelector(getTimerStatus);
-  const [seconds, setSeconds] = useState(POMODORO_START_SECONDS);
+  const [seconds, setSeconds] = useState(pomodoroDurationMinutes * 60);
   const [startedAt, setStartedAt] = useState<number>(0);
   const [spentOnPomodoroTime, setSpentOnPomodoroTime] = useState<number>(0);
   const [isStopDown, setIsStopDown] = useState<boolean>(false);
   const [showNotification, setShowNotification] = useState(false);
+  const calculateNewSeconds = (isBreak: boolean, finishedTasks: number) => {
+    if (!isBreak) {
+      return pomodoroDurationMinutes * 60
+    } else {
+      return finishedTasks % pomodoroBetweenLongBreak === 0 ? longBreakDurationMinutes * 60 : shortBreakDurationMinutes * 60;
+    }
+  }
 
   const startTimer = () => {
     setStartedAt(Date.now())
@@ -106,6 +118,7 @@ export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody
 
   return (
     <div className={styles.body}>
+      <Settings/>
       <ClockFace
         key={currentTask?.id}
         handlers={{setSeconds, finishTask}}

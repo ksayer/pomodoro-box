@@ -9,7 +9,6 @@ import {IconName} from "../../../../svg-icons";
 import {getRandomString} from "../../../../utils/randomString";
 import {Modal} from "../../../Modal";
 import {getTimerStatus} from "../../../../store/slices/timer";
-import {CSSTransition} from "react-transition-group";
 
 
 type TMenuButton = {
@@ -79,32 +78,25 @@ export function Menu(
           }
         </ul>
       </Dropdown>
-        <CSSTransition
-          in={isDeleteModalOpened}
-          timeout={500}
-          classNames="modal"
-          unmountOnExit
-        >
-            <Modal close={() => setIsDeleteModalOpened(false)}>
-              <div data-no-dnd={true} className={styles.modal}>
-                <span className={styles.modal__icon}></span>
-                <h3 className={styles.modal__title}>Удалить задачу?</h3>
-                <button
-                  className={`${styles['modal__first-btn']} btn btn--red`}
-                  onClick={() => {
-                    setIsDeleteModalOpened(false);
-                    dispatch(removeTask({id: task.id}));
-                  }}
-                >Удалить
-                </button>
-                <button
-                  className={styles['modal__second-btn']}
-                  onClick={() => setIsDeleteModalOpened(false)}
-                >Отмена
-                </button>
-              </div>
-            </Modal>
-        </CSSTransition>
+      <Modal close={() => setIsDeleteModalOpened(false)} isModalOpened={isDeleteModalOpened}>
+        <div data-no-dnd={true} className={styles.modal}>
+          <span className={styles.modal__icon}></span>
+          <h3 className={styles.modal__title}>Удалить задачу?</h3>
+          <button
+            className={`${styles['modal__first-btn']} btn btn--red`}
+            onClick={() => {
+              setIsDeleteModalOpened(false);
+              dispatch(removeTask({id: task.id}));
+            }}
+          >Удалить
+          </button>
+          <button
+            className={styles['modal__second-btn']}
+            onClick={() => setIsDeleteModalOpened(false)}
+          >Отмена
+          </button>
+        </div>
+      </Modal>
     </>
   );
 }

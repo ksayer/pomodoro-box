@@ -11,10 +11,11 @@ import { ReactComponent as SmileTomato } from "./smile-tomato.svg"
 import { ReactComponent as Focus } from "./focus.svg"
 import { ReactComponent as Pause } from "./pause.svg"
 import { ReactComponent as Stop } from "./stop.svg"
+import { ReactComponent as Settings } from "./settings.svg"
 
 export type IconName =
   "logo" | "statistic" | "menu" | "minus" | "edit" | "delete" | "plus" |
-  "filledPlus" | "tomato" | "smileTomato" | "focus" | "stop" | "pause"
+  "filledPlus" | "tomato" | "smileTomato" | "focus" | "stop" | "pause" | "settings"
 
 export const svgIconConfig = {
   logo: { component:  Logo, width: 40, height: 40},
@@ -30,4 +31,5 @@ export const svgIconConfig = {
   focus: { component:  Focus, width: 129, height: 129},
   stop: { component:  Stop, width: 129, height: 129},
   pause: { component:  Pause, width: 129, height: 129},
+  settings: { component:  Settings, width: 62, height: 45},
 }

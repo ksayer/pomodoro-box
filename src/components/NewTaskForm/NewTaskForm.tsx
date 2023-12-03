@@ -19,7 +19,9 @@ export function NewTaskForm() {
   function onSubmit(event: FormEvent) {
     event.preventDefault();
     const newTask = {id: getRandomString(), name: value, countPomodoro: 1, finishedPomodoro: 0, active: false}
-    if (status !== 'isStop' && !tasks) newTask.active = true;
+    if (status !== 'isStop' && !tasks.length) {
+      newTask.active = true;
+    }
     if (tasks.find(obj => obj.name === value)) {
       setErrorMessage('Такая задача уже есть в списке')
       return

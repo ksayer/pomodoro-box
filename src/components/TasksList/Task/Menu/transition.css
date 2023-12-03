@@ -1,17 +1,17 @@
-.modal-enter {
-  opacity: 0;
-  transform: scale(0.5);
-}
-.modal-enter-active {
-  opacity: 1;
-  transform: scale(1);
-  transition: all 0.3s;
-}
-.modal-exit {
-  opacity: 1;
-}
-.modal-exit-active {
-  opacity: 0;
-  transform: scale(0.5);
-  transition: all 0.3s;
-}
+/*.modal-enter {*/
+/*  opacity: 0;*/
+/*  transform: scale(0.5);*/
+/*}*/
+/*.modal-enter-active {*/
+/*  opacity: 1;*/
+/*  transform: scale(1);*/
+/*  transition: all 0.3s;*/
+/*}*/
+/*.modal-exit {*/
+/*  opacity: 1;*/
+/*}*/
+/*.modal-exit-active {*/
+/*  opacity: 0;*/
+/*  transform: scale(0.5);*/
+/*  transition: all 0.3s;*/
+/*}*/

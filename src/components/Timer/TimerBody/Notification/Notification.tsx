@@ -23,7 +23,7 @@ export function Notification({showNotification, setShowNotification, text}: INot
 
   return (
     <>
-    {showNotification && <Modal close={close}>
+    <Modal close={close} isModalOpened={showNotification}>
       <div className={styles.modal}>
         <h3 className={styles.title}>{text}</h3>
         <button
@@ -36,7 +36,7 @@ export function Notification({showNotification, setShowNotification, text}: INot
         >Ок
         </button>
       </div>
-    </Modal>}
+    </Modal>
     </>
   );
 }
