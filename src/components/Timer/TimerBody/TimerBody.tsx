@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './TimerBody.module.css';
 import {ClockFace} from "./ClockFace";
 import {ManagePanel} from "./ManagePanel";
@@ -11,21 +11,17 @@ import {
   addTimeOnFinishedTasks,
   getTodayStatistic,
 } from "../../../store/slices/statistic";
-import {getTimerStatus, setStatus} from "../../../store/slices/timer";
+import {getTimerStore, setSeconds, setStatus, toggleIsBreak} from "../../../store/slices/timer";
 import {Notification} from "./Notification";
 import {Settings} from "./Settings";
 import {getSettings} from "../../../store/slices/settings";
 interface ITimerBody {
   currentTask: TaskType,
-  isBreak: boolean,
   taskName: string,
-  handlers: {
-    setIsBreak: (v: boolean) => void,
-  }
 }
 
 
-export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody) {
+export function TimerBody({currentTask, taskName}: ITimerBody) {
   const dispatcher = useDispatch();
   const {finishedTasks} = useSelector(getTodayStatistic);
   const {
@@ -34,8 +30,7 @@ export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody
     pomodoroBetweenLongBreak,
     shortBreakDurationMinutes
   } = useSelector(getSettings)
-  const status = useSelector(getTimerStatus);
-  const [seconds, setSeconds] = useState(pomodoroDurationMinutes * 60);
+  const {isBreak, status} = useSelector(getTimerStore);
   const [startedAt, setStartedAt] = useState<number>(0);
   const [spentOnPomodoroTime, setSpentOnPomodoroTime] = useState<number>(0);
   const [isStopDown, setIsStopDown] = useState<boolean>(false);
@@ -65,7 +60,7 @@ export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody
     updateWorkingPauseTime();
     dispatcher(setStatus('isStop'))
     setSpentOnPomodoroTime(0)
-    setSeconds(newSeconds);
+    dispatcher(setSeconds(newSeconds));
     dispatcher(updateStatus({id: currentTask?.id, active: false}))
   }
 
@@ -73,7 +68,7 @@ export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody
     updateTimeOnFinishedTasks();
     let nextFinishedTasks = finishedTasks;
     const nextIsBreak = !isBreak
-    handlers.setIsBreak(nextIsBreak)
+    dispatcher(toggleIsBreak())
     if (nextIsBreak) {
       nextFinishedTasks = finishedTasks + 1
       dispatcher(incrementFinishedTasks());
@@ -121,10 +116,8 @@ export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody
       <Settings/>
       <ClockFace
         key={currentTask?.id}
-        handlers={{setSeconds, finishTask}}
-        seconds={seconds}
+        handlers={{finishTask}}
         isStopDown={isStopDown}
-        isBreak={isBreak}
         secondsOnUpdate={
           calculateNewSeconds(isBreak, finishedTasks)
         }
@@ -134,7 +127,6 @@ export function TimerBody({currentTask, isBreak, taskName, handlers}: ITimerBody
         {taskName}
       </div>
       <ManagePanel
-        isBreak={isBreak}
         handlers={{stopTimer, startTimer, togglePause, finishTask, setIsStopDown}}
         secondsOnUpdate={
           calculateNewSeconds(isBreak, finishedTasks)

@@ -10,7 +10,6 @@ import {getSettings} from "../../store/slices/settings";
 
 export function Timer() {
   const currentTask = useSelector(selectTasks)[0];
-  const [isBreak, setIsBreak] = useState(false);
   const dispatcher = useDispatch();
   const taskName = currentTask?.name || "Создайте задачу";
   const {pomodoroDurationMinutes} = useSelector(getSettings);
@@ -26,15 +25,12 @@ export function Timer() {
       <div>
         <TimerHeader
           taskName={taskName}
-          isBreak={isBreak}
           finishedPomodoro={currentTask?.finishedPomodoro || 0}
         />
         <TimerBody
           key={`${pomodoroDurationMinutes}`}
           currentTask={currentTask}
-          isBreak={isBreak}
           taskName={taskName}
-          handlers={{setIsBreak}}
         />
       </div>
     </div>

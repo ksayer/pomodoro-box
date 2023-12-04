@@ -2,19 +2,16 @@ import React, {useEffect, useRef} from 'react';
 import './transition.css';
 import styles from "./ClockFace.module.css";
 import {Icon} from "../../../Icon";
-import {useSelector} from "react-redux";
-import {getTimerStatus} from "../../../../store/slices/timer";
+import {useDispatch, useSelector} from "react-redux";
+import {getTimerStore, setSeconds} from "../../../../store/slices/timer";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 
 
 interface IClockFace {
-  seconds: number
   secondsOnUpdate: number
-  isBreak: boolean
   isStopDown: boolean
   handlers: {
     finishTask: () => void
-    setSeconds: (v: number) => void
   }
 }
 
@@ -50,13 +47,14 @@ function useInterval(callback: () => void, delay: number | null) {
   }, [delay]);
 }
 
-export const ClockFace = ({seconds, secondsOnUpdate, isBreak, isStopDown, handlers}: IClockFace) => {
+export const ClockFace = ({secondsOnUpdate, isStopDown, handlers}: IClockFace) => {
+  const {isBreak, seconds, status} = useSelector(getTimerStore);
+  const dispatcher = useDispatch();
   const {minutesFirst, minutesSecond, secondsFirst, secondsSecond} = getClockString(seconds)
-  const status = useSelector(getTimerStatus);
 
   useInterval(() => {
     const newSeconds = seconds - 1
-    handlers.setSeconds(newSeconds);
+    dispatcher(setSeconds(newSeconds));
     if (newSeconds <= 0) {
       setTimeout(() => handlers.finishTask(), 100);
     }
@@ -64,7 +62,7 @@ export const ClockFace = ({seconds, secondsOnUpdate, isBreak, isStopDown, handle
 
   const updateTimer = (e: React.MouseEvent<HTMLElement>) => {
     e.currentTarget.blur();
-    handlers.setSeconds(secondsOnUpdate);
+    dispatcher(setSeconds(secondsOnUpdate));
   }
   return (
     <div className={styles['counter-container']}>

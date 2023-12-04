@@ -1,15 +1,15 @@
 import React from 'react';
 import styles from './TimerHeader.module.css';
 import {useSelector} from "react-redux";
-import {getTimerStatus} from "../../../store/slices/timer";
+import {getTimerStatus, getTimerStore} from "../../../store/slices/timer";
 
 interface ITimerHeader {
   taskName: string,
-  isBreak: boolean,
   finishedPomodoro: number,
 }
 
-export function TimerHeader({taskName, isBreak, finishedPomodoro}: ITimerHeader) {
+export function TimerHeader({taskName, finishedPomodoro}: ITimerHeader) {
+  const {isBreak} = useSelector(getTimerStore);
   const status = useSelector(getTimerStatus);
 
   let styleHeader = '';
