@@ -57,11 +57,11 @@ export const statisticSlice = createSlice({
     incrementStops: (state) => {
       incrementByOne({state, field: "stops"})
     },
-    addWorkingTime: (state, action: PayloadAction<number>) => {
-      incrementByValue({state, field: "workingTime", value: action.payload})
+    incrementWorkingTime: (state) => {
+      incrementByValue({state, field: "workingTime", value: 1000})
     },
-    addPauseTime: (state, action: PayloadAction<number>) => {
-      incrementByValue({state, field: "pauseTime", value: action.payload})
+    incrementPauseTime: (state) => {
+      incrementByValue({state, field: "pauseTime", value: 1000})
     },
     addTimeOnFinishedTasks: (state, action: PayloadAction<number>) => {
       incrementByValue({state, field: "timeOnFinishedTasks", value: action.payload})
@@ -76,10 +76,10 @@ export const statisticSlice = createSlice({
 
 export const {
   incrementFinishedTasks,
-  incrementStops,
-  addPauseTime,
-  addWorkingTime,
+  incrementWorkingTime,
+  incrementPauseTime,
   addTimeOnFinishedTasks,
+  incrementStops,
   setSelectedDay,
 } = statisticSlice.actions;
 

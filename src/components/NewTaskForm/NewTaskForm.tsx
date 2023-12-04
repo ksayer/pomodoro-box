@@ -18,7 +18,7 @@ export function NewTaskForm() {
   }
   function onSubmit(event: FormEvent) {
     event.preventDefault();
-    const newTask = {id: getRandomString(), name: value, countPomodoro: 1, finishedPomodoro: 0, active: false}
+    const newTask = {id: getRandomString(), name: value, countPomodoro: 1, finishedPomodoro: 0, active: false, workingSecondsLastTask: 0}
     if (status !== 'isStop' && !tasks.length) {
       newTask.active = true;
     }

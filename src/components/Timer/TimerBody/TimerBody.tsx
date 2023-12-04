@@ -1,15 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styles from './TimerBody.module.css';
 import {ClockFace} from "./ClockFace";
 import {ManagePanel} from "./ManagePanel";
 import {removeTask, TaskType, updateStatus, updateTask} from "../../../store/slices/tasks";
 import {useDispatch, useSelector} from "react-redux";
 import {
-  addWorkingTime,
-  addPauseTime,
   incrementFinishedTasks,
-  addTimeOnFinishedTasks,
-  getTodayStatistic,
+  getTodayStatistic, addTimeOnFinishedTasks,
 } from "../../../store/slices/statistic";
 import {getTimerStore, setSeconds, setStatus, toggleIsBreak} from "../../../store/slices/timer";
 import {Notification} from "./Notification";
@@ -31,8 +28,6 @@ export function TimerBody({currentTask, taskName}: ITimerBody) {
     shortBreakDurationMinutes
   } = useSelector(getSettings)
   const {isBreak, status} = useSelector(getTimerStore);
-  const [startedAt, setStartedAt] = useState<number>(0);
-  const [spentOnPomodoroTime, setSpentOnPomodoroTime] = useState<number>(0);
   const [isStopDown, setIsStopDown] = useState<boolean>(false);
   const [showNotification, setShowNotification] = useState(false);
   const calculateNewSeconds = (isBreak: boolean, finishedTasks: number) => {
@@ -44,70 +39,47 @@ export function TimerBody({currentTask, taskName}: ITimerBody) {
   }
 
   const startTimer = () => {
-    setStartedAt(Date.now())
     dispatcher(setStatus('isWork'));
     dispatcher(updateTask({...currentTask, active: true}))
   }
 
   const togglePause = () => {
-    if (!isBreak && status !== 'isPause') setSpentOnPomodoroTime(spentOnPomodoroTime + Date.now() - startedAt)
-    updateWorkingPauseTime();
-    setStartedAt(Date.now())
     dispatcher(setStatus(status == 'isPause' ? 'isWork' : 'isPause'))
   }
 
   const stopTimer = (newSeconds: number) => {
-    updateWorkingPauseTime();
     dispatcher(setStatus('isStop'))
-    setSpentOnPomodoroTime(0)
     dispatcher(setSeconds(newSeconds));
     dispatcher(updateStatus({id: currentTask?.id, active: false}))
   }
 
+  const updateCurrentTask = () => {
+    dispatcher(addTimeOnFinishedTasks(currentTask.workingSecondsLastTask))
+    dispatcher(
+      currentTask.countPomodoro === 1 ?
+        removeTask({id: currentTask.id})
+        :
+        updateTask({
+          ...currentTask,
+          countPomodoro: currentTask.countPomodoro - 1,
+          finishedPomodoro: currentTask.finishedPomodoro + 1,
+          active: false,
+          workingSecondsLastTask: 0,
+        }));
+  }
+
   const finishTask = () => {
-    updateTimeOnFinishedTasks();
     let nextFinishedTasks = finishedTasks;
     const nextIsBreak = !isBreak
     dispatcher(toggleIsBreak())
     if (nextIsBreak) {
       nextFinishedTasks = finishedTasks + 1
       dispatcher(incrementFinishedTasks());
-      if (currentTask) {
-        dispatcher(
-          currentTask.countPomodoro === 1 ?
-            removeTask({id: currentTask.id})
-            :
-            updateTask({
-              ...currentTask,
-              countPomodoro: currentTask.countPomodoro - 1,
-              finishedPomodoro: currentTask.finishedPomodoro + 1,
-              active: false
-            }));
-      }
+      if (currentTask) updateCurrentTask();
     }
     stopTimer(calculateNewSeconds(nextIsBreak, nextFinishedTasks));
     if (status !== 'isPause') {
       setShowNotification(true)
-    }
-  }
-
-  const updateWorkingPauseTime = () => {
-    if (status !== 'isPause') {
-      if (!isBreak) dispatcher(addWorkingTime(Date.now() - startedAt))
-    } else {
-      dispatcher(addPauseTime(Date.now() - startedAt))
-    }
-  }
-
-  const updateTimeOnFinishedTasks = () => {
-    if (!isBreak) {
-      let spentTime;
-      if (status === 'isPause')  {
-        spentTime = spentOnPomodoroTime
-      } else {
-        spentTime = spentOnPomodoroTime + Date.now() - startedAt
-      }
-      dispatcher(addTimeOnFinishedTasks(spentTime));
     }
   }
 

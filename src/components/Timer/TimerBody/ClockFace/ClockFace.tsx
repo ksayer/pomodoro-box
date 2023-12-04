@@ -5,6 +5,8 @@ import {Icon} from "../../../Icon";
 import {useDispatch, useSelector} from "react-redux";
 import {getTimerStore, setSeconds} from "../../../../store/slices/timer";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
+import {incrementPauseTime, incrementWorkingTime} from "../../../../store/slices/statistic";
+import {incrementWorkingSecondsLastTask, selectTasks, updateTask} from "../../../../store/slices/tasks";
 
 
 interface IClockFace {
@@ -49,16 +51,24 @@ function useInterval(callback: () => void, delay: number | null) {
 
 export const ClockFace = ({secondsOnUpdate, isStopDown, handlers}: IClockFace) => {
   const {isBreak, seconds, status} = useSelector(getTimerStore);
+  const tasks = useSelector(selectTasks);
   const dispatcher = useDispatch();
   const {minutesFirst, minutesSecond, secondsFirst, secondsSecond} = getClockString(seconds)
 
   useInterval(() => {
-    const newSeconds = seconds - 1
-    dispatcher(setSeconds(newSeconds));
-    if (newSeconds <= 0) {
+    if (status === 'isWork') {
+      dispatcher(setSeconds(seconds - 1));
+      if (!isBreak) {
+        dispatcher(incrementWorkingTime())
+        if (tasks.length) dispatcher(incrementWorkingSecondsLastTask())
+      }
+    }
+    if (status === 'isPause') dispatcher(incrementPauseTime())
+
+    if (seconds <= 1) {
       setTimeout(() => handlers.finishTask(), 100);
     }
-  }, status === 'isWork' ? 1000 : null)
+  }, status === 'isStop' ? null : 1000)
 
   const updateTimer = (e: React.MouseEvent<HTMLElement>) => {
     e.currentTarget.blur();
@@ -66,15 +76,15 @@ export const ClockFace = ({secondsOnUpdate, isStopDown, handlers}: IClockFace) =
   }
   return (
     <div className={styles['counter-container']}>
-      <div className={`${styles.counter} ${isBreak && status === 'isWork' ? 
-        styles['counter--break'] : status === 'isWork' ? 
-          isStopDown ? styles['counter--stop'] : styles['counter--running'] 
+      <div className={`${styles.counter} ${isBreak && status === 'isWork' ?
+        styles['counter--break'] : status === 'isWork' ?
+          isStopDown ? styles['counter--stop'] : styles['counter--running']
           : ""}`}>
         {[minutesFirst, minutesSecond, secondsFirst, secondsSecond].map((number, index) =>
           <React.Fragment key={index}>
             <TransitionGroup className={styles.number}>
               <CSSTransition
-                key={index}
+                key={number}
                 timeout={900}
                 classNames="transition"
               >

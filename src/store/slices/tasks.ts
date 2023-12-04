@@ -8,6 +8,7 @@ export type TaskType = {
   countPomodoro: number,
   finishedPomodoro: number,
   active?: boolean,
+  workingSecondsLastTask: number,
 }
 
 const initialState: TaskType[] = [];
@@ -37,6 +38,11 @@ export const tasksSlice = createSlice({
         return task.id === action.payload.id ? action.payload : task;
       })
     },
+    incrementWorkingSecondsLastTask: (state) => {
+      return state.map((task) => {
+        return task.active === true ? {...task, workingSecondsLastTask: task.workingSecondsLastTask + 1000} : task;
+      })
+    },
     updateStatus: (state, action: PayloadAction<{id: string, active: boolean}>) => {
       return state.map((task) => {
         return task.id === action.payload.id ? {...task, active: action.payload.active} : task
@@ -44,12 +50,21 @@ export const tasksSlice = createSlice({
     },
     deactivateTasks: (state) => {
       return state.map(task => ({...task, active: false}))
-    }
+    },
+
   }
 })
 
 
-export const { addNewTask, removeTask, moveTasks, updateTask, deactivateTasks, updateStatus } = tasksSlice.actions;
+export const {
+  addNewTask,
+  removeTask,
+  moveTasks,
+  updateTask,
+  deactivateTasks,
+  updateStatus,
+  incrementWorkingSecondsLastTask,
+} = tasksSlice.actions;
 
 export const selectTasks = (state: RootState) => state.tasks;
 
