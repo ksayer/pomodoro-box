@@ -3,7 +3,7 @@ import './transition.css';
 import styles from './TasksList.module.css';
 import {Task} from "./Task";
 import {useDispatch, useSelector} from "react-redux";
-import {moveTasks, selectTasks} from "../../store/slices/tasks";
+import {moveTasks, selectRealTasks} from "../../store/slices/tasks";
 import {POMODORO_DURATION_MINUTES} from "../../constants";
 import {closestCenter, DndContext, useSensor, useSensors} from "@dnd-kit/core";
 import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
@@ -22,7 +22,7 @@ const getDurationString = (totalMinutes: number) => {
 
 
 export function TasksList() {
-  const tasks = useSelector(selectTasks);
+  const tasks = useSelector(selectRealTasks);
   const dispatch = useDispatch();
   const minutes = tasks.reduce(
     (accumulator, currentValue) => (

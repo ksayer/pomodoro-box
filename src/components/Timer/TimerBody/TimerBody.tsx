@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styles from './TimerBody.module.css';
 import {ClockFace} from "./ClockFace";
 import {ManagePanel} from "./ManagePanel";
-import {removeTask, TaskType, updateStatus, updateTask} from "../../../store/slices/tasks";
+import {addNewTask, removeTask, selectTasks, TaskType, updateStatus, updateTask} from "../../../store/slices/tasks";
 import {useDispatch, useSelector} from "react-redux";
 import {
   incrementFinishedTasks,
@@ -12,6 +12,8 @@ import {getTimerStore, setSeconds, setStatus, toggleIsBreak} from "../../../stor
 import {Notification} from "./Notification";
 import {Settings} from "./Settings";
 import {getSettings} from "../../../store/slices/settings";
+import {getRandomString} from "../../../utils/randomString";
+import {DEFAULT_TASK_NAME} from "../../../constants";
 interface ITimerBody {
   currentTask: TaskType,
   taskName: string,
@@ -26,10 +28,12 @@ export function TimerBody({currentTask, taskName}: ITimerBody) {
     longBreakDurationMinutes,
     pomodoroBetweenLongBreak,
     shortBreakDurationMinutes
-  } = useSelector(getSettings)
+  } = useSelector(getSettings);
+  const tasks = useSelector(selectTasks);
   const {isBreak, status} = useSelector(getTimerStore);
   const [isStopDown, setIsStopDown] = useState<boolean>(false);
   const [showNotification, setShowNotification] = useState(false);
+
   const calculateNewSeconds = (isBreak: boolean, finishedTasks: number) => {
     if (!isBreak) {
       return pomodoroDurationMinutes * 60
@@ -40,17 +44,27 @@ export function TimerBody({currentTask, taskName}: ITimerBody) {
 
   const startTimer = () => {
     dispatcher(setStatus('isWork'));
-    dispatcher(updateTask({...currentTask, active: true}))
-  }
-
-  const togglePause = () => {
-    dispatcher(setStatus(status == 'isPause' ? 'isWork' : 'isPause'))
+    dispatcher(updateTask({...currentTask, active: true}));
+    if (!tasks.length && !isBreak) {
+      dispatcher(addNewTask({
+        id: getRandomString(),
+        name: DEFAULT_TASK_NAME,
+        countPomodoro: 1,
+        finishedPomodoro: 0,
+        active: true,
+        workingSecondsLastTask: 0,
+        fake: true,
+      }))
+    }
   }
 
   const stopTimer = (newSeconds: number) => {
     dispatcher(setStatus('isStop'))
     dispatcher(setSeconds(newSeconds));
-    dispatcher(updateStatus({id: currentTask?.id, active: false}))
+    dispatcher(updateStatus({id: currentTask?.id, active: false}));
+    if (tasks[0]?.fake) {
+      dispatcher(updateTask({...tasks[0], workingSecondsLastTask: 0}))
+    }
   }
 
   const updateCurrentTask = () => {
@@ -99,7 +113,7 @@ export function TimerBody({currentTask, taskName}: ITimerBody) {
         {taskName}
       </div>
       <ManagePanel
-        handlers={{stopTimer, startTimer, togglePause, finishTask, setIsStopDown}}
+        handlers={{stopTimer, startTimer, finishTask, setIsStopDown}}
         secondsOnUpdate={
           calculateNewSeconds(isBreak, finishedTasks)
         }

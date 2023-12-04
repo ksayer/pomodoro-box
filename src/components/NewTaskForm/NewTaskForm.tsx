@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
 import styles from './NewTaskForm.module.css';
 import {useDispatch, useSelector} from "react-redux";
-import {addNewTask, selectTasks} from "../../store/slices/tasks";
+import {addNewTask, selectTasks, updateTask} from "../../store/slices/tasks";
 import {getRandomString} from "../../utils/randomString";
 import {getTimerStatus} from "../../store/slices/timer";
 
@@ -18,15 +18,20 @@ export function NewTaskForm() {
   }
   function onSubmit(event: FormEvent) {
     event.preventDefault();
-    const newTask = {id: getRandomString(), name: value, countPomodoro: 1, finishedPomodoro: 0, active: false, workingSecondsLastTask: 0}
-    if (status !== 'isStop' && !tasks.length) {
-      newTask.active = true;
-    }
     if (tasks.find(obj => obj.name === value)) {
       setErrorMessage('Такая задача уже есть в списке')
       return
     }
-    dispatch(addNewTask(newTask))
+
+    if (tasks[0].fake) {
+      dispatch(updateTask({...tasks[0], fake: false, name: value}))
+    } else {
+      const newTask = {id: getRandomString(), name: value, countPomodoro: 1, finishedPomodoro: 0, active: false, fake: false, workingSecondsLastTask: 0};
+      if (status !== 'isStop' && !tasks.length) {
+        newTask.active = true;
+      }
+      dispatch(addNewTask(newTask))
+    }
   }
 
   return (
