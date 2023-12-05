@@ -53,7 +53,7 @@ export function Menu({
 
   const disableBtn = (btn: TMenuButton) =>
     (btn.name === 'Уменьшить' && task.countPomodoro <= 1) ||
-    (btn.name === 'Удалить' && task.active && status === 'isWork');
+    (btn.name === 'Удалить' && task.active && status !== 'isStop');
 
   return (
     <>

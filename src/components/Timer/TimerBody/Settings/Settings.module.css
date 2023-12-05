@@ -26,6 +26,10 @@
   background-color: var(--white);
 }
 
+[data-theme='dark'] .modal {
+  background-color: var(--dark-423);
+}
+
 .title {
   font-size: 24px;
   font-weight: 700;
@@ -55,6 +59,11 @@
 
 .input {
   font-size: 16px;
+}
+
+[data-theme='dark'] .input {
+  background-color: var(--dark-423);
+  color: var(--white);
 }
 
 .group--btn {
