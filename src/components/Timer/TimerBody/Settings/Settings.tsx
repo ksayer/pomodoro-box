@@ -112,7 +112,7 @@ export function Settings() {
   return (
     <>
       <button className={styles.btn} onClick={() => setIsModalOpened(true)}>
-        <Icon name={'settings'} />
+        <Icon name={'settings'} width={42} height={35} />
       </button>
       <Modal close={() => setIsModalOpened(false)} isModalOpened={isModalOpened}>
         <div className={styles.modal}>

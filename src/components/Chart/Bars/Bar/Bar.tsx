@@ -7,21 +7,22 @@ import { WeekDayShort } from 'utils/datetime';
 interface IBar {
   date: string;
   selected: boolean;
+  chartMaxSeconds: number;
 }
 
-const getBarPercent = (workingTime: number) => {
+const getBarPercent = (workingTime: number, chartMaxSeconds: number) => {
   if (!workingTime) return 0;
-  const workingTimeLimit = 125 * 60 * 1000;
+  const workingTimeLimit = chartMaxSeconds * 1000;
   const completedPercent = (workingTime * 100) / workingTimeLimit;
   return Math.max(completedPercent, 1.3);
 };
 
-export function Bar({ date, selected }: IBar) {
+export function Bar({ date, selected, chartMaxSeconds }: IBar) {
   const dispatch = useDispatch();
   const { days } = useSelector(selectStatistic);
   const weekDay = WeekDayShort[new Date(date).getDay()];
   const barStatistic = days[date] || { ...initialDayStatistic };
-  const barHeight = `${getBarPercent(barStatistic.workingTime) || 1.3}%`;
+  const barHeight = `${getBarPercent(barStatistic.workingTime, chartMaxSeconds) || 1.3}%`;
 
   return (
     <div

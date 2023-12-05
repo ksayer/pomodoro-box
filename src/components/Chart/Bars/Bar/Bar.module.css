@@ -53,3 +53,9 @@
   position: absolute;
   inset: -8px -20px -8px -20px;
 }
+
+@media (max-width: 480px) {
+  .day {
+    font-size: 14px;
+  }
+}

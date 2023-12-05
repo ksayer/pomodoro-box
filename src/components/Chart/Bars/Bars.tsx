@@ -5,7 +5,7 @@ import { Bar } from './Bar';
 import { selectStatistic } from 'store/slices/statistic';
 import { dateToStoreFormat, getDayIndexWithMondayAsFirstDay } from 'utils/datetime';
 
-const getDays = (selectedDay: string) =>
+export const getDays = (selectedDay: string) =>
   [0, 1, 2, 3, 4, 5, 6].map(weekday => {
     const today = new Date(selectedDay);
     const differenceWithToday = weekday - getDayIndexWithMondayAsFirstDay(today);
@@ -13,13 +13,18 @@ const getDays = (selectedDay: string) =>
     return { date: dateToStoreFormat(dateWeekday) };
   });
 
-export function Bars() {
+export function Bars({ chartMaxSeconds }: { chartMaxSeconds: number }) {
   const { selectedDay } = useSelector(selectStatistic);
   const days = getDays(selectedDay);
   return (
     <div className={styles.bars}>
       {days.map(day => (
-        <Bar key={day.date} date={day.date} selected={day.date === selectedDay} />
+        <Bar
+          key={day.date}
+          date={day.date}
+          selected={day.date === selectedDay}
+          chartMaxSeconds={chartMaxSeconds}
+        />
       ))}
     </div>
   );

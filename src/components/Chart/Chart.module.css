@@ -40,7 +40,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
 }
 
 .line::before {
@@ -52,4 +52,34 @@
 
 .time {
   font-size: 12px;
+}
+
+@media (max-width: 1024px) {
+  .line::before {
+    width: 86%;
+  }
+}
+
+@media (max-width: 780px) {
+  .line::before {
+    width: 84%;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart__top {
+    padding-right: 0;
+    gap: 85px;
+    padding-bottom: 88px;
+  }
+
+  .time {
+    position: absolute;
+    top: -11px;
+    right: 10px;
+    font-size: 10px;
+  }
+  .line::before {
+    width: 100%;
+  }
 }

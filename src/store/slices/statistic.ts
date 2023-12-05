@@ -10,10 +10,12 @@ export type DayStatistic = {
   timeOnFinishedTasks: number;
 };
 
+export type TDays = {
+  [key: string]: DayStatistic;
+};
+
 export type Statistic = {
-  days: {
-    [key: string]: DayStatistic;
-  };
+  days: TDays;
   selectedDay: string;
 };
 
