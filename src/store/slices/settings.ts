@@ -47,12 +47,7 @@ export const settingsSlice = createSlice({
   },
 });
 
-export const {
-  toggleTheme,
-  updateSettings,
-  updatePomodoroDurationMinutes,
-  updateShortBreakDurationMinutes,
-} = settingsSlice.actions;
+export const { toggleTheme, updateSettings } = settingsSlice.actions;
 
 export const selectSettings = (state: RootState) => state.settings;
 

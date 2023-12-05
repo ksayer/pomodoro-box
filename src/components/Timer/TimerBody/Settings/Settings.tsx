@@ -3,18 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './Settings.module.css';
 import { Icon } from '../../../Icon';
 import { Modal } from '../../../Modal';
-import {
-  selectSettings,
-  updatePomodoroDurationMinutes,
-  updateSettings,
-  updateShortBreakDurationMinutes,
-} from '../../../../store/slices/settings';
+import { selectSettings, updateSettings } from '../../../../store/slices/settings';
 import {
   BREAK_DURATION_MINUTES,
   LONG_BREAK_DURATION_MINUTES,
   POMODORO_DURATION_MINUTES,
   POMODORO_BETWEEN_LONG_BREAK,
 } from '../../../../constants';
+import { selectTimerStore, setSeconds } from '../../../../store/slices/timer';
+import { selectTodayStatistic } from '../../../../store/slices/statistic';
 
 export function Settings() {
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -23,28 +20,72 @@ export function Settings() {
     shortBreakDurationMinutes,
     longBreakDurationMinutes,
     pomodoroBetweenLongBreak,
+    enableNotification,
   } = useSelector(selectSettings);
+  const { isBreak, status } = useSelector(selectTimerStore);
+  const { finishedTasks } = useSelector(selectTodayStatistic);
   const dispatch = useDispatch();
   const pomodoroDurationRef = useRef<HTMLInputElement>(null);
   const shortBreakDurationRef = useRef<HTMLInputElement>(null);
   const longBreakDurationRef = useRef<HTMLInputElement>(null);
   const pomodoroBetweenLongBreakRef = useRef<HTMLInputElement>(null);
+  const enableNotificationRef = useRef<HTMLInputElement>(null);
+
+  const updateTimerByLongBreak = (newMinutes: number, newPomodoroBetweenLongBreak: number) => {
+    if (
+      newMinutes &&
+      status === 'isStop' &&
+      isBreak &&
+      finishedTasks % newPomodoroBetweenLongBreak === 0
+    ) {
+      dispatch(setSeconds(newMinutes * 60));
+    }
+  };
+
+  const updateTimerByShortBreak = (newMinutes: number, newPomodoroBetweenLongBreak: number) => {
+    if (
+      newMinutes &&
+      status === 'isStop' &&
+      isBreak &&
+      finishedTasks % newPomodoroBetweenLongBreak !== 0
+    ) {
+      dispatch(setSeconds(newMinutes * 60));
+    }
+  };
+
+  const updateTimerByPomodoro = (newMinutes: number) => {
+    if (newMinutes && status === 'isStop' && !isBreak) {
+      dispatch(setSeconds(newMinutes * 60));
+    }
+  };
+
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
+
+    const newPomodoroBetweenLongBreak = parseInt(pomodoroBetweenLongBreakRef.current?.value || '1');
+
+    const newPomodoroDurationMinutes = parseInt(pomodoroDurationRef.current?.value || '1');
+    updateTimerByPomodoro(newPomodoroDurationMinutes);
+
+    const newShortBreakDurationMinutes = parseInt(shortBreakDurationRef.current?.value || '1');
+    updateTimerByShortBreak(newShortBreakDurationMinutes, newPomodoroBetweenLongBreak);
+
+    const newLongBreakDurationMinutes = parseInt(longBreakDurationRef.current?.value || '1');
+    updateTimerByLongBreak(newLongBreakDurationMinutes, newPomodoroBetweenLongBreak);
+
     dispatch(
       updateSettings({
-        // pomodoroDurationMinutes: parseInt(pomodoroDurationRef.current?.value || '1'),
-        // shortBreakDurationMinutes: parseInt(shortBreakDurationRef.current?.value || '1'),
-        longBreakDurationMinutes: parseInt(longBreakDurationRef.current?.value || '1'),
-        pomodoroBetweenLongBreak: parseInt(pomodoroBetweenLongBreakRef.current?.value || '1'),
+        pomodoroDurationMinutes: newPomodoroDurationMinutes,
+        shortBreakDurationMinutes: newShortBreakDurationMinutes,
+        longBreakDurationMinutes: newLongBreakDurationMinutes,
+        pomodoroBetweenLongBreak: newPomodoroBetweenLongBreak,
+        enableNotification: enableNotificationRef.current?.checked,
       }),
     );
-    dispatch(updatePomodoroDurationMinutes(parseInt(pomodoroDurationRef.current?.value || '1')));
-    dispatch(
-      updateShortBreakDurationMinutes(parseInt(shortBreakDurationRef.current?.value || '1')),
-    );
+
     setIsModalOpened(false);
   };
+
   const inputs = [
     {
       defaultValue: pomodoroDurationMinutes || POMODORO_DURATION_MINUTES,
@@ -85,7 +126,14 @@ export function Settings() {
             ))}
             <label className={`${styles.label} ${styles['checkbox-label']}`}>
               Уведомления:
-              <input className={styles.checkbox} type="checkbox" name="duration" min={1} />
+              <input
+                ref={enableNotificationRef}
+                defaultChecked={enableNotification}
+                className={styles.checkbox}
+                type="checkbox"
+                name="duration"
+                min={1}
+              />
             </label>
             <div className={styles['group--btn']}>
               <button type={'submit'} className={'btn btn--green'}>

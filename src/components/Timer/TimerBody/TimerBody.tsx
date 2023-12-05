@@ -16,7 +16,12 @@ import {
   selectTodayStatistic,
   addTimeOnFinishedTasks,
 } from '../../../store/slices/statistic';
-import { selectTimerStore, setSeconds, setStatus, toggleIsBreak } from '../../../store/slices/timer';
+import {
+  selectTimerStore,
+  setSeconds,
+  setStatus,
+  toggleIsBreak,
+} from '../../../store/slices/timer';
 import { Notification } from './Notification';
 import { Settings } from './Settings';
 import { selectSettings } from '../../../store/slices/settings';
@@ -36,6 +41,7 @@ export function TimerBody({ currentTask, taskName }: ITimerBody) {
     longBreakDurationMinutes,
     pomodoroBetweenLongBreak,
     shortBreakDurationMinutes,
+    enableNotification,
   } = useSelector(selectSettings);
   const tasks = useSelector(selectTasks);
   const { isBreak, status } = useSelector(selectTimerStore);
@@ -132,7 +138,7 @@ export function TimerBody({ currentTask, taskName }: ITimerBody) {
       />
       <Notification
         setShowNotification={setShowNotification}
-        showNotification={showNotification}
+        showNotification={showNotification && enableNotification}
         text={isBreak ? 'Пора отдохнуть!' : 'Перерыв окончен!'}
       />
     </div>
