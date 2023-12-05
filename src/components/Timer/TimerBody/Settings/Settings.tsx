@@ -1,17 +1,17 @@
 import React, { FormEvent, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Settings.module.css';
-import { Icon } from '../../../Icon';
-import { Modal } from '../../../Modal';
-import { selectSettings, updateSettings } from '../../../../store/slices/settings';
+import { Icon } from 'components/Icon';
+import { Modal } from 'components/Modal';
+import { selectSettings, updateSettings } from 'store/slices/settings';
 import {
   BREAK_DURATION_MINUTES,
   LONG_BREAK_DURATION_MINUTES,
   POMODORO_DURATION_MINUTES,
   POMODORO_BETWEEN_LONG_BREAK,
-} from '../../../../constants';
-import { selectTimerStore, setSeconds } from '../../../../store/slices/timer';
-import { selectTodayStatistic } from '../../../../store/slices/statistic';
+} from 'constants/index';
+import { selectTimerStore, setSeconds } from 'store/slices/timer';
+import { selectTodayStatistic } from 'store/slices/statistic';
 
 export function Settings() {
   const [isModalOpened, setIsModalOpened] = useState(false);

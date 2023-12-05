@@ -1,14 +1,14 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import styles from './Menu.module.css';
 import './transition.css';
-import { Icon } from '../../../Icon';
-import { Dropdown } from '../../../Dropdown';
-import { removeTask, TaskType, updateTask } from '../../../../store/slices/tasks';
+import { Icon } from 'components/Icon';
+import { Dropdown } from 'components/Dropdown';
+import { removeTask, TaskType, updateTask } from 'store/slices/tasks';
 import { useDispatch, useSelector } from 'react-redux';
-import { IconName } from '../../../../svg-icons';
-import { getRandomString } from '../../../../utils/randomString';
-import { Modal } from '../../../Modal';
-import { selectTimerStatus } from '../../../../store/slices/timer';
+import { IconName } from 'svg-icons';
+import { getRandomString } from 'utils/randomString';
+import { Modal } from 'components/Modal';
+import { selectTimerStatus } from 'store/slices/timer';
 
 type TMenuButton = {
   name: string;

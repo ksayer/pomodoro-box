@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Selector.module.css';
-import { Dropdown } from '../Dropdown';
-import { getRandomString } from '../../utils/randomString';
-import { selectStatistic, setSelectedDay } from '../../store/slices/statistic';
-import { dateToStoreFormat } from '../../utils/datetime';
+import { Dropdown } from 'components/Dropdown';
+import { getRandomString } from 'utils/randomString';
+import { selectStatistic, setSelectedDay } from 'store/slices/statistic';
+import { dateToStoreFormat } from 'utils/datetime';
 
 type TypeMenuButton = {
   name: string;

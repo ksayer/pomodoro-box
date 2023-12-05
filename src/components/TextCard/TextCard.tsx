@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styles from './TextCard.module.css';
-import { selectSelectedStatistic, selectStatistic } from '../../store/slices/statistic';
-import { convertSeconds } from '../../utils/convertSeconds';
-import { getDayIndexWithMondayAsFirstDay, WeekDaysFull } from '../../utils/datetime';
+import { selectSelectedStatistic, selectStatistic } from 'store/slices/statistic';
+import { convertSeconds } from 'utils/convertSeconds';
+import { getDayIndexWithMondayAsFirstDay, WeekDaysFull } from 'utils/datetime';
 
 function formatTime(minutes: number, hours: number) {
   let result = '';

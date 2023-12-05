@@ -6,10 +6,10 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styles from './TasksList.module.css';
 import { Task } from './Task';
-import { moveTasks, selectTasks } from '../../store/slices/tasks';
-import { POMODORO_DURATION_MINUTES } from '../../constants';
-import { CustomMouseSensor, CustomTouchSensor } from '../../librariesCustomization/dndKit';
-import { convertSeconds } from '../../utils/convertSeconds';
+import { moveTasks, selectTasks } from 'store/slices/tasks';
+import { POMODORO_DURATION_MINUTES } from 'constants/index';
+import { CustomMouseSensor, CustomTouchSensor } from 'librariesCustomization/dndKit';
+import { convertSeconds } from 'utils/convertSeconds';
 
 const getDurationString = (totalMinutes: number) => {
   const { hours, minutes } = convertSeconds(totalMinutes * 60);

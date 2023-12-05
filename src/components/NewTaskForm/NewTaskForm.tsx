@@ -1,9 +1,9 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './NewTaskForm.module.css';
-import { addNewTask, selectTasks, updateTask } from '../../store/slices/tasks';
-import { getRandomString } from '../../utils/randomString';
-import { selectTimerStatus } from '../../store/slices/timer';
+import { addNewTask, selectTasks, updateTask } from 'store/slices/tasks';
+import { getRandomString } from 'utils/randomString';
+import { selectTimerStatus } from 'store/slices/timer';
 
 export function NewTaskForm() {
   const [value, setValue] = useState('');

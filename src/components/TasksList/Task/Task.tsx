@@ -4,7 +4,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import styles from './Task.module.css';
 import { Menu } from './Menu';
-import { TaskType, updateTask } from '../../../store/slices/tasks';
+import { TaskType, updateTask } from 'store/slices/tasks';
 
 export const Task: FC<{ task: TaskType }> = ({ task }) => {
   const [editing, setEditing] = useState(false);

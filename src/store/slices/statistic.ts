@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { currentDate } from '../../utils/datetime';
+import { currentDate } from 'utils/datetime';
 
 export type DayStatistic = {
   finishedTasks: number;

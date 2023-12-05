@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styles from './WideCard.module.css';
-import { Icon } from '../Icon';
-import { IconName } from '../../svg-icons';
-import { DayStatistic, selectSelectedStatistic } from '../../store/slices/statistic';
-import { convertSeconds } from '../../utils/convertSeconds';
+import { Icon } from 'components/Icon';
+import { IconName } from 'svg-icons';
+import { DayStatistic, selectSelectedStatistic } from 'store/slices/statistic';
+import { convertSeconds } from 'utils/convertSeconds';
 
 type Card = {
   title: string;

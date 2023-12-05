@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styles from './TimerHeader.module.css';
-import { selectTimerStatus, selectTimerStore } from '../../../store/slices/timer';
+import { selectTimerStatus, selectTimerStore } from 'store/slices/timer';
 
 interface ITimerHeader {
   taskName: string;

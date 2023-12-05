@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './ManagePanel.module.css';
-import { incrementStops } from '../../../../store/slices/statistic';
-import { selectTimerStore, setStatus } from '../../../../store/slices/timer';
+import { incrementStops } from 'store/slices/statistic';
+import { selectTimerStore, setStatus } from 'store/slices/timer';
 
 interface IManagePanel {
   secondsOnUpdate: number;

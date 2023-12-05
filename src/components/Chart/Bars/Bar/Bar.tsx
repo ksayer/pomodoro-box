@@ -1,12 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Bar.module.css';
-import {
-  selectStatistic,
-  initialDayStatistic,
-  setSelectedDay,
-} from '../../../../store/slices/statistic';
-import { WeekDayShort } from '../../../../utils/datetime';
+import { selectStatistic, initialDayStatistic, setSelectedDay } from 'store/slices/statistic';
+import { WeekDayShort } from 'utils/datetime';
 
 interface IBar {
   date: string;

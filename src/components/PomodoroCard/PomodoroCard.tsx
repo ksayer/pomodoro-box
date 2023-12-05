@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styles from './PomodoroCard.module.css';
-import { Icon } from '../Icon';
-import { selectSelectedStatistic } from '../../store/slices/statistic';
+import { Icon } from 'components/Icon';
+import { selectSelectedStatistic } from 'store/slices/statistic';
 
 function getPomodoroString(count: number) {
   let ending;

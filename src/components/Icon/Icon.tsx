@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { IconName, svgIconConfig } from '../../svg-icons';
+import { IconName, svgIconConfig } from 'svg-icons';
 
 export const Icon: FC<{
   name: IconName;

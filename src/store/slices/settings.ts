@@ -5,7 +5,7 @@ import {
   LONG_BREAK_DURATION_MINUTES,
   POMODORO_BETWEEN_LONG_BREAK,
   POMODORO_DURATION_MINUTES,
-} from '../../constants';
+} from 'constants/index';
 
 type SettingsTheme = 'dark' | 'light';
 

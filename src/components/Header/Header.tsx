@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
-import { Icon } from '../Icon';
-import { Theme } from '../Theme';
+import { Icon } from 'components/Icon';
+import { Theme } from 'components/Theme';
 
 export function Header() {
   return (

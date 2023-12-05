@@ -1,7 +1,7 @@
 import React, { Dispatch, FC, SetStateAction, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './Dropdown.module.css';
-import { useClickOutside } from '../../hooks/useClickOutside';
+import { useClickOutside } from 'hooks/useClickOutside';
 
 interface IDropdown {
   isDropdownOpen: boolean;

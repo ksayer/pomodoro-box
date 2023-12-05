@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import styles from './Notification.module.css';
-import { Modal } from '../../../Modal';
-import ring from '../../../../assets/ring.mp3';
+import { Modal } from 'components/Modal';
+import ring from 'assets/ring.mp3';
 
 interface INotification {
   showNotification: boolean;

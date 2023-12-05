@@ -3,10 +3,10 @@ import './transition.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styles from './ClockFace.module.css';
-import { Icon } from '../../../Icon';
-import { selectTimerStore, setSeconds } from '../../../../store/slices/timer';
-import { incrementPauseTime, incrementWorkingTime } from '../../../../store/slices/statistic';
-import { incrementWorkingSecondsLastTask, selectTasks } from '../../../../store/slices/tasks';
+import { Icon } from 'components/Icon';
+import { selectTimerStore, setSeconds } from 'store/slices/timer';
+import { incrementPauseTime, incrementWorkingTime } from 'store/slices/statistic';
+import { incrementWorkingSecondsLastTask, selectTasks } from 'store/slices/tasks';
 
 interface IClockFace {
   secondsOnUpdate: number;

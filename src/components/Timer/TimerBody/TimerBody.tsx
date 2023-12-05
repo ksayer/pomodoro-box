@@ -10,23 +10,18 @@ import {
   TaskType,
   updateStatus,
   updateTask,
-} from '../../../store/slices/tasks';
+} from 'store/slices/tasks';
 import {
   incrementFinishedTasks,
   selectTodayStatistic,
   addTimeOnFinishedTasks,
-} from '../../../store/slices/statistic';
-import {
-  selectTimerStore,
-  setSeconds,
-  setStatus,
-  toggleIsBreak,
-} from '../../../store/slices/timer';
+} from 'store/slices/statistic';
+import { selectTimerStore, setSeconds, setStatus, toggleIsBreak } from 'store/slices/timer';
 import { Notification } from './Notification';
 import { Settings } from './Settings';
-import { selectSettings } from '../../../store/slices/settings';
-import { getRandomString } from '../../../utils/randomString';
-import { DEFAULT_TASK_NAME } from '../../../constants';
+import { selectSettings } from 'store/slices/settings';
+import { getRandomString } from 'utils/randomString';
+import { DEFAULT_TASK_NAME } from 'constants/index';
 
 interface ITimerBody {
   currentTask: TaskType;

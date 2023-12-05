@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './Theme.module.css';
-import { toggleTheme } from '../../store/slices/settings';
+import { toggleTheme } from 'store/slices/settings';
 
 export function Theme() {
   const dispatch = useDispatch();

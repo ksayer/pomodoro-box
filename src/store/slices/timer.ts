@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { POMODORO_DURATION_MINUTES } from '../../constants';
+import { POMODORO_DURATION_MINUTES } from 'constants/index';
 
 export type TStatus = 'isWork' | 'isStop' | 'isPause';
 

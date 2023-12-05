@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styles from './Bars.module.css';
 import { Bar } from './Bar';
-import { selectStatistic } from '../../../store/slices/statistic';
-import { dateToStoreFormat, getDayIndexWithMondayAsFirstDay } from '../../../utils/datetime';
+import { selectStatistic } from 'store/slices/statistic';
+import { dateToStoreFormat, getDayIndexWithMondayAsFirstDay } from 'utils/datetime';
 
 const getDays = (selectedDay: string) =>
   [0, 1, 2, 3, 4, 5, 6].map(weekday => {

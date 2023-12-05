@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Timer.module.css';
-import { selectTasks } from '../../store/slices/tasks';
+import { selectTasks } from 'store/slices/tasks';
 import { TimerHeader } from './TimerHeader';
 import { TimerBody } from './TimerBody';
-import { setStatus } from '../../store/slices/timer';
-import { selectSettings } from '../../store/slices/settings';
-import { DEFAULT_TASK_NAME } from '../../constants';
+import { setStatus } from 'store/slices/timer';
+import { selectSettings } from 'store/slices/settings';
+import { DEFAULT_TASK_NAME } from 'constants/index';
 
 export function Timer() {
   const currentTask = useSelector(selectTasks)[0];
