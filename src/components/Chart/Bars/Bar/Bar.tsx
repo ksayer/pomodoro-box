@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Bar.module.css';
 import {
-  getStatistic,
+  selectStatistic,
   initialDayStatistic,
   setSelectedDay,
 } from '../../../../store/slices/statistic';
@@ -22,7 +22,7 @@ const getBarPercent = (workingTime: number) => {
 
 export function Bar({ date, selected }: IBar) {
   const dispatch = useDispatch();
-  const { days } = useSelector(getStatistic);
+  const { days } = useSelector(selectStatistic);
   const weekDay = WeekDayShort[new Date(date).getDay()];
   const barStatistic = days[date] || { ...initialDayStatistic };
   const barHeight = `${getBarPercent(barStatistic.workingTime) || 1.3}%`;

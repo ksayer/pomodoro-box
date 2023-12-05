@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styles from './TextCard.module.css';
-import { getSelectedStatistic, getStatistic } from '../../store/slices/statistic';
+import { selectSelectedStatistic, selectStatistic } from '../../store/slices/statistic';
 import { convertSeconds } from '../../utils/convertSeconds';
 import { getDayIndexWithMondayAsFirstDay, WeekDaysFull } from '../../utils/datetime';
 
@@ -29,8 +29,8 @@ function geMinuteSuffix(minutes: number) {
 }
 
 export function TextCard() {
-  const { workingTime } = useSelector(getSelectedStatistic);
-  const { selectedDay } = useSelector(getStatistic);
+  const { workingTime } = useSelector(selectSelectedStatistic);
+  const { selectedDay } = useSelector(selectStatistic);
   const { minutes, hours, seconds } = convertSeconds(workingTime / 1000);
   const text = 'Вы работали над задачами';
   return (

@@ -6,7 +6,7 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styles from './TasksList.module.css';
 import { Task } from './Task';
-import { moveTasks, selectRealTasks } from '../../store/slices/tasks';
+import { moveTasks, selectTasks } from '../../store/slices/tasks';
 import { POMODORO_DURATION_MINUTES } from '../../constants';
 import { CustomMouseSensor, CustomTouchSensor } from '../../librariesCustomization/dndKit';
 import { convertSeconds } from '../../utils/convertSeconds';
@@ -20,9 +20,10 @@ const getDurationString = (totalMinutes: number) => {
 };
 
 export function TasksList() {
-  const tasks = useSelector(selectRealTasks);
+  const tasks = useSelector(selectTasks);
+  const filtered_tasks = tasks.filter(task => !task.fake);
   const dispatch = useDispatch();
-  const minutes = tasks.reduce(
+  const minutes = filtered_tasks.reduce(
     (accumulator, currentValue) =>
       accumulator + currentValue.countPomodoro * POMODORO_DURATION_MINUTES,
     0,
@@ -38,9 +39,9 @@ export function TasksList() {
   return (
     <div className={styles.tasks}>
       <DndContext sensors={sensors} onDragEnd={onDragEnd} collisionDetection={closestCenter}>
-        <SortableContext strategy={verticalListSortingStrategy} items={tasks}>
+        <SortableContext strategy={verticalListSortingStrategy} items={filtered_tasks}>
           <TransitionGroup className={styles.list}>
-            {tasks.map(task => {
+            {filtered_tasks.map(task => {
               const nodeRef = createRef<HTMLDivElement>();
               return (
                 <CSSTransition key={task.id} nodeRef={nodeRef} timeout={500} classNames="item">

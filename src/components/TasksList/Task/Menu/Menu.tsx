@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IconName } from '../../../../svg-icons';
 import { getRandomString } from '../../../../utils/randomString';
 import { Modal } from '../../../Modal';
-import { getTimerStatus } from '../../../../store/slices/timer';
+import { selectTimerStatus } from '../../../../store/slices/timer';
 
 type TMenuButton = {
   name: string;
@@ -26,7 +26,7 @@ export function Menu({
   const dispatch = useDispatch();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
-  const status = useSelector(getTimerStatus);
+  const status = useSelector(selectTimerStatus);
 
   const addPomodoro = () => {
     dispatch(updateTask({ ...task, countPomodoro: task.countPomodoro + 1 }));

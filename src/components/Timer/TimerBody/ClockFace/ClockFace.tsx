@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { createRef, useEffect, useRef } from 'react';
 import './transition.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styles from './ClockFace.module.css';
 import { Icon } from '../../../Icon';
-import { getTimerStore, setSeconds } from '../../../../store/slices/timer';
+import { selectTimerStore, setSeconds } from '../../../../store/slices/timer';
 import { incrementPauseTime, incrementWorkingTime } from '../../../../store/slices/statistic';
 import { incrementWorkingSecondsLastTask, selectTasks } from '../../../../store/slices/tasks';
 
@@ -26,12 +26,7 @@ function getClockString(totalSeconds: number) {
   const seconds = totalSeconds % 60;
   const { firstNumber: minutesFirst, secondNumber: minutesSecond } = timeToString(minutes);
   const { firstNumber: secondsFirst, secondNumber: secondsSecond } = timeToString(seconds);
-  return {
-    minutesFirst,
-    minutesSecond,
-    secondsFirst,
-    secondsSecond,
-  };
+  return { minutesFirst, minutesSecond, secondsFirst, secondsSecond };
 }
 
 function useInterval(callback: () => void, delay: number | null) {
@@ -53,7 +48,7 @@ function useInterval(callback: () => void, delay: number | null) {
 }
 
 export const ClockFace = ({ secondsOnUpdate, isStopDown, handlers }: IClockFace) => {
-  const { isBreak, seconds, status } = useSelector(getTimerStore);
+  const { isBreak, seconds, status } = useSelector(selectTimerStore);
   const tasks = useSelector(selectTasks);
   const dispatcher = useDispatch();
   const { minutesFirst, minutesSecond, secondsFirst, secondsSecond } = getClockString(seconds);
@@ -80,6 +75,14 @@ export const ClockFace = ({ secondsOnUpdate, isStopDown, handlers }: IClockFace)
     e.currentTarget.blur();
     dispatcher(setSeconds(secondsOnUpdate));
   };
+
+  const numbers = [
+    { time: minutesFirst, ref: createRef<HTMLElement>() },
+    { time: minutesSecond, ref: createRef<HTMLElement>() },
+    { time: secondsFirst, ref: createRef<HTMLElement>() },
+    { time: secondsSecond, ref: createRef<HTMLElement>() },
+  ];
+
   return (
     <div className={styles['counter-container']}>
       <div
@@ -93,11 +96,13 @@ export const ClockFace = ({ secondsOnUpdate, isStopDown, handlers }: IClockFace)
               : ''
         }`}
       >
-        {[minutesFirst, minutesSecond, secondsFirst, secondsSecond].map((number, index) => (
+        {numbers.map(({ time, ref }, index) => (
           <React.Fragment key={index}>
             <TransitionGroup className={styles.number}>
-              <CSSTransition key={number} timeout={900} classNames="transition">
-                <span className={styles.transition}>{number}</span>
+              <CSSTransition nodeRef={ref} key={time} timeout={900} classNames="transition">
+                <span ref={ref} className={styles.transition}>
+                  {time}
+                </span>
               </CSSTransition>
             </TransitionGroup>
             {index === 1 && <span>:</span>}

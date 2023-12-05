@@ -34,7 +34,7 @@ export const timerSlice = createSlice({
 
 export const { setStatus, setSeconds, toggleIsBreak } = timerSlice.actions;
 
-export const getTimerStatus = (state: RootState) => state.timer.status;
-export const getTimerStore = (state: RootState) => state.timer;
+export const selectTimerStatus = (state: RootState) => state.timer.status;
+export const selectTimerStore = (state: RootState) => state.timer;
 
 export const timerReducer = timerSlice.reducer;

@@ -93,11 +93,11 @@ export const {
   setSelectedDay,
 } = statisticSlice.actions;
 
-export const getTodayStatistic = (state: RootState) =>
+export const selectTodayStatistic = (state: RootState) =>
   state.statistic.days[currentDate()] || { ...initialDayStatistic };
-export const getSelectedStatistic = (state: RootState) =>
+export const selectSelectedStatistic = (state: RootState) =>
   state.statistic.days[state.statistic.selectedDay];
 
-export const getStatistic = (state: RootState) => state.statistic;
+export const selectStatistic = (state: RootState) => state.statistic;
 
 export const statisticReducer = statisticSlice.reducer;

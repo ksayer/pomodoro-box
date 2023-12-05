@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import styles from './WideCard.module.css';
 import { Icon } from '../Icon';
 import { IconName } from '../../svg-icons';
-import { DayStatistic, getSelectedStatistic } from '../../store/slices/statistic';
+import { DayStatistic, selectSelectedStatistic } from '../../store/slices/statistic';
 import { convertSeconds } from '../../utils/convertSeconds';
 
 type Card = {
@@ -65,7 +65,7 @@ function getPauseResult(statistic: DayStatistic) {
 
 export function WideCard({ cardName }: { cardName: keyof CardsData }) {
   const card = cardsData[cardName];
-  const statistic = useSelector(getSelectedStatistic);
+  const statistic = useSelector(selectSelectedStatistic);
   return (
     <div className={`${styles.card} ${statistic.workingTime ? card.activeClass : ''}`}>
       <div className={styles.card__content}>

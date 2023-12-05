@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styles from './Bars.module.css';
 import { Bar } from './Bar';
-import { getStatistic } from '../../../store/slices/statistic';
+import { selectStatistic } from '../../../store/slices/statistic';
 import { dateToStoreFormat, getDayIndexWithMondayAsFirstDay } from '../../../utils/datetime';
 
 const getDays = (selectedDay: string) =>
@@ -14,7 +14,7 @@ const getDays = (selectedDay: string) =>
   });
 
 export function Bars() {
-  const { selectedDay } = useSelector(getStatistic);
+  const { selectedDay } = useSelector(selectStatistic);
   const days = getDays(selectedDay);
   return (
     <div className={styles.bars}>

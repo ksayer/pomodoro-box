@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './NewTaskForm.module.css';
 import { addNewTask, selectTasks, updateTask } from '../../store/slices/tasks';
 import { getRandomString } from '../../utils/randomString';
-import { getTimerStatus } from '../../store/slices/timer';
+import { selectTimerStatus } from '../../store/slices/timer';
 
 export function NewTaskForm() {
   const [value, setValue] = useState('');
   const dispatch = useDispatch();
-  const status = useSelector(getTimerStatus);
+  const status = useSelector(selectTimerStatus);
   const tasks = useSelector(selectTasks);
   const [errorMessage, setErrorMessage] = useState<string>('');
 

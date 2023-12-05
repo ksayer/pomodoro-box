@@ -54,6 +54,6 @@ export const {
   updateShortBreakDurationMinutes,
 } = settingsSlice.actions;
 
-export const getSettings = (state: RootState) => state.settings;
+export const selectSettings = (state: RootState) => state.settings;
 
 export const settingsReducer = settingsSlice.reducer;

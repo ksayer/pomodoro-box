@@ -68,6 +68,4 @@ export const {
 
 export const selectTasks = (state: RootState) => state.tasks;
 
-export const selectRealTasks = (state: RootState) => state.tasks.filter(task => !task.fake);
-
 export const tasksReducer = tasksSlice.reducer;

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './Selector.module.css';
 import { Dropdown } from '../Dropdown';
 import { getRandomString } from '../../utils/randomString';
-import { getStatistic, setSelectedDay } from '../../store/slices/statistic';
+import { selectStatistic, setSelectedDay } from '../../store/slices/statistic';
 import { dateToStoreFormat } from '../../utils/datetime';
 
 type TypeMenuButton = {
@@ -21,7 +21,7 @@ export function Selector() {
   const [selectorOpened, setSelectorOpened] = useState(false);
   const [selected, setSelected] = useState(menuButtons[0]);
   const dispatch = useDispatch();
-  const { selectedDay } = useSelector(getStatistic);
+  const { selectedDay } = useSelector(selectStatistic);
   const ref = useRef<HTMLDivElement>(null);
 
   const selectorButtons = menuButtons.filter(b => b.name !== selected.name);

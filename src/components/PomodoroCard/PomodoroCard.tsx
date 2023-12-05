@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styles from './PomodoroCard.module.css';
 import { Icon } from '../Icon';
-import { getSelectedStatistic } from '../../store/slices/statistic';
+import { selectSelectedStatistic } from '../../store/slices/statistic';
 
 function getPomodoroString(count: number) {
   let ending;
@@ -19,7 +19,7 @@ function getPomodoroString(count: number) {
 }
 
 export function PomodoroCard() {
-  const { finishedTasks } = useSelector(getSelectedStatistic);
+  const { finishedTasks } = useSelector(selectSelectedStatistic);
   return (
     <div className={styles.card}>
       <div className={styles.card__body}>

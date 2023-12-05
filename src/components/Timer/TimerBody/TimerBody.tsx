@@ -13,13 +13,13 @@ import {
 } from '../../../store/slices/tasks';
 import {
   incrementFinishedTasks,
-  getTodayStatistic,
+  selectTodayStatistic,
   addTimeOnFinishedTasks,
 } from '../../../store/slices/statistic';
-import { getTimerStore, setSeconds, setStatus, toggleIsBreak } from '../../../store/slices/timer';
+import { selectTimerStore, setSeconds, setStatus, toggleIsBreak } from '../../../store/slices/timer';
 import { Notification } from './Notification';
 import { Settings } from './Settings';
-import { getSettings } from '../../../store/slices/settings';
+import { selectSettings } from '../../../store/slices/settings';
 import { getRandomString } from '../../../utils/randomString';
 import { DEFAULT_TASK_NAME } from '../../../constants';
 
@@ -30,15 +30,15 @@ interface ITimerBody {
 
 export function TimerBody({ currentTask, taskName }: ITimerBody) {
   const dispatcher = useDispatch();
-  const { finishedTasks } = useSelector(getTodayStatistic);
+  const { finishedTasks } = useSelector(selectTodayStatistic);
   const {
     pomodoroDurationMinutes,
     longBreakDurationMinutes,
     pomodoroBetweenLongBreak,
     shortBreakDurationMinutes,
-  } = useSelector(getSettings);
+  } = useSelector(selectSettings);
   const tasks = useSelector(selectTasks);
-  const { isBreak, status } = useSelector(getTimerStore);
+  const { isBreak, status } = useSelector(selectTimerStore);
   const [isStopDown, setIsStopDown] = useState<boolean>(false);
   const [showNotification, setShowNotification] = useState(false);
 

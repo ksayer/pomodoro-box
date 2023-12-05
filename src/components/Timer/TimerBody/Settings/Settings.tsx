@@ -4,7 +4,7 @@ import styles from './Settings.module.css';
 import { Icon } from '../../../Icon';
 import { Modal } from '../../../Modal';
 import {
-  getSettings,
+  selectSettings,
   updatePomodoroDurationMinutes,
   updateSettings,
   updateShortBreakDurationMinutes,
@@ -23,7 +23,7 @@ export function Settings() {
     shortBreakDurationMinutes,
     longBreakDurationMinutes,
     pomodoroBetweenLongBreak,
-  } = useSelector(getSettings);
+  } = useSelector(selectSettings);
   const dispatch = useDispatch();
   const pomodoroDurationRef = useRef<HTMLInputElement>(null);
   const shortBreakDurationRef = useRef<HTMLInputElement>(null);
