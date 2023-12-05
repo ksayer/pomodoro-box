@@ -42,7 +42,9 @@
 }
 
 .transition {
-  transition: all .3s, color 0s;
+  transition:
+    all 0.3s,
+    color 0s;
 }
 
 .uptime-btn {
@@ -51,7 +53,7 @@
 }
 
 .uptime-btn .plus-color {
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .uptime-btn:focus {
@@ -73,13 +75,13 @@
   fill: var(--dark-2b2);
 }
 
-[data-theme='dark'] .uptime-btn:focus .plus-color ,
-[data-theme='dark'] .uptime-btn:hover .plus-color  {
+[data-theme='dark'] .uptime-btn:focus .plus-color,
+[data-theme='dark'] .uptime-btn:hover .plus-color {
   border-radius: 50px;
   box-shadow: 0 0 10px var(--red);
 }
 
-[data-theme='dark'] .uptime-btn:active .plus-color  {
+[data-theme='dark'] .uptime-btn:active .plus-color {
   border-radius: 50px;
   box-shadow: 0 0 10px 7px var(--very-red);
 }
@@ -96,7 +98,7 @@
     transform: translateX(170px);
   }
 
-  .uptime-btn svg{
+  .uptime-btn svg {
     width: 35px;
     height: 35px;
   }

@@ -5,7 +5,7 @@
 }
 
 .btn svg g path {
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .btn:hover svg g path {
@@ -60,5 +60,5 @@
 .group--btn {
   display: flex;
   justify-content: center;
-  gap: 35px
+  gap: 35px;
 }

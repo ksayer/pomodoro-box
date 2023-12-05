@@ -35,15 +35,16 @@ export function TextCard() {
   const text = 'Вы работали над задачами';
   return (
     <div className={styles.card}>
-      <h3 className={styles.card__title}>{WeekDaysFull[getDayIndexWithMondayAsFirstDay(new Date(selectedDay))]}</h3>
+      <h3 className={styles.card__title}>
+        {WeekDaysFull[getDayIndexWithMondayAsFirstDay(new Date(selectedDay))]}
+      </h3>
       <p className={styles.card__text}>
-        {minutes || hours
-          ? `${text} в течение `
-          : seconds ? `${text} менее`
-            : 'Нет данных'
-        }
+        {minutes || hours ? `${text} в течение ` : seconds ? `${text} менее` : 'Нет данных'}
         {(minutes > 0 || hours > 0 || seconds > 0) && (
-          <b className={styles['card__text--red']}> {minutes || hours ? formatTime(minutes, hours) : seconds ? '1\u00A0минуты' : ''}</b>
+          <b className={styles['card__text--red']}>
+            {' '}
+            {minutes || hours ? formatTime(minutes, hours) : seconds ? '1\u00A0минуты' : ''}
+          </b>
         )}
       </p>
     </div>

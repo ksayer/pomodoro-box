@@ -9,10 +9,10 @@ export function App() {
   document.firstElementChild?.setAttribute('data-theme', theme);
   return (
     <>
-      <Header/>
+      <Header />
       <main>
         <div className={'container'}>
-          <Outlet/>
+          <Outlet />
         </div>
       </main>
     </>

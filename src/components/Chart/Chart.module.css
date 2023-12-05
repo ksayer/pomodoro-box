@@ -44,7 +44,7 @@
 }
 
 .line::before {
-  content: "";
+  content: '';
   width: 88%;
   height: 1px;
   background-color: var(--semi-light-grey);

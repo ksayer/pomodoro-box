@@ -11,11 +11,11 @@ export function Main() {
   const dispatch = useDispatch();
   dispatch(deactivateTasks());
   return (
-      <div className={styles.app}>
-        <Instruction/>
-        <NewTaskForm/>
-        <TasksList/>
-        <Timer/>
-      </div>
+    <div className={styles.app}>
+      <Instruction />
+      <NewTaskForm />
+      <TasksList />
+      <Timer />
+    </div>
   );
 }

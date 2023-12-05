@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
 
 interface IUseClickOutside {
-  ref:React.RefObject<HTMLDivElement>,
-  setIsOpen: Dispatch<SetStateAction<boolean>>
-  isOpen?: boolean
+  ref: React.RefObject<HTMLDivElement>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  isOpen?: boolean;
 }
 
 export const useClickOutside = ({ ref, setIsOpen, isOpen }: IUseClickOutside) => {

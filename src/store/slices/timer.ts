@@ -5,10 +5,10 @@ import { POMODORO_DURATION_MINUTES } from '../../constants';
 export type TStatus = 'isWork' | 'isStop' | 'isPause';
 
 export type TimerStore = {
-  status: TStatus,
-  isBreak: boolean,
-  seconds: number,
-}
+  status: TStatus;
+  isBreak: boolean;
+  seconds: number;
+};
 
 const initialState: TimerStore = {
   status: 'isStop',
@@ -26,17 +26,13 @@ export const timerSlice = createSlice({
     setSeconds: (state, action: PayloadAction<number>) => {
       state.seconds = action.payload;
     },
-    toggleIsBreak: (state) => {
+    toggleIsBreak: state => {
       state.isBreak = !state.isBreak;
     },
   },
 });
 
-export const {
-  setStatus,
-  setSeconds,
-  toggleIsBreak,
-} = timerSlice.actions;
+export const { setStatus, setSeconds, toggleIsBreak } = timerSlice.actions;
 
 export const getTimerStatus = (state: RootState) => state.timer.status;
 export const getTimerStore = (state: RootState) => state.timer;

@@ -18,7 +18,7 @@ export function NewTaskForm() {
   }
   function onSubmit(event: FormEvent) {
     event.preventDefault();
-    if (tasks.find((obj) => obj.name === value)) {
+    if (tasks.find(obj => obj.name === value)) {
       setErrorMessage('Такая задача уже есть в списке');
       return;
     }
@@ -27,7 +27,13 @@ export function NewTaskForm() {
       dispatch(updateTask({ ...tasks[0], fake: false, name: value }));
     } else {
       const newTask = {
-        id: getRandomString(), name: value, countPomodoro: 1, finishedPomodoro: 0, active: false, fake: false, workingSecondsLastTask: 0,
+        id: getRandomString(),
+        name: value,
+        countPomodoro: 1,
+        finishedPomodoro: 0,
+        active: false,
+        fake: false,
+        workingSecondsLastTask: 0,
       };
       if (status !== 'isStop' && !tasks.length) {
         newTask.active = true;
@@ -51,7 +57,9 @@ export function NewTaskForm() {
         aria-invalid={!!errorMessage}
       />
       {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
-      <button className="btn btn--green" type="submit">Добавить</button>
+      <button className="btn btn--green" type="submit">
+        Добавить
+      </button>
     </form>
   );
 }

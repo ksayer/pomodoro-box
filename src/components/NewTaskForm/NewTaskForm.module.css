@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 25px;
-  grid-column: 1 / 6
+  grid-column: 1 / 6;
 }
 
 .input {
@@ -12,15 +12,15 @@
   padding: 19px 15px;
   border: none;
   background-color: var(--light-grey);
-  transition: background-color .3s;
+  transition: background-color 0.3s;
 }
 
 [data-theme='dark'] .input {
   background-color: var(--dark-423);
-  color: var(--white)
+  color: var(--white);
 }
 
-.input[aria-invalid=true] {
+.input[aria-invalid='true'] {
   outline: 1px solid var(--red);
 }
 
@@ -47,10 +47,10 @@
 
 .errorMessage {
   position: absolute;
-  color: var(--red)
+  color: var(--red);
 }
 
-@media(max-width: 1024px) {
+@media (max-width: 1024px) {
   .form {
     grid-column: 1;
   }
@@ -59,8 +59,7 @@
   }
 }
 
-
-@media(max-width: 560px) {
+@media (max-width: 560px) {
   .form {
     gap: 10px;
   }

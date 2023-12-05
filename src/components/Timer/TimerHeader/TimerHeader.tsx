@@ -4,8 +4,8 @@ import styles from './TimerHeader.module.css';
 import { getTimerStatus, getTimerStore } from '../../../store/slices/timer';
 
 interface ITimerHeader {
-  taskName: string,
-  finishedPomodoro: number,
+  taskName: string;
+  finishedPomodoro: number;
 }
 
 export function TimerHeader({ taskName, finishedPomodoro }: ITimerHeader) {
@@ -22,7 +22,9 @@ export function TimerHeader({ taskName, finishedPomodoro }: ITimerHeader) {
   return (
     <div className={`${styles.header} ${styleHeader}`}>
       <span>{taskName}</span>
-      <span>{isBreak ? `Перерыв ${finishedPomodoro || ''}` : `Помидор ${finishedPomodoro + 1}`}</span>
+      <span>
+        {isBreak ? `Перерыв ${finishedPomodoro || ''}` : `Помидор ${finishedPomodoro + 1}`}
+      </span>
     </div>
   );
 }

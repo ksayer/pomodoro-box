@@ -1,5 +1,5 @@
 .instruction {
-  grid-column: 1 / 6
+  grid-column: 1 / 6;
 }
 
 .title {
@@ -24,16 +24,13 @@
   color: var(--dark-red);
 }
 
-
-@media(max-width: 1024px) {
-
+@media (max-width: 1024px) {
   .instruction {
     grid-column: 1;
   }
 }
 
-
-@media(max-width: 560px) {
+@media (max-width: 560px) {
   .list {
     line-height: 23px;
   }

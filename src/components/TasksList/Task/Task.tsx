@@ -17,13 +17,10 @@ export const Task: FC<{ task: TaskType }> = ({ task }) => {
     setEditing(false);
   };
 
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-  } = useSortable({ id: task.id, disabled: task.active });
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+    id: task.id,
+    disabled: task.active,
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -35,26 +32,29 @@ export const Task: FC<{ task: TaskType }> = ({ task }) => {
       data-no-dnd={editing}
       className={`${styles.item} ${styles['item--draggable']}`}
       ref={task.active ? null : setNodeRef}
-      style={style} {...attributes} {...listeners}
+      style={style}
+      {...attributes}
+      {...listeners}
     >
-      <div className={styles.item__content} >
-        <div className={`${styles.counter} ${task.active ? styles['counter--active'] : ''}`}>{task.countPomodoro}</div>
-        {!editing
-          ? (<div
-            className={`${styles.name}`}>
-            {task.name}
-          </div>)
-          : (<input data-no-dnd={false}
-              style={{ outline: 'none', border: 'none' }}
-              className={`${styles.input}`}
-              autoFocus={true}
-              onBlur={onBlur}
-              type="text"
-              value={value}
-              onInput={(e) => setValue(e.currentTarget.value)}
-            />
-          )}
-        <Menu task={task} setEditing={setEditing}/>
+      <div className={styles.item__content}>
+        <div className={`${styles.counter} ${task.active ? styles['counter--active'] : ''}`}>
+          {task.countPomodoro}
+        </div>
+        {!editing ? (
+          <div className={`${styles.name}`}>{task.name}</div>
+        ) : (
+          <input
+            data-no-dnd={false}
+            style={{ outline: 'none', border: 'none' }}
+            className={`${styles.input}`}
+            autoFocus={true}
+            onBlur={onBlur}
+            type="text"
+            value={value}
+            onInput={e => setValue(e.currentTarget.value)}
+          />
+        )}
+        <Menu task={task} setEditing={setEditing} />
       </div>
     </li>
   );

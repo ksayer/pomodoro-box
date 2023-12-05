@@ -18,26 +18,26 @@ export function Statistic() {
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <h1 className={styles.title}>Ваша активность</h1>
-        <Selector/>
+        <Selector />
       </div>
       <div className={styles.grid}>
         <div className={`${styles.grid__item} ${styles['first-grid-item']}`}>
-          <TextCard/>
+          <TextCard />
         </div>
         <div className={`${styles.grid__item} ${styles['second-grid-item']}`}>
-          <PomodoroCard/>
+          <PomodoroCard />
         </div>
         <div className={`${styles.grid__item} ${styles['third-grid-item']}`}>
-          <Chart/>
+          <Chart />
         </div>
         <div className={`${styles.grid__item} ${styles['last-card']}`}>
-          <WideCard cardName={'focus'}/>
+          <WideCard cardName={'focus'} />
         </div>
         <div className={`${styles.grid__item} ${styles['last-card']}`}>
-          <WideCard cardName={'pauseTime'}/>
+          <WideCard cardName={'pauseTime'} />
         </div>
         <div className={`${styles.grid__item} ${styles['last-card']}`}>
-          <WideCard cardName={'stops'}/>
+          <WideCard cardName={'stops'} />
         </div>
       </div>
     </div>

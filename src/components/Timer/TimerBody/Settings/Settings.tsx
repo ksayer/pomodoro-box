@@ -4,7 +4,10 @@ import styles from './Settings.module.css';
 import { Icon } from '../../../Icon';
 import { Modal } from '../../../Modal';
 import {
-  getSettings, updatePomodoroDurationMinutes, updateSettings, updateShortBreakDurationMinutes,
+  getSettings,
+  updatePomodoroDurationMinutes,
+  updateSettings,
+  updateShortBreakDurationMinutes,
 } from '../../../../store/slices/settings';
 import {
   BREAK_DURATION_MINUTES,
@@ -28,54 +31,72 @@ export function Settings() {
   const pomodoroBetweenLongBreakRef = useRef<HTMLInputElement>(null);
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
-    dispatch(updateSettings({
-      // pomodoroDurationMinutes: parseInt(pomodoroDurationRef.current?.value || '1'),
-      // shortBreakDurationMinutes: parseInt(shortBreakDurationRef.current?.value || '1'),
-      longBreakDurationMinutes: parseInt(longBreakDurationRef.current?.value || '1'),
-      pomodoroBetweenLongBreak: parseInt(pomodoroBetweenLongBreakRef.current?.value || '1'),
-    }));
+    dispatch(
+      updateSettings({
+        // pomodoroDurationMinutes: parseInt(pomodoroDurationRef.current?.value || '1'),
+        // shortBreakDurationMinutes: parseInt(shortBreakDurationRef.current?.value || '1'),
+        longBreakDurationMinutes: parseInt(longBreakDurationRef.current?.value || '1'),
+        pomodoroBetweenLongBreak: parseInt(pomodoroBetweenLongBreakRef.current?.value || '1'),
+      }),
+    );
     dispatch(updatePomodoroDurationMinutes(parseInt(pomodoroDurationRef.current?.value || '1')));
-    dispatch(updateShortBreakDurationMinutes(parseInt(shortBreakDurationRef.current?.value || '1')));
+    dispatch(
+      updateShortBreakDurationMinutes(parseInt(shortBreakDurationRef.current?.value || '1')),
+    );
     setIsModalOpened(false);
   };
   const inputs = [
-    { defaultValue: pomodoroDurationMinutes || POMODORO_DURATION_MINUTES, ref: pomodoroDurationRef, text: 'Продолжительность помидора:' },
-    { defaultValue: shortBreakDurationMinutes || BREAK_DURATION_MINUTES, ref: shortBreakDurationRef, text: 'Продолжительность короткого перерыва:' },
-    { defaultValue: longBreakDurationMinutes || LONG_BREAK_DURATION_MINUTES, ref: longBreakDurationRef, text: 'Продолжительность длинного перерыва:' },
-    { defaultValue: pomodoroBetweenLongBreak || POMODORO_BETWEEN_LONG_BREAK, ref: pomodoroBetweenLongBreakRef, text: 'Количество помидоров между длинными перерывами:' },
+    {
+      defaultValue: pomodoroDurationMinutes || POMODORO_DURATION_MINUTES,
+      ref: pomodoroDurationRef,
+      text: 'Продолжительность помидора:',
+    },
+    {
+      defaultValue: shortBreakDurationMinutes || BREAK_DURATION_MINUTES,
+      ref: shortBreakDurationRef,
+      text: 'Продолжительность короткого перерыва:',
+    },
+    {
+      defaultValue: longBreakDurationMinutes || LONG_BREAK_DURATION_MINUTES,
+      ref: longBreakDurationRef,
+      text: 'Продолжительность длинного перерыва:',
+    },
+    {
+      defaultValue: pomodoroBetweenLongBreak || POMODORO_BETWEEN_LONG_BREAK,
+      ref: pomodoroBetweenLongBreakRef,
+      text: 'Количество помидоров между длинными перерывами:',
+    },
   ];
 
   return (
     <>
-      <button
-        className={styles.btn}
-        onClick={() => setIsModalOpened(true)}
-      >
-        <Icon name={'settings'}/>
+      <button className={styles.btn} onClick={() => setIsModalOpened(true)}>
+        <Icon name={'settings'} />
       </button>
       <Modal close={() => setIsModalOpened(false)} isModalOpened={isModalOpened}>
         <div className={styles.modal}>
           <h3 className={styles.title}>Настройки таймера</h3>
           <form className={styles.form} onSubmit={onSubmit}>
-            {inputs.map((input) => (
-                <label key={input.text} className={styles.label}>{input.text}
-                  <input className={styles.input} {...input} type="number" min={1} max={99}/>
-                </label>
+            {inputs.map(input => (
+              <label key={input.text} className={styles.label}>
+                {input.text}
+                <input className={styles.input} {...input} type="number" min={1} max={99} />
+              </label>
             ))}
-            <label className={`${styles.label} ${styles['checkbox-label']}`}>Уведомления:
-              <input className={styles.checkbox} type="checkbox" name="duration" min={1}/>
+            <label className={`${styles.label} ${styles['checkbox-label']}`}>
+              Уведомления:
+              <input className={styles.checkbox} type="checkbox" name="duration" min={1} />
             </label>
             <div className={styles['group--btn']}>
-              <button
-                type={'submit'}
-                className={'btn btn--green'}
-              >Ок
+              <button type={'submit'} className={'btn btn--green'}>
+                Ок
               </button>
               <button
                 type={'button'}
                 className={'btn btn--red'}
                 onClick={() => setIsModalOpened(false)}
-              >Отмена
+              >
+                Отмена
               </button>
             </div>
           </form>

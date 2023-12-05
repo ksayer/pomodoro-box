@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Chart.module.css';
-import {Bars} from "./Bars";
+import { Bars } from './Bars';
 
 export function Chart() {
   return (
@@ -18,7 +18,7 @@ export function Chart() {
         <div className={styles.line}>
           <span className={styles.time}>25 мин</span>
         </div>
-        <Bars/>
+        <Bars />
       </div>
       <div className={styles.chart__footer}></div>
     </div>

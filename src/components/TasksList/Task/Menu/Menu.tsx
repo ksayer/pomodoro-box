@@ -11,17 +11,18 @@ import { Modal } from '../../../Modal';
 import { getTimerStatus } from '../../../../store/slices/timer';
 
 type TMenuButton = {
-  name: string,
-  iconName: IconName,
-  onClick: () => void
-}
+  name: string;
+  iconName: IconName;
+  onClick: () => void;
+};
 
-export function Menu(
-  { task, setEditing }: {
-    task: TaskType,
-    setEditing: Dispatch<SetStateAction<boolean>>
-  },
-) {
+export function Menu({
+  task,
+  setEditing,
+}: {
+  task: TaskType;
+  setEditing: Dispatch<SetStateAction<boolean>>;
+}) {
   const dispatch = useDispatch();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
@@ -42,36 +43,38 @@ export function Menu(
   const menuButtons: TMenuButton[] = [
     { name: 'Увеличить', iconName: 'plus', onClick: addPomodoro },
     { name: 'Уменьшить', iconName: 'minus', onClick: removePomodoro },
-    { name: 'Редактировать', iconName: 'edit', onClick: () => setEditing(true) },
+    {
+      name: 'Редактировать',
+      iconName: 'edit',
+      onClick: () => setEditing(true),
+    },
     { name: 'Удалить', iconName: 'delete', onClick: deleteTask },
   ];
 
-  const disableBtn = (btn: TMenuButton) => (
-    btn.name === 'Уменьшить' && task.countPomodoro <= 1
-  ) || (
-    btn.name === 'Удалить' && task.active && status === 'isWork'
-  );
+  const disableBtn = (btn: TMenuButton) =>
+    (btn.name === 'Уменьшить' && task.countPomodoro <= 1) ||
+    (btn.name === 'Удалить' && task.active && status === 'isWork');
 
   return (
     <>
       <Dropdown
-        button={<Icon name={'menu'} className={styles.icon}/>}
+        button={<Icon name={'menu'} className={styles.icon} />}
         buttonStyles={styles['main-btn']}
         isDropdownOpen={isDropdownOpen}
         setIsDropdownOpen={setIsDropdownOpen}
       >
         <ul className={styles.menu}>
-          {
-            menuButtons.map((btn) => (
-              <button key={getRandomString()}
-                      className={styles.btn}
-                      onClick={btn.onClick}
-                      disabled={disableBtn(btn)}>
-                <Icon name={btn.iconName}/>
-                <span>{btn.name}</span>
-              </button>
-            ))
-          }
+          {menuButtons.map(btn => (
+            <button
+              key={getRandomString()}
+              className={styles.btn}
+              onClick={btn.onClick}
+              disabled={disableBtn(btn)}
+            >
+              <Icon name={btn.iconName} />
+              <span>{btn.name}</span>
+            </button>
+          ))}
         </ul>
       </Dropdown>
       <Modal close={() => setIsDeleteModalOpened(false)} isModalOpened={isDeleteModalOpened}>
@@ -84,12 +87,14 @@ export function Menu(
               setIsDeleteModalOpened(false);
               dispatch(removeTask({ id: task.id }));
             }}
-          >Удалить
+          >
+            Удалить
           </button>
           <button
             className={styles['modal__second-btn']}
             onClick={() => setIsDeleteModalOpened(false)}
-          >Отмена
+          >
+            Отмена
           </button>
         </div>
       </Modal>

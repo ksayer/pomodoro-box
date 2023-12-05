@@ -7,10 +7,10 @@ import { App } from './App';
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <App/>,
+    element: <App />,
     children: [
-      { index: true, element: <Main/> },
-      { path: 'statistic/', element: <Statistic/> },
+      { index: true, element: <Main /> },
+      { path: 'statistic/', element: <Statistic /> },
     ],
   },
 ]);

@@ -5,13 +5,13 @@ import { incrementStops } from '../../../../store/slices/statistic';
 import { getTimerStore, setStatus } from '../../../../store/slices/timer';
 
 interface IManagePanel {
-  secondsOnUpdate: number,
+  secondsOnUpdate: number;
   handlers: {
-    stopTimer: (v: number) => void,
-    startTimer: () => void
-    finishTask: () => void
-    setIsStopDown: (isd: boolean) => void
-  }
+    stopTimer: (v: number) => void;
+    startTimer: () => void;
+    finishTask: () => void;
+    setIsStopDown: (isd: boolean) => void;
+  };
 }
 
 export function ManagePanel({ secondsOnUpdate, handlers }: IManagePanel) {
@@ -44,10 +44,9 @@ export function ManagePanel({ secondsOnUpdate, handlers }: IManagePanel) {
 
   return (
     <div className={styles.group_btn}>
-      <button
-        className="btn btn--green"
-        onClick={leftBtnHandler}
-      >{leftBtnText}</button>
+      <button className="btn btn--green" onClick={leftBtnHandler}>
+        {leftBtnText}
+      </button>
       <button
         className={`btn ${styles['right-btn']}`}
         onClick={rightBtnHandler}
@@ -55,7 +54,9 @@ export function ManagePanel({ secondsOnUpdate, handlers }: IManagePanel) {
         onMouseDown={() => handlers.setIsStopDown(true)}
         onMouseUp={() => handlers.setIsStopDown(false)}
         onMouseOutCapture={() => handlers.setIsStopDown(false)}
-      >{rightBtnText}</button>
+      >
+        {rightBtnText}
+      </button>
     </div>
   );
 }

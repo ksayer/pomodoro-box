@@ -4,15 +4,19 @@ import styles from './TimerBody.module.css';
 import { ClockFace } from './ClockFace';
 import { ManagePanel } from './ManagePanel';
 import {
-  addNewTask, removeTask, selectTasks, TaskType, updateStatus, updateTask,
+  addNewTask,
+  removeTask,
+  selectTasks,
+  TaskType,
+  updateStatus,
+  updateTask,
 } from '../../../store/slices/tasks';
 import {
   incrementFinishedTasks,
-  getTodayStatistic, addTimeOnFinishedTasks,
+  getTodayStatistic,
+  addTimeOnFinishedTasks,
 } from '../../../store/slices/statistic';
-import {
-  getTimerStore, setSeconds, setStatus, toggleIsBreak,
-} from '../../../store/slices/timer';
+import { getTimerStore, setSeconds, setStatus, toggleIsBreak } from '../../../store/slices/timer';
 import { Notification } from './Notification';
 import { Settings } from './Settings';
 import { getSettings } from '../../../store/slices/settings';
@@ -20,8 +24,8 @@ import { getRandomString } from '../../../utils/randomString';
 import { DEFAULT_TASK_NAME } from '../../../constants';
 
 interface ITimerBody {
-  currentTask: TaskType,
-  taskName: string,
+  currentTask: TaskType;
+  taskName: string;
 }
 
 export function TimerBody({ currentTask, taskName }: ITimerBody) {
@@ -42,22 +46,26 @@ export function TimerBody({ currentTask, taskName }: ITimerBody) {
     if (!isBreak) {
       return pomodoroDurationMinutes * 60;
     }
-    return finishedTasks % pomodoroBetweenLongBreak === 0 ? longBreakDurationMinutes * 60 : shortBreakDurationMinutes * 60;
+    return finishedTasks % pomodoroBetweenLongBreak === 0
+      ? longBreakDurationMinutes * 60
+      : shortBreakDurationMinutes * 60;
   };
 
   const startTimer = () => {
     dispatcher(setStatus('isWork'));
     dispatcher(updateTask({ ...currentTask, active: true }));
     if (!tasks.length && !isBreak) {
-      dispatcher(addNewTask({
-        id: getRandomString(),
-        name: DEFAULT_TASK_NAME,
-        countPomodoro: 1,
-        finishedPomodoro: 0,
-        active: true,
-        workingSecondsLastTask: 0,
-        fake: true,
-      }));
+      dispatcher(
+        addNewTask({
+          id: getRandomString(),
+          name: DEFAULT_TASK_NAME,
+          countPomodoro: 1,
+          finishedPomodoro: 0,
+          active: true,
+          workingSecondsLastTask: 0,
+          fake: true,
+        }),
+      );
     }
   };
 
@@ -76,12 +84,12 @@ export function TimerBody({ currentTask, taskName }: ITimerBody) {
       currentTask.countPomodoro === 1
         ? removeTask({ id: currentTask.id })
         : updateTask({
-          ...currentTask,
-          countPomodoro: currentTask.countPomodoro - 1,
-          finishedPomodoro: currentTask.finishedPomodoro + 1,
-          active: false,
-          workingSecondsLastTask: 0,
-        }),
+            ...currentTask,
+            countPomodoro: currentTask.countPomodoro - 1,
+            finishedPomodoro: currentTask.finishedPomodoro + 1,
+            active: false,
+            workingSecondsLastTask: 0,
+          }),
     );
   };
 
@@ -102,14 +110,12 @@ export function TimerBody({ currentTask, taskName }: ITimerBody) {
 
   return (
     <div className={styles.body}>
-      <Settings/>
+      <Settings />
       <ClockFace
         key={currentTask?.id}
         handlers={{ finishTask }}
         isStopDown={isStopDown}
-        secondsOnUpdate={
-          calculateNewSeconds(isBreak, finishedTasks)
-        }
+        secondsOnUpdate={calculateNewSeconds(isBreak, finishedTasks)}
       />
       <div className={styles.description}>
         <span className={styles.description__text}>Задача 1 - </span>
@@ -117,16 +123,17 @@ export function TimerBody({ currentTask, taskName }: ITimerBody) {
       </div>
       <ManagePanel
         handlers={{
-          stopTimer, startTimer, finishTask, setIsStopDown,
+          stopTimer,
+          startTimer,
+          finishTask,
+          setIsStopDown,
         }}
-        secondsOnUpdate={
-          calculateNewSeconds(isBreak, finishedTasks)
-        }
+        secondsOnUpdate={calculateNewSeconds(isBreak, finishedTasks)}
       />
       <Notification
         setShowNotification={setShowNotification}
         showNotification={showNotification}
-        text={isBreak ? 'Пора отдохнуть!' : 'Перерыв окончен!' }
+        text={isBreak ? 'Пора отдохнуть!' : 'Перерыв окончен!'}
       />
     </div>
   );

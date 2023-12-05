@@ -29,5 +29,5 @@ export const currentDate = () => {
 
 export function getDayIndexWithMondayAsFirstDay(date: Date) {
   const dayIndex = date.getDay();
-  return (dayIndex === 0) ? 6 : dayIndex - 1;
+  return dayIndex === 0 ? 6 : dayIndex - 1;
 }

@@ -4,7 +4,7 @@ import styles from './PomodoroCard.module.css';
 import { Icon } from '../Icon';
 import { getSelectedStatistic } from '../../store/slices/statistic';
 
-function getPomodoroString(count:number) {
+function getPomodoroString(count: number) {
   let ending;
 
   if (count % 10 === 1 && count % 100 !== 11) {
@@ -23,10 +23,12 @@ export function PomodoroCard() {
   return (
     <div className={styles.card}>
       <div className={styles.card__body}>
-        <Icon name={'tomato'}/>
+        <Icon name={'tomato'} />
         <span className={styles.card__count}>{`x\u00A0${finishedTasks}`}</span>
       </div>
-      <p className={styles.card__footer}>{finishedTasks} {getPomodoroString(finishedTasks)}</p>
+      <p className={styles.card__footer}>
+        {finishedTasks} {getPomodoroString(finishedTasks)}
+      </p>
     </div>
   );
 }

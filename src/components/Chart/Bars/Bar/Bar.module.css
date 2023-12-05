@@ -45,11 +45,11 @@
 }
 
 .day--selected {
-  color: var(--red)
+  color: var(--red);
 }
 
 .day::after {
-  content: "";
+  content: '';
   position: absolute;
   inset: -8px -20px -8px -20px;
 }

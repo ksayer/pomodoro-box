@@ -15,13 +15,13 @@
   z-index: 10;
 }
 
-.item[aria-disabled=true] {
+.item[aria-disabled='true'] {
   cursor: not-allowed;
 }
 
 .item::before,
 .item::after {
-  content: "";
+  content: '';
   position: absolute;
   width: 100%;
   height: 1px;
@@ -87,7 +87,7 @@
   color: var(--white);
 }
 
-@media(max-width: 560px) {
+@media (max-width: 560px) {
   .item {
     font-size: 14px;
   }

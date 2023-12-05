@@ -1,6 +1,6 @@
 .tasks {
   max-width: 370px;
-  grid-column: 1 / 6
+  grid-column: 1 / 6;
 }
 
 .tasks--green {
@@ -18,14 +18,14 @@
   line-height: 17px;
 }
 
-@media(max-width: 1024px) {
+@media (max-width: 1024px) {
   .tasks {
     grid-column: 1;
     max-width: 1024px;
   }
 }
 
-@media(max-width: 560px) {
+@media (max-width: 560px) {
   .total-time {
     font-size: 14px;
   }

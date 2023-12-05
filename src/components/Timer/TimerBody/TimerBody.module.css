@@ -18,9 +18,8 @@
 }
 
 .description__text {
-  color: var(--semi-grey)
+  color: var(--semi-grey);
 }
-
 
 @media (max-width: 560px) {
   .body {

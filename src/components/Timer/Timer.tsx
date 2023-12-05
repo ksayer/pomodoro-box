@@ -14,17 +14,17 @@ export function Timer() {
   const taskName = currentTask?.name || DEFAULT_TASK_NAME;
   const { pomodoroDurationMinutes } = useSelector(getSettings);
 
-  useEffect(() => () => {
-    dispatcher(setStatus('isStop'));
-  }, [dispatcher]);
+  useEffect(
+    () => () => {
+      dispatcher(setStatus('isStop'));
+    },
+    [dispatcher],
+  );
 
   return (
     <div className={styles['timer-wrapper']}>
       <div>
-        <TimerHeader
-          taskName={taskName}
-          finishedPomodoro={currentTask?.finishedPomodoro || 0}
-        />
+        <TimerHeader taskName={taskName} finishedPomodoro={currentTask?.finishedPomodoro || 0} />
         <TimerBody
           key={`${pomodoroDurationMinutes}`}
           currentTask={currentTask}

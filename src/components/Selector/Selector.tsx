@@ -7,9 +7,9 @@ import { getStatistic, setSelectedDay } from '../../store/slices/statistic';
 import { dateToStoreFormat } from '../../utils/datetime';
 
 type TypeMenuButton = {
-  name: string,
-  weekNumber: number,
-}
+  name: string;
+  weekNumber: number;
+};
 
 const menuButtons: TypeMenuButton[] = [
   { name: 'Эта неделя', weekNumber: 0 },
@@ -24,12 +24,14 @@ export function Selector() {
   const { selectedDay } = useSelector(getStatistic);
   const ref = useRef<HTMLDivElement>(null);
 
-  const selectorButtons = menuButtons.filter((b) => b.name !== selected.name);
+  const selectorButtons = menuButtons.filter(b => b.name !== selected.name);
 
   const handleClickSelector = (btn: TypeMenuButton) => {
     setSelected(btn);
     const dateOnSelectedWeek = new Date(selectedDay);
-    dateOnSelectedWeek.setDate(dateOnSelectedWeek.getDate() + (btn.weekNumber - selected.weekNumber) * 7);
+    dateOnSelectedWeek.setDate(
+      dateOnSelectedWeek.getDate() + (btn.weekNumber - selected.weekNumber) * 7,
+    );
     dispatch(setSelectedDay(dateToStoreFormat(dateOnSelectedWeek)));
   };
 
@@ -37,26 +39,28 @@ export function Selector() {
     <div className={styles.selector} ref={ref}>
       <Dropdown
         button={selected.name}
-        buttonStyles={`${styles.btn} ${styles.main_btn} ${selectorOpened ? styles['main_btn--active'] : ''}`}
+        buttonStyles={`${styles.btn} ${styles.main_btn} ${
+          selectorOpened ? styles['main_btn--active'] : ''
+        }`}
         isDropdownOpen={selectorOpened}
         setIsDropdownOpen={setSelectorOpened}
       >
-        <ul className={styles.list}
-            style={{
-              transform: `translateY(${ref.current?.offsetHeight}px)`,
-              width: `${ref.current?.offsetWidth}px`,
-            }}
+        <ul
+          className={styles.list}
+          style={{
+            transform: `translateY(${ref.current?.offsetHeight}px)`,
+            width: `${ref.current?.offsetWidth}px`,
+          }}
         >
-          {
-            selectorButtons.map((btn) => (
-              <button key={getRandomString()}
-                      className={styles.btn}
-                      onClick={() => handleClickSelector(btn)}
-              >
-                <span>{btn.name}</span>
-              </button>
-            ))
-          }
+          {selectorButtons.map(btn => (
+            <button
+              key={getRandomString()}
+              className={styles.btn}
+              onClick={() => handleClickSelector(btn)}
+            >
+              <span>{btn.name}</span>
+            </button>
+          ))}
         </ul>
       </Dropdown>
     </div>

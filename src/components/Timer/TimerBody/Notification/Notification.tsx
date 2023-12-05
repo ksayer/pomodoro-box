@@ -4,9 +4,9 @@ import { Modal } from '../../../Modal';
 import ring from '../../../../assets/ring.mp3';
 
 interface INotification {
-  showNotification: boolean,
-  setShowNotification: Dispatch<SetStateAction<boolean>>,
-  text: string,
+  showNotification: boolean;
+  setShowNotification: Dispatch<SetStateAction<boolean>>;
+  text: string;
 }
 
 export function Notification({ showNotification, setShowNotification, text }: INotification) {
@@ -23,20 +23,21 @@ export function Notification({ showNotification, setShowNotification, text }: IN
 
   return (
     <>
-    <Modal close={close} isModalOpened={showNotification}>
-      <div className={styles.modal}>
-        <h3 className={styles.title}>{text}</h3>
-        <button
-          className={'btn btn--green'}
-          onClick={() => {
-            audio.pause();
-            setAudio(new Audio(ring));
-            setShowNotification(false);
-          }}
-        >Ок
-        </button>
-      </div>
-    </Modal>
+      <Modal close={close} isModalOpened={showNotification}>
+        <div className={styles.modal}>
+          <h3 className={styles.title}>{text}</h3>
+          <button
+            className={'btn btn--green'}
+            onClick={() => {
+              audio.pause();
+              setAudio(new Audio(ring));
+              setShowNotification(false);
+            }}
+          >
+            Ок
+          </button>
+        </div>
+      </Modal>
     </>
   );
 }

@@ -14,8 +14,20 @@ import { ReactComponent as Stop } from './stop.svg';
 import { ReactComponent as Settings } from './settings.svg';
 
 export type IconName =
-  'logo' | 'statistic' | 'menu' | 'minus' | 'edit' | 'delete' | 'plus' |
-  'filledPlus' | 'tomato' | 'smileTomato' | 'focus' | 'stop' | 'pause' | 'settings'
+  | 'logo'
+  | 'statistic'
+  | 'menu'
+  | 'minus'
+  | 'edit'
+  | 'delete'
+  | 'plus'
+  | 'filledPlus'
+  | 'tomato'
+  | 'smileTomato'
+  | 'focus'
+  | 'stop'
+  | 'pause'
+  | 'settings';
 
 export const svgIconConfig = {
   logo: { component: Logo, width: 40, height: 40 },

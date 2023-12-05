@@ -1,5 +1,5 @@
-@import "./normalize.css";
-@import "./fonts.css";
+@import './normalize.css';
+@import './fonts.css';
 
 html {
   overflow-y: scroll;
@@ -35,7 +35,7 @@ body {
 .btn--green {
   background-color: var(--green);
   color: var(--white);
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .btn--green:focus {
@@ -54,7 +54,7 @@ body {
 .btn--red {
   background-color: var(--red);
   color: var(--white);
-  transition: background-color .3s;
+  transition: background-color 0.3s;
 }
 
 .btn--red:hover {
@@ -76,15 +76,15 @@ body {
   box-shadow: 0 0 10px 7px var(--very-red);
 }
 
-@media(max-width: 1024px) {
+@media (max-width: 1024px) {
   .container {
-    padding: 0 30px
+    padding: 0 30px;
   }
 }
 
-@media(max-width: 560px) {
+@media (max-width: 560px) {
   .container {
-    padding: 0 10px
+    padding: 0 10px;
   }
   .timer__description {
     font-size: 14px;

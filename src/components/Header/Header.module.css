@@ -1,9 +1,9 @@
-@import "../../styles/variables.css";
+@import '../../styles/variables.css';
 
 .header {
   padding: 15px 0;
   box-shadow: 0 10px 63px 0 rgba(0, 0, 0, 0.07);
-  transition: background-color .3s;
+  transition: background-color 0.3s;
 }
 
 [data-theme='dark'] header {
@@ -18,7 +18,7 @@
 
 .link {
   display: flex;
-  transition: transform .1s;
+  transition: transform 0.1s;
 }
 
 .logo {
@@ -39,7 +39,7 @@
 
 .link-text {
   color: var(--red);
-  transition: color .3s;
+  transition: color 0.3s;
 }
 
 .link:focus {
@@ -66,8 +66,7 @@
   line-height: 24px;
 }
 
-
-@media(max-width: 560px) {
+@media (max-width: 560px) {
   .header {
     padding: 5px 0;
   }

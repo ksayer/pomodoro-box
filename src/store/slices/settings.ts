@@ -10,13 +10,13 @@ import {
 type SettingsTheme = 'dark' | 'light';
 
 export type Settings = {
-  theme: SettingsTheme,
-  pomodoroDurationMinutes: number,
-  shortBreakDurationMinutes: number,
-  longBreakDurationMinutes: number,
-  pomodoroBetweenLongBreak: number,
-  enableNotification: boolean,
-}
+  theme: SettingsTheme;
+  pomodoroDurationMinutes: number;
+  shortBreakDurationMinutes: number;
+  longBreakDurationMinutes: number;
+  pomodoroBetweenLongBreak: number;
+  enableNotification: boolean;
+};
 
 const initialState: Settings = {
   theme: 'light',
@@ -31,7 +31,7 @@ export const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
-    toggleTheme: (state) => {
+    toggleTheme: state => {
       state.theme = state.theme === 'dark' ? 'light' : 'dark';
     },
     updatePomodoroDurationMinutes: (state, action: PayloadAction<number>) => {
@@ -40,7 +40,10 @@ export const settingsSlice = createSlice({
     updateShortBreakDurationMinutes: (state, action: PayloadAction<number>) => {
       state.shortBreakDurationMinutes = action.payload;
     },
-    updateSettings: (state, action: PayloadAction<object>) => ({ ...state, ...action.payload }),
+    updateSettings: (state, action: PayloadAction<object>) => ({
+      ...state,
+      ...action.payload,
+    }),
   },
 });
 

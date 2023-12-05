@@ -1,8 +1,8 @@
 type SpecialTime = {
-  hours: number,
-  minutes: number,
-  seconds: number
-}
+  hours: number;
+  minutes: number;
+  seconds: number;
+};
 
 export const convertSeconds = (durationSeconds: number): SpecialTime => {
   const hours = Math.floor(durationSeconds / 3600);

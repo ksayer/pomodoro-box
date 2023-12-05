@@ -2,7 +2,7 @@
   position: relative;
   min-width: 370px;
   background-color: var(--light-grey);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: all var(--transition);
 }
 
@@ -30,7 +30,7 @@
 }
 
 .main_btn::after {
-  content: "";
+  content: '';
   position: absolute;
   right: 15px;
   width: 10px;
@@ -38,10 +38,10 @@
   border-left: 2px solid var(--dark-red);
   border-bottom: 2px solid var(--dark-red);
   transform: rotate(-45deg);
-  transition: transform .3s;
+  transition: transform 0.3s;
 }
 
-.main_btn--active::after{
+.main_btn--active::after {
   transform: rotate(-225deg);
 }
 
@@ -55,7 +55,7 @@
   align-items: flex-start;
   width: 100%;
   background-color: var(--light-grey);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: all var(--transition);
 }
 

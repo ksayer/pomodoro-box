@@ -7,17 +7,17 @@ import { DayStatistic, getSelectedStatistic } from '../../store/slices/statistic
 import { convertSeconds } from '../../utils/convertSeconds';
 
 type Card = {
-  title: string,
-  activeClass: string,
-  icon: IconName,
+  title: string;
+  activeClass: string;
+  icon: IconName;
   res: (globalCounter: DayStatistic) => string | number;
-}
+};
 
 type CardsData = {
-  focus: Card,
-  pauseTime: Card,
-  stops: Card,
-}
+  focus: Card;
+  pauseTime: Card;
+  stops: Card;
+};
 
 const cardsData: CardsData = {
   focus: {
@@ -63,20 +63,16 @@ function getPauseResult(statistic: DayStatistic) {
   return result;
 }
 
-export function WideCard({ cardName }: {cardName: keyof CardsData}) {
+export function WideCard({ cardName }: { cardName: keyof CardsData }) {
   const card = cardsData[cardName];
   const statistic = useSelector(getSelectedStatistic);
   return (
     <div className={`${styles.card} ${statistic.workingTime ? card.activeClass : ''}`}>
       <div className={styles.card__content}>
-        <h3 className={styles.card__title}>
-          {card.title}
-        </h3>
-        <p className={styles.card__text}>
-          {card.res(statistic)}
-        </p>
+        <h3 className={styles.card__title}>{card.title}</h3>
+        <p className={styles.card__text}>{card.res(statistic)}</p>
       </div>
-      <Icon name={card.icon} className={styles.card__svg}/>
+      <Icon name={card.icon} className={styles.card__svg} />
     </div>
   );
 }
