@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useEffect} from "react";
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 
 interface IUseClickOutside {
   ref:React.RefObject<HTMLDivElement>,
@@ -6,23 +6,23 @@ interface IUseClickOutside {
   isOpen?: boolean
 }
 
-export const useClickOutside = ({ref, setIsOpen, isOpen}: IUseClickOutside) => {
+export const useClickOutside = ({ ref, setIsOpen, isOpen }: IUseClickOutside) => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as HTMLElement)){
+      if (ref.current && !ref.current.contains(event.target as HTMLElement)) {
         setIsOpen(false);
       }
-    }
-    const closeHandler = () => setIsOpen(false)
+    };
+    const closeHandler = () => setIsOpen(false);
     let timeoutId: NodeJS.Timeout;
     if (isOpen) {
-      timeoutId = setTimeout(() => document.addEventListener('click', handleClickOutside), 0)
+      timeoutId = setTimeout(() => document.addEventListener('click', handleClickOutside), 0);
     }
     window.addEventListener('resize', closeHandler);
     return () => {
       clearTimeout(timeoutId);
       document.removeEventListener('click', handleClickOutside);
       window.removeEventListener('resize', closeHandler);
-    }
-  }, [ref, setIsOpen, isOpen])
-}
+    };
+  }, [ref, setIsOpen, isOpen]);
+};

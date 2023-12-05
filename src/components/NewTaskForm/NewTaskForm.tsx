@@ -1,9 +1,9 @@
-import React, {ChangeEvent, FormEvent, useState} from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './NewTaskForm.module.css';
-import {useDispatch, useSelector} from "react-redux";
-import {addNewTask, selectTasks, updateTask} from "../../store/slices/tasks";
-import {getRandomString} from "../../utils/randomString";
-import {getTimerStatus} from "../../store/slices/timer";
+import { addNewTask, selectTasks, updateTask } from '../../store/slices/tasks';
+import { getRandomString } from '../../utils/randomString';
+import { getTimerStatus } from '../../store/slices/timer';
 
 export function NewTaskForm() {
   const [value, setValue] = useState('');
@@ -18,19 +18,21 @@ export function NewTaskForm() {
   }
   function onSubmit(event: FormEvent) {
     event.preventDefault();
-    if (tasks.find(obj => obj.name === value)) {
-      setErrorMessage('Такая задача уже есть в списке')
-      return
+    if (tasks.find((obj) => obj.name === value)) {
+      setErrorMessage('Такая задача уже есть в списке');
+      return;
     }
 
-    if (tasks[0].fake) {
-      dispatch(updateTask({...tasks[0], fake: false, name: value}))
+    if (tasks[0]?.fake) {
+      dispatch(updateTask({ ...tasks[0], fake: false, name: value }));
     } else {
-      const newTask = {id: getRandomString(), name: value, countPomodoro: 1, finishedPomodoro: 0, active: false, fake: false, workingSecondsLastTask: 0};
+      const newTask = {
+        id: getRandomString(), name: value, countPomodoro: 1, finishedPomodoro: 0, active: false, fake: false, workingSecondsLastTask: 0,
+      };
       if (status !== 'isStop' && !tasks.length) {
         newTask.active = true;
       }
-      dispatch(addNewTask(newTask))
+      dispatch(addNewTask(newTask));
     }
   }
 

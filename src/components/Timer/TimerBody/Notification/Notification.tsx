@@ -1,7 +1,7 @@
-import React, {Dispatch, SetStateAction, useState} from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import styles from './Notification.module.css';
-import {Modal} from "../../../Modal";
-import ring from "../../../../assets/ring.mp3";
+import { Modal } from '../../../Modal';
+import ring from '../../../../assets/ring.mp3';
 
 interface INotification {
   showNotification: boolean,
@@ -9,17 +9,17 @@ interface INotification {
   text: string,
 }
 
-export function Notification({showNotification, setShowNotification, text}: INotification) {
-  const [audio, setAudio] = useState(new Audio(ring))
+export function Notification({ showNotification, setShowNotification, text }: INotification) {
+  const [audio, setAudio] = useState(new Audio(ring));
   if (showNotification) {
-    audio.loop = true
-    audio.play()
+    audio.loop = true;
+    audio.play();
   }
 
   const close = () => {
     audio.pause();
     setShowNotification(false);
-  }
+  };
 
   return (
     <>
@@ -27,9 +27,9 @@ export function Notification({showNotification, setShowNotification, text}: INot
       <div className={styles.modal}>
         <h3 className={styles.title}>{text}</h3>
         <button
-          className={`btn btn--green`}
+          className={'btn btn--green'}
           onClick={() => {
-            audio.pause()
+            audio.pause();
             setAudio(new Audio(ring));
             setShowNotification(false);
           }}

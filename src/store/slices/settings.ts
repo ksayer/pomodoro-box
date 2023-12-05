@@ -1,12 +1,11 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {RootState} from "../store";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 import {
   BREAK_DURATION_MINUTES,
   LONG_BREAK_DURATION_MINUTES,
   POMODORO_BETWEEN_LONG_BREAK,
-  POMODORO_DURATION_MINUTES
-} from "../../constants";
-
+  POMODORO_DURATION_MINUTES,
+} from '../../constants';
 
 type SettingsTheme = 'dark' | 'light';
 
@@ -26,7 +25,7 @@ const initialState: Settings = {
   longBreakDurationMinutes: LONG_BREAK_DURATION_MINUTES,
   pomodoroBetweenLongBreak: POMODORO_BETWEEN_LONG_BREAK,
   enableNotification: true,
-}
+};
 
 export const settingsSlice = createSlice({
   name: 'settings',
@@ -41,18 +40,15 @@ export const settingsSlice = createSlice({
     updateShortBreakDurationMinutes: (state, action: PayloadAction<number>) => {
       state.shortBreakDurationMinutes = action.payload;
     },
-    updateSettings: (state, action: PayloadAction<{}>) => {
-      return  {...state, ...action.payload}
-    }
-  }
-})
-
+    updateSettings: (state, action: PayloadAction<object>) => ({ ...state, ...action.payload }),
+  },
+});
 
 export const {
   toggleTheme,
   updateSettings,
   updatePomodoroDurationMinutes,
-  updateShortBreakDurationMinutes
+  updateShortBreakDurationMinutes,
 } = settingsSlice.actions;
 
 export const getSettings = (state: RootState) => state.settings;

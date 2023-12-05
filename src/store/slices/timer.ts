@@ -1,6 +1,6 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {RootState} from "../store";
-import {POMODORO_DURATION_MINUTES} from "../../constants";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../store';
+import { POMODORO_DURATION_MINUTES } from '../../constants';
 
 export type TStatus = 'isWork' | 'isStop' | 'isPause';
 
@@ -13,9 +13,8 @@ export type TimerStore = {
 const initialState: TimerStore = {
   status: 'isStop',
   isBreak: false,
-  seconds: POMODORO_DURATION_MINUTES * 60
-}
-
+  seconds: POMODORO_DURATION_MINUTES * 60,
+};
 
 export const timerSlice = createSlice({
   name: 'timer',
@@ -30,9 +29,8 @@ export const timerSlice = createSlice({
     toggleIsBreak: (state) => {
       state.isBreak = !state.isBreak;
     },
-  }
-})
-
+  },
+});
 
 export const {
   setStatus,

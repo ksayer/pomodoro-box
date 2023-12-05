@@ -1,50 +1,48 @@
-import React, {createRef} from 'react';
+import React, { createRef } from 'react';
 import './transition.css';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  closestCenter, DndContext, useSensor, useSensors,
+} from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styles from './TasksList.module.css';
-import {Task} from "./Task";
-import {useDispatch, useSelector} from "react-redux";
-import {moveTasks, selectRealTasks} from "../../store/slices/tasks";
-import {POMODORO_DURATION_MINUTES} from "../../constants";
-import {closestCenter, DndContext, useSensor, useSensors} from "@dnd-kit/core";
-import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
-import {CustomMouseSensor, CustomTouchSensor} from "../../librariesCustomization/dndKit";
-import {convertSeconds} from "../../utils/convertSeconds";
-import {CSSTransition, TransitionGroup} from "react-transition-group";
-
+import { Task } from './Task';
+import { moveTasks, selectRealTasks } from '../../store/slices/tasks';
+import { POMODORO_DURATION_MINUTES } from '../../constants';
+import { CustomMouseSensor, CustomTouchSensor } from '../../librariesCustomization/dndKit';
+import { convertSeconds } from '../../utils/convertSeconds';
 
 const getDurationString = (totalMinutes: number) => {
-  const {hours, minutes} = convertSeconds(totalMinutes * 60)
-  let result = ''
+  const { hours, minutes } = convertSeconds(totalMinutes * 60);
+  let result = '';
   if (hours) result = `${hours} ч`;
-  if (minutes) result =  `${result} ${minutes} минут`;
+  if (minutes) result = `${result} ${minutes} минут`;
   return result;
-}
-
+};
 
 export function TasksList() {
   const tasks = useSelector(selectRealTasks);
   const dispatch = useDispatch();
-  const minutes = tasks.reduce(
-    (accumulator, currentValue) => (
-      accumulator + currentValue.countPomodoro * POMODORO_DURATION_MINUTES
-    ), 0)
-  const timeString = getDurationString(minutes)
-
+  const minutes = tasks.reduce((accumulator, currentValue) => (
+    accumulator + currentValue.countPomodoro * POMODORO_DURATION_MINUTES
+  ), 0);
+  const timeString = getDurationString(minutes);
 
   const onDragEnd = (event: any) => {
-    dispatch(moveTasks({activeId: event.active.id, overId: event.over.id}))
-  }
+    dispatch(moveTasks({ activeId: event.active.id, overId: event.over.id }));
+  };
 
   const sensors = useSensors(
     useSensor(CustomMouseSensor),
     useSensor(CustomTouchSensor),
-  )
+  );
 
   return (
     <div className={styles.tasks}>
       <DndContext sensors={sensors} onDragEnd={onDragEnd} collisionDetection={closestCenter}>
         <SortableContext strategy={verticalListSortingStrategy} items={tasks} >
-            <TransitionGroup  className={styles.list}>
+            <TransitionGroup className={styles.list}>
               {tasks.map((task) => {
                 const nodeRef = createRef<HTMLDivElement>();
                 return <CSSTransition
@@ -56,7 +54,7 @@ export function TasksList() {
                     <div ref={nodeRef}>
                       <Task key={task.id} task={task}/>
                     </div>
-                </CSSTransition>
+                </CSSTransition>;
               })}
             </TransitionGroup>
         </SortableContext>

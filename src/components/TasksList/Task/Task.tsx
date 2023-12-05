@@ -1,23 +1,21 @@
-import React, {FC, useState} from 'react';
+import React, { FC, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import styles from './Task.module.css';
-import {Menu} from "./Menu";
-import {TaskType, updateTask} from "../../../store/slices/tasks";
-import {useDispatch} from "react-redux";
-import {useSortable} from "@dnd-kit/sortable";
-import {CSS} from '@dnd-kit/utilities';
+import { Menu } from './Menu';
+import { TaskType, updateTask } from '../../../store/slices/tasks';
 
-
-
-export const Task: FC<{ task: TaskType }> = ({task}) => {
+export const Task: FC<{ task: TaskType }> = ({ task }) => {
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(task.name);
   const dispatch = useDispatch();
 
   const onBlur = () => {
     const newName = !value ? task.name : value;
-    dispatch(updateTask({...task, name: newName}))
+    dispatch(updateTask({ ...task, name: newName }));
     setEditing(false);
-  }
+  };
 
   const {
     attributes,
@@ -25,8 +23,7 @@ export const Task: FC<{ task: TaskType }> = ({task}) => {
     setNodeRef,
     transform,
     transition,
-  } = useSortable({id: task.id, disabled: task.active});
-
+  } = useSortable({ id: task.id, disabled: task.active });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -37,19 +34,18 @@ export const Task: FC<{ task: TaskType }> = ({task}) => {
     <li
       data-no-dnd={editing}
       className={`${styles.item} ${styles['item--draggable']}`}
-      ref={task.active ? null: setNodeRef}
+      ref={task.active ? null : setNodeRef}
       style={style} {...attributes} {...listeners}
     >
-      <div className={styles['item__content']} >
-        <div className={`${styles.counter} ${task.active? styles["counter--active"] : ""}`}>{task.countPomodoro}</div>
-        {!editing ?
-          (<div
+      <div className={styles.item__content} >
+        <div className={`${styles.counter} ${task.active ? styles['counter--active'] : ''}`}>{task.countPomodoro}</div>
+        {!editing
+          ? (<div
             className={`${styles.name}`}>
             {task.name}
           </div>)
-          :
-          (<input data-no-dnd={false}
-              style={{outline: "none", border: "none"}}
+          : (<input data-no-dnd={false}
+              style={{ outline: 'none', border: 'none' }}
               className={`${styles.input}`}
               autoFocus={true}
               onBlur={onBlur}
@@ -62,4 +58,4 @@ export const Task: FC<{ task: TaskType }> = ({task}) => {
       </div>
     </li>
   );
-}
+};

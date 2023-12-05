@@ -1,8 +1,8 @@
-import React, {FC, useRef} from 'react';
+import React, { FC, useRef } from 'react';
 import styles from './Modal.module.css';
 import './transition.css';
-import ReactDOM from "react-dom";
-import {CSSTransition} from "react-transition-group";
+import ReactDOM from 'react-dom';
+import { CSSTransition } from 'react-transition-group';
 
 interface IModal {
   children: React.ReactNode,
@@ -10,14 +10,14 @@ interface IModal {
   isModalOpened: boolean,
 }
 
-export const Modal: FC<IModal> = ({children, close, isModalOpened}) => {
+export const Modal: FC<IModal> = ({ children, close, isModalOpened }) => {
   const ref = useRef(null);
 
   const onWrapperClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    ref.current &&
-    e.target === ref.current &&
-    close()
-  }
+    ref.current
+    && e.target === ref.current
+    && close();
+  };
 
   const modalContainer = document.querySelector('#modal-container');
   if (!modalContainer) return null;
@@ -35,8 +35,8 @@ export const Modal: FC<IModal> = ({children, close, isModalOpened}) => {
           onClick={onWrapperClick}
           ref={ref} className={`${styles.modal}`}>{children}
         </div>
-      </CSSTransition>
-      , modalContainer
+      </CSSTransition>,
+      modalContainer,
     )
   );
-}
+};

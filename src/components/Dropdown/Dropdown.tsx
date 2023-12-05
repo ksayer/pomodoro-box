@@ -1,7 +1,9 @@
-import React, {Dispatch, FC, SetStateAction, useRef, useState} from 'react';
-import styles from './Dropdown.module.css';
+import React, {
+  Dispatch, FC, SetStateAction, useRef, useState,
+} from 'react';
 import ReactDOM from 'react-dom';
-import {useClickOutside} from '../../hooks/useClickOutside'
+import styles from './Dropdown.module.css';
+import { useClickOutside } from '../../hooks/useClickOutside';
 
 interface IDropdown {
   isDropdownOpen: boolean,
@@ -17,10 +19,12 @@ interface ICoords {
   top: number,
 }
 
-export const Dropdown: FC<IDropdown> = ({isDropdownOpen, setIsDropdownOpen, children, button, disabled, buttonStyles}) => {
+export const Dropdown: FC<IDropdown> = ({
+  isDropdownOpen, setIsDropdownOpen, children, button, disabled, buttonStyles,
+}) => {
   const ref = useRef<HTMLDivElement>(null);
   const [coords, setCoords] = useState<ICoords>({ left: 0, top: 0 });
-  useClickOutside({ref, setIsOpen: setIsDropdownOpen, isOpen: isDropdownOpen});
+  useClickOutside({ ref, setIsOpen: setIsDropdownOpen, isOpen: isDropdownOpen });
 
   const updateCoords: React.MouseEventHandler<HTMLElement> = (e) => {
     const rect = (e.target as HTMLElement).getBoundingClientRect();
@@ -36,19 +40,17 @@ export const Dropdown: FC<IDropdown> = ({isDropdownOpen, setIsDropdownOpen, chil
         className={`${buttonStyles} ${disabled && styles['btn--disabled']}`}
         onClick={(e) => {
           updateCoords(e);
-          setIsDropdownOpen(!isDropdownOpen)
+          setIsDropdownOpen(!isDropdownOpen);
         }}>
         {button}
       </button>
-      {isDropdownOpen && ReactDOM.createPortal(
-        <div
+      {isDropdownOpen && ReactDOM.createPortal(<div
           data-no-dnd={true}
-          style={{ left: coords.left, top: coords.top, position: "absolute"}}
+          style={{ left: coords.left, top: coords.top, position: 'absolute' }}
           className={styles.dropdown}
         >
           {children}
-        </div>, modalContainer
-      )}
+        </div>, modalContainer)}
     </div>
   );
-}
+};

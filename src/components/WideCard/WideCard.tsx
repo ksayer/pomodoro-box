@@ -1,10 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from './WideCard.module.css';
-import {Icon} from "../Icon";
-import {IconName} from "../../svg-icons";
-import {DayStatistic, getSelectedStatistic} from "../../store/slices/statistic";
-import {useSelector} from "react-redux";
-import {convertSeconds} from "../../utils/convertSeconds";
+import { Icon } from '../Icon';
+import { IconName } from '../../svg-icons';
+import { DayStatistic, getSelectedStatistic } from '../../store/slices/statistic';
+import { convertSeconds } from '../../utils/convertSeconds';
 
 type Card = {
   title: string,
@@ -36,38 +36,38 @@ const cardsData: CardsData = {
     title: 'Остановки',
     icon: 'stop',
     activeClass: `${styles['card--cyan']}`,
-    res: getStopsResult
-  }
-}
+    res: getStopsResult,
+  },
+};
 
 function getFocusResult(statistic: DayStatistic) {
-  const {pauseTime, workingTime, timeOnFinishedTasks} = statistic
+  const { pauseTime, workingTime, timeOnFinishedTasks } = statistic;
   if (!timeOnFinishedTasks) return '0%';
-  const result = `${Math.round(timeOnFinishedTasks / (workingTime + pauseTime) * 100)}`
+  const result = `${Math.round((timeOnFinishedTasks / (workingTime + pauseTime)) * 100)}`;
   return `${result}\u00A0%`;
 }
 
 function getStopsResult(statistic: DayStatistic) {
-  return statistic.stops
+  return statistic.stops;
 }
 
 function getPauseResult(statistic: DayStatistic) {
-  const pauseSeconds = Math.floor(statistic.pauseTime / 1000)
-  if (pauseSeconds && pauseSeconds < 60) return '< 1м'
+  const pauseSeconds = Math.floor(statistic.pauseTime / 1000);
+  if (pauseSeconds && pauseSeconds < 60) return '< 1м';
 
-  const {hours, minutes} = convertSeconds(statistic.pauseTime / 1000)
+  const { hours, minutes } = convertSeconds(statistic.pauseTime / 1000);
   let result = '';
-  if (hours) result = `${hours}ч`
-  if (minutes) result = `${result} ${minutes}м`
-  if (!result) return '0м'
-  return result
+  if (hours) result = `${hours}ч`;
+  if (minutes) result = `${result} ${minutes}м`;
+  if (!result) return '0м';
+  return result;
 }
 
-export function WideCard({cardName}: {cardName: keyof CardsData}) {
-  const card = cardsData[cardName]
-  const statistic = useSelector(getSelectedStatistic)
+export function WideCard({ cardName }: {cardName: keyof CardsData}) {
+  const card = cardsData[cardName];
+  const statistic = useSelector(getSelectedStatistic);
   return (
-    <div className={`${styles.card} ${statistic.workingTime ? card.activeClass : ""}`}>
+    <div className={`${styles.card} ${statistic.workingTime ? card.activeClass : ''}`}>
       <div className={styles.card__content}>
         <h3 className={styles.card__title}>
           {card.title}

@@ -1,50 +1,53 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './TimerBody.module.css';
-import {ClockFace} from "./ClockFace";
-import {ManagePanel} from "./ManagePanel";
-import {addNewTask, removeTask, selectTasks, TaskType, updateStatus, updateTask} from "../../../store/slices/tasks";
-import {useDispatch, useSelector} from "react-redux";
+import { ClockFace } from './ClockFace';
+import { ManagePanel } from './ManagePanel';
+import {
+  addNewTask, removeTask, selectTasks, TaskType, updateStatus, updateTask,
+} from '../../../store/slices/tasks';
 import {
   incrementFinishedTasks,
   getTodayStatistic, addTimeOnFinishedTasks,
-} from "../../../store/slices/statistic";
-import {getTimerStore, setSeconds, setStatus, toggleIsBreak} from "../../../store/slices/timer";
-import {Notification} from "./Notification";
-import {Settings} from "./Settings";
-import {getSettings} from "../../../store/slices/settings";
-import {getRandomString} from "../../../utils/randomString";
-import {DEFAULT_TASK_NAME} from "../../../constants";
+} from '../../../store/slices/statistic';
+import {
+  getTimerStore, setSeconds, setStatus, toggleIsBreak,
+} from '../../../store/slices/timer';
+import { Notification } from './Notification';
+import { Settings } from './Settings';
+import { getSettings } from '../../../store/slices/settings';
+import { getRandomString } from '../../../utils/randomString';
+import { DEFAULT_TASK_NAME } from '../../../constants';
+
 interface ITimerBody {
   currentTask: TaskType,
   taskName: string,
 }
 
-
-export function TimerBody({currentTask, taskName}: ITimerBody) {
+export function TimerBody({ currentTask, taskName }: ITimerBody) {
   const dispatcher = useDispatch();
-  const {finishedTasks} = useSelector(getTodayStatistic);
+  const { finishedTasks } = useSelector(getTodayStatistic);
   const {
     pomodoroDurationMinutes,
     longBreakDurationMinutes,
     pomodoroBetweenLongBreak,
-    shortBreakDurationMinutes
+    shortBreakDurationMinutes,
   } = useSelector(getSettings);
   const tasks = useSelector(selectTasks);
-  const {isBreak, status} = useSelector(getTimerStore);
+  const { isBreak, status } = useSelector(getTimerStore);
   const [isStopDown, setIsStopDown] = useState<boolean>(false);
   const [showNotification, setShowNotification] = useState(false);
 
   const calculateNewSeconds = (isBreak: boolean, finishedTasks: number) => {
     if (!isBreak) {
-      return pomodoroDurationMinutes * 60
-    } else {
-      return finishedTasks % pomodoroBetweenLongBreak === 0 ? longBreakDurationMinutes * 60 : shortBreakDurationMinutes * 60;
+      return pomodoroDurationMinutes * 60;
     }
-  }
+    return finishedTasks % pomodoroBetweenLongBreak === 0 ? longBreakDurationMinutes * 60 : shortBreakDurationMinutes * 60;
+  };
 
   const startTimer = () => {
     dispatcher(setStatus('isWork'));
-    dispatcher(updateTask({...currentTask, active: true}));
+    dispatcher(updateTask({ ...currentTask, active: true }));
     if (!tasks.length && !isBreak) {
       dispatcher(addNewTask({
         id: getRandomString(),
@@ -54,55 +57,55 @@ export function TimerBody({currentTask, taskName}: ITimerBody) {
         active: true,
         workingSecondsLastTask: 0,
         fake: true,
-      }))
+      }));
     }
-  }
+  };
 
   const stopTimer = (newSeconds: number) => {
-    dispatcher(setStatus('isStop'))
+    dispatcher(setStatus('isStop'));
     dispatcher(setSeconds(newSeconds));
-    dispatcher(updateStatus({id: currentTask?.id, active: false}));
+    dispatcher(updateStatus({ id: currentTask?.id, active: false }));
     if (tasks[0]?.fake) {
-      dispatcher(updateTask({...tasks[0], workingSecondsLastTask: 0}))
+      dispatcher(updateTask({ ...tasks[0], workingSecondsLastTask: 0 }));
     }
-  }
+  };
 
   const updateCurrentTask = () => {
-    dispatcher(addTimeOnFinishedTasks(currentTask.workingSecondsLastTask))
+    dispatcher(addTimeOnFinishedTasks(currentTask.workingSecondsLastTask));
     dispatcher(
-      currentTask.countPomodoro === 1 ?
-        removeTask({id: currentTask.id})
-        :
-        updateTask({
+      currentTask.countPomodoro === 1
+        ? removeTask({ id: currentTask.id })
+        : updateTask({
           ...currentTask,
           countPomodoro: currentTask.countPomodoro - 1,
           finishedPomodoro: currentTask.finishedPomodoro + 1,
           active: false,
           workingSecondsLastTask: 0,
-        }));
-  }
+        }),
+    );
+  };
 
   const finishTask = () => {
     let nextFinishedTasks = finishedTasks;
-    const nextIsBreak = !isBreak
-    dispatcher(toggleIsBreak())
+    const nextIsBreak = !isBreak;
+    dispatcher(toggleIsBreak());
     if (nextIsBreak) {
-      nextFinishedTasks = finishedTasks + 1
+      nextFinishedTasks = finishedTasks + 1;
       dispatcher(incrementFinishedTasks());
       if (currentTask) updateCurrentTask();
     }
     stopTimer(calculateNewSeconds(nextIsBreak, nextFinishedTasks));
     if (status !== 'isPause') {
-      setShowNotification(true)
+      setShowNotification(true);
     }
-  }
+  };
 
   return (
     <div className={styles.body}>
       <Settings/>
       <ClockFace
         key={currentTask?.id}
-        handlers={{finishTask}}
+        handlers={{ finishTask }}
         isStopDown={isStopDown}
         secondsOnUpdate={
           calculateNewSeconds(isBreak, finishedTasks)
@@ -113,7 +116,9 @@ export function TimerBody({currentTask, taskName}: ITimerBody) {
         {taskName}
       </div>
       <ManagePanel
-        handlers={{stopTimer, startTimer, finishTask, setIsStopDown}}
+        handlers={{
+          stopTimer, startTimer, finishTask, setIsStopDown,
+        }}
         secondsOnUpdate={
           calculateNewSeconds(isBreak, finishedTasks)
         }
@@ -121,7 +126,7 @@ export function TimerBody({currentTask, taskName}: ITimerBody) {
       <Notification
         setShowNotification={setShowNotification}
         showNotification={showNotification}
-        text={isBreak ? 'Пора отдохнуть!': 'Перерыв окончен!' }
+        text={isBreak ? 'Пора отдохнуть!' : 'Перерыв окончен!' }
       />
     </div>
   );

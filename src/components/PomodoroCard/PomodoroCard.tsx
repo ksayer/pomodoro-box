@@ -1,8 +1,8 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from './PomodoroCard.module.css';
-import {Icon} from "../Icon";
-import {useSelector} from "react-redux";
-import {getSelectedStatistic} from "../../store/slices/statistic";
+import { Icon } from '../Icon';
+import { getSelectedStatistic } from '../../store/slices/statistic';
 
 function getPomodoroString(count:number) {
   let ending;
@@ -19,11 +19,11 @@ function getPomodoroString(count:number) {
 }
 
 export function PomodoroCard() {
-  const { finishedTasks } = useSelector(getSelectedStatistic)
+  const { finishedTasks } = useSelector(getSelectedStatistic);
   return (
     <div className={styles.card}>
       <div className={styles.card__body}>
-        <Icon name={"tomato"}/>
+        <Icon name={'tomato'}/>
         <span className={styles.card__count}>{`x\u00A0${finishedTasks}`}</span>
       </div>
       <p className={styles.card__footer}>{finishedTasks} {getPomodoroString(finishedTasks)}</p>

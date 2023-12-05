@@ -8,7 +8,7 @@ export const WeekDaysFull: TWeekDays = {
   4: 'Пятница',
   5: 'Суббота',
   6: 'Воскресенье',
-}
+};
 
 export const WeekDayShort: TWeekDays = {
   1: 'Пн',
@@ -18,17 +18,14 @@ export const WeekDayShort: TWeekDays = {
   5: 'Пт',
   6: 'Cб',
   0: 'Вс',
-}
+};
 
+export const dateToStoreFormat = (date: Date) => date.toISOString().split('T')[0];
 
 export const currentDate = () => {
   const today = new Date();
   return dateToStoreFormat(today);
-}
-
-export const dateToStoreFormat = (date: Date) => {
-  return date.toISOString().split('T')[0]
-}
+};
 
 export function getDayIndexWithMondayAsFirstDay(date: Date) {
   const dayIndex = date.getDay();

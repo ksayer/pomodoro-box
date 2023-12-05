@@ -1,24 +1,23 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import styles from './Theme.module.css';
-import {useDispatch, useSelector} from "react-redux";
-import {getSettings, toggleTheme} from "../../store/slices/settings";
-
+import { toggleTheme } from '../../store/slices/settings';
 
 export function Theme() {
   const dispatch = useDispatch();
   return (
     <button
       onClick={() => {
-        dispatch(toggleTheme())
+        dispatch(toggleTheme());
       }}
       className={styles['theme-toggle']} title="Toggles light & dark" aria-label="auto" aria-live="polite">
-      <svg className={styles["sun-and-moon"]} aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
-        <mask className={styles["moon"]} id="moon-mask">
+      <svg className={styles['sun-and-moon']} aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
+        <mask className={styles.moon} id="moon-mask">
           <rect x="0" y="0" width="100%" height="100%" fill="white" />
           <circle cx="24" cy="10" r="6" fill="black" />
         </mask>
-        <circle className={styles["sun"]} cx="12" cy="12" r="6" mask="url(#moon-mask)" fill="currentColor" />
-        <g className={styles["sun-beams"]} stroke="currentColor">
+        <circle className={styles.sun} cx="12" cy="12" r="6" mask="url(#moon-mask)" fill="currentColor" />
+        <g className={styles['sun-beams']} stroke="currentColor">
           <line x1="12" y1="1" x2="12" y2="3" />
           <line x1="12" y1="21" x2="12" y2="23" />
           <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
