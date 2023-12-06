@@ -4,18 +4,18 @@ import styles from './Bar.module.css';
 import { selectStatistic, initialDayStatistic, setSelectedDay } from 'store/slices/statistic';
 import { WeekDayShort } from 'utils/datetime';
 
-interface IBar {
-  date: string;
-  selected: boolean;
-  chartMaxSeconds: number;
-}
-
 const getBarPercent = (workingTime: number, chartMaxSeconds: number) => {
   if (!workingTime) return 0;
   const workingTimeLimit = chartMaxSeconds * 1000;
   const completedPercent = (workingTime * 100) / workingTimeLimit;
   return Math.max(completedPercent, 1.3);
 };
+
+interface IBar {
+  date: string;
+  selected: boolean;
+  chartMaxSeconds: number;
+}
 
 export function Bar({ date, selected, chartMaxSeconds }: IBar) {
   const dispatch = useDispatch();

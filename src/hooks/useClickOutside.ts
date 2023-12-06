@@ -16,12 +16,12 @@ export const useClickOutside = ({ ref, setIsOpen, isOpen }: IUseClickOutside) =>
     const closeHandler = () => setIsOpen(false);
     let timeoutId: NodeJS.Timeout;
     if (isOpen) {
-      timeoutId = setTimeout(() => document.addEventListener('click', handleClickOutside), 0);
+      timeoutId = setTimeout(() => document.addEventListener('mousedown', handleClickOutside), 0);
     }
     window.addEventListener('resize', closeHandler);
     return () => {
       clearTimeout(timeoutId);
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
       window.removeEventListener('resize', closeHandler);
     };
   }, [ref, setIsOpen, isOpen]);

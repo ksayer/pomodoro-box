@@ -53,7 +53,7 @@
 
 [data-theme='dark'] .card--cyan,
 [data-theme='dark'] .card--cyan path {
-  background-color: var(--very-dark-red);
+  background-color: var(--pale-red);
 }
 
 @media (max-width: 1024px) {

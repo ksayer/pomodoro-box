@@ -63,7 +63,11 @@ function getPauseResult(statistic: DayStatistic) {
   return result;
 }
 
-export function WideCard({ cardName }: { cardName: keyof CardsData }) {
+interface IWideCard {
+  cardName: keyof CardsData;
+}
+
+export function WideCard({ cardName }: IWideCard) {
   const card = cardsData[cardName];
   const statistic = useSelector(selectSelectedStatistic);
   return (

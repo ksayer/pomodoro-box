@@ -1,12 +1,14 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { IconName, svgIconConfig } from 'svg-icons';
 
-export const Icon: FC<{
+interface IIcon {
   name: IconName;
   height?: number;
   width?: number;
   className?: string;
-}> = ({ name, height, width, className }) => {
+}
+
+export const Icon = ({ name, height, width, className }: IIcon) => {
   const IconComponent = svgIconConfig[name].component;
   const w = width || svgIconConfig[name].width;
   const h = height || svgIconConfig[name].height;

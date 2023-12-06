@@ -20,11 +20,15 @@
 }
 
 [data-theme='dark'] .header--red {
-  background-color: var(--very-dark-red);
+  background-color: var(--pale-red);
 }
 
 [data-theme='dark'] .header--green {
-  background-color: var(--very-dark-green);
+  background-color: var(--pale-green);
+}
+
+[data-theme='dark'] .header {
+  color: var(--grey);
 }
 
 @media (max-width: 560px) {

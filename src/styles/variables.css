@@ -2,6 +2,7 @@
   --red: #dc3e22;
   --dark-red: #b7280f;
   --very-red: #a12009;
+  --red-hover: #ee735d;
   --pink: #ea8a79;
   --grey: #c4c4c4;
   --semi-grey: #999;
@@ -24,15 +25,15 @@
 
   --card-padding: 25px;
 
-  --dark-171: #1a1a1a;
-  --dark-423: #423f3e;
-  --dark-2b2: #2b2b2b;
-  --brown: #362222;
-  --very-dark-red: #3b0202;
+  --dark-171: #262626;
+  --dark-2b2: #3a3939;
+  --dark-423: #4b4949;
+  --pale-green: #547328;
+  --pale-red: #a8443a;
   --very-dark-green: #142114;
 
-  --very-dark-peach: #31250b;
-  --very-dark-purple: #162c48;
+  --very-dark-peach: rgba(82, 76, 11, 0.53);
+  --very-dark-purple: #24315d;
   --very-dark-cyan: #162c48;
 
   --transition: 0.1s;

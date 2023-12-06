@@ -8,14 +8,6 @@ import { selectTimerStore, setSeconds } from 'store/slices/timer';
 import { incrementPauseTime, incrementWorkingTime } from 'store/slices/statistic';
 import { incrementWorkingSecondsLastTask, selectTasks } from 'store/slices/tasks';
 
-interface IClockFace {
-  secondsOnUpdate: number;
-  isStopDown: boolean;
-  handlers: {
-    finishTask: () => void;
-  };
-}
-
 function timeToString(time: number) {
   if (time < 10) return { firstNumber: 0, secondNumber: time };
   return { firstNumber: String(time)[0], secondNumber: String(time)[1] };
@@ -45,6 +37,14 @@ function useInterval(callback: () => void, delay: number | null) {
       return () => clearInterval(id);
     }
   }, [delay]);
+}
+
+interface IClockFace {
+  secondsOnUpdate: number;
+  isStopDown: boolean;
+  handlers: {
+    finishTask: () => void;
+  };
 }
 
 export const ClockFace = ({ secondsOnUpdate, isStopDown, handlers }: IClockFace) => {

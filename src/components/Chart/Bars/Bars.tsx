@@ -13,7 +13,11 @@ export const getDays = (selectedDay: string) =>
     return { date: dateToStoreFormat(dateWeekday) };
   });
 
-export function Bars({ chartMaxSeconds }: { chartMaxSeconds: number }) {
+interface IBars {
+  chartMaxSeconds: number;
+}
+
+export function Bars({ chartMaxSeconds }: IBars) {
   const { selectedDay } = useSelector(selectStatistic);
   const days = getDays(selectedDay);
   return (

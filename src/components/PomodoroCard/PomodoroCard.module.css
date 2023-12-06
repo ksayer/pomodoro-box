@@ -32,3 +32,7 @@
   font-size: 24px;
   font-weight: 700;
 }
+
+[data-theme='dark'] .card__footer {
+  background-color: var(--pale-red);
+}

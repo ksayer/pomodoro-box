@@ -65,7 +65,7 @@ body {
 }
 
 [data-theme='dark'] .btn--green {
-  background-color: var(--brown);
+  background-color: var(--pale-green);
 }
 
 [data-theme='dark'] .btn--green:hover {

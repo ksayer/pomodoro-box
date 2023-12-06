@@ -29,11 +29,19 @@
 }
 
 .bar:hover {
+  background-color: var(--red-hover);
+}
+
+.bar:active {
   background-color: var(--red);
 }
 
 .bar:hover .day {
-  color: red;
+  color: var(--red-hover);
+}
+
+.bar:active .day {
+  color: var(--red);
 }
 
 .day {
