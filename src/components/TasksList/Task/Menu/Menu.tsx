@@ -16,13 +16,12 @@ type TMenuButton = {
   onClick: () => void;
 };
 
-export function Menu({
-  task,
-  setEditing,
-}: {
+interface IMenu {
   task: TaskType;
   setEditing: Dispatch<SetStateAction<boolean>>;
-}) {
+}
+
+export function Menu({ task, setEditing }: IMenu) {
   const dispatch = useDispatch();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
@@ -68,7 +67,7 @@ export function Menu({
             <button
               key={getRandomString()}
               className={styles.btn}
-              onClick={btn.onClick}
+              onMouseDown={btn.onClick}
               disabled={disableBtn(btn)}
             >
               <Icon name={btn.iconName} />

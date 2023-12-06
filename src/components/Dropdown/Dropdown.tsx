@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './Dropdown.module.css';
 import { useClickOutside } from 'hooks/useClickOutside';
@@ -17,14 +17,14 @@ interface ICoords {
   top: number;
 }
 
-export const Dropdown: FC<IDropdown> = ({
+export const Dropdown = ({
   isDropdownOpen,
   setIsDropdownOpen,
   children,
   button,
   disabled,
   buttonStyles,
-}) => {
+}: IDropdown) => {
   const ref = useRef<HTMLDivElement>(null);
   const [coords, setCoords] = useState<ICoords>({ left: 0, top: 0 });
   useClickOutside({

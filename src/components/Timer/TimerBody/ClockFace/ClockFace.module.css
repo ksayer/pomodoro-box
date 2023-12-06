@@ -15,7 +15,7 @@
 }
 
 [data-theme='dark'] .counter--running {
-  color: var(--very-dark-red);
+  color: var(--pale-red);
 }
 
 .counter--break {
@@ -23,7 +23,7 @@
 }
 
 [data-theme='dark'] .counter--break {
-  color: var(--very-dark-green);
+  color: var(--pale-green);
 }
 
 .counter--stop {
@@ -31,7 +31,7 @@
 }
 
 [data-theme='dark'] .counter--stop {
-  color: var(--very-dark-red);
+  color: var(--pale-red);
 }
 
 .number {
@@ -72,7 +72,7 @@
 [data-theme='dark'] .plus-color circle,
 [data-theme='dark'] .uptime-btn:focus .plus-color circle,
 [data-theme='dark'] .uptime-btn:hover .plus-color circle {
-  fill: var(--dark-2b2);
+  fill: var(--semi-grey);
 }
 
 [data-theme='dark'] .uptime-btn:focus .plus-color,

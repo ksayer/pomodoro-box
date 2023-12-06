@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { useRef } from 'react';
 import styles from './Modal.module.css';
 import './transition.css';
 import ReactDOM from 'react-dom';
@@ -10,7 +10,7 @@ interface IModal {
   isModalOpened: boolean;
 }
 
-export const Modal: FC<IModal> = ({ children, close, isModalOpened }) => {
+export const Modal = ({ children, close, isModalOpened }: IModal) => {
   const ref = useRef(null);
 
   const onWrapperClick = (e: React.MouseEvent<HTMLDivElement>) => {

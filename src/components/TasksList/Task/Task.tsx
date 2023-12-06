@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -6,7 +6,11 @@ import styles from './Task.module.css';
 import { Menu } from './Menu';
 import { TaskType, updateTask } from 'store/slices/tasks';
 
-export const Task: FC<{ task: TaskType }> = ({ task }) => {
+interface ITask {
+  task: TaskType;
+}
+
+export const Task = ({ task }: ITask) => {
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(task.name);
   const dispatch = useDispatch();

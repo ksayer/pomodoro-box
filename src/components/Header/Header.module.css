@@ -42,6 +42,10 @@
   transition: color 0.3s;
 }
 
+[data-theme='dark'] .link-text {
+  color: var(--pale-red);
+}
+
 .link:focus {
   outline-color: var(--red);
   outline-offset: 5px;

@@ -17,6 +17,10 @@
   color: var(--red);
 }
 
+[data-theme='dark'] .card__text--red {
+  color: var(--pale-red);
+}
+
 @media (max-width: 1024px) {
   .card__title {
     font-size: 18px;
