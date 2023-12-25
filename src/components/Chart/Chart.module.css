@@ -1,0 +1,85 @@
+.chart {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.chart__top {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 73px;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 80px;
+  padding-right: 20px;
+  background-color: var(--light-grey);
+  transition: all var(--transition);
+}
+
+[data-theme='dark'] .chart__top {
+  background-color: var(--dark-423);
+}
+
+.chart__footer {
+  width: 100%;
+  height: 47px;
+  background-color: var(--average-grey);
+  transition: all var(--transition);
+}
+
+[data-theme='dark'] .chart__footer {
+  background-color: var(--dark-2b2);
+}
+
+.line {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.line::before {
+  content: '';
+  width: 88%;
+  height: 1px;
+  background-color: var(--semi-light-grey);
+}
+
+.time {
+  font-size: 12px;
+}
+
+@media (max-width: 1024px) {
+  .line::before {
+    width: 86%;
+  }
+}
+
+@media (max-width: 780px) {
+  .line::before {
+    width: 84%;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart__top {
+    padding-right: 0;
+    gap: 85px;
+    padding-bottom: 88px;
+  }
+
+  .time {
+    position: absolute;
+    top: -11px;
+    right: 10px;
+    font-size: 10px;
+  }
+  .line::before {
+    width: 100%;
+  }
+}

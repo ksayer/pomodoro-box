@@ -1,0 +1,38 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding-top: 25px;
+}
+
+.card__body {
+  padding-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.card__count {
+  color: var(--semi-grey);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 33px;
+  transform: translateY(7px);
+  width: 35px;
+}
+
+.card__footer {
+  width: 100%;
+  padding: 8px 0;
+  text-align: center;
+  background-color: var(--red);
+  color: var(--white);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+[data-theme='dark'] .card__footer {
+  background-color: var(--pale-red);
+}

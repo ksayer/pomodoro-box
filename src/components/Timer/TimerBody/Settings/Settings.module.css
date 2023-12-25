@@ -1,0 +1,80 @@
+.btn {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
+.btn svg g path {
+  transition: all 0.3s;
+}
+
+.btn:hover svg g path {
+  fill: var(--red);
+}
+
+[data-theme='dark'] .btn:hover svg g path {
+  fill: var(--pale-red);
+}
+
+.modal {
+  position: fixed;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px;
+  inset: 0;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  background-color: var(--white);
+}
+
+[data-theme='dark'] .modal {
+  background-color: var(--dark-423);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 33px;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.checkbox-label {
+  justify-content: unset;
+  justify-self: center;
+  align-self: center;
+  user-select: none;
+}
+
+.input {
+  font-size: 16px;
+  width: 50px;
+  height: 30px;
+  padding-left: 5px;
+}
+
+[data-theme='dark'] .input {
+  background-color: var(--dark-423);
+  color: var(--white);
+}
+
+.group--btn {
+  display: flex;
+  justify-content: center;
+  gap: 35px;
+}

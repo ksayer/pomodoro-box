@@ -1,0 +1,97 @@
+@import './normalize.css';
+@import './fonts.css';
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  min-width: 320px;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: 'SF UI Display', serif;
+  color: var(--black);
+  background-color: var(--white);
+  transition: all 0.3s;
+}
+
+[data-theme='dark'] body {
+  background-color: var(--dark-171);
+  color: var(--grey);
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+.btn {
+  padding: 19px 50px;
+  font-weight: 500;
+  line-height: 17px;
+}
+
+.btn--green {
+  background-color: var(--green);
+  color: var(--white);
+  transition: all 0.3s;
+}
+
+.btn--green:focus {
+  outline-color: var(--dark-green);
+  outline-offset: -1px;
+}
+
+.btn--green:hover {
+  background-color: var(--semi-dark-green);
+}
+
+.btn--green:active {
+  background-color: var(--dark-green);
+}
+
+.btn--red {
+  background-color: var(--red);
+  color: var(--white);
+  transition: background-color 0.3s;
+}
+
+.btn--red:hover {
+  background-color: var(--dark-red);
+}
+.btn--red:active {
+  background-color: var(--very-red);
+}
+
+[data-theme='dark'] .btn--green {
+  background-color: var(--pale-green);
+}
+
+[data-theme='dark'] .btn--green:hover {
+  box-shadow: 0 0 10px var(--red);
+}
+
+[data-theme='dark'] .btn--green:active {
+  box-shadow: 0 0 10px 7px var(--very-red);
+}
+
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 560px) {
+  .container {
+    padding: 0 10px;
+  }
+  .timer__description {
+    font-size: 14px;
+  }
+  .btn {
+    padding: 13px 30px;
+    font-weight: 500;
+    font-size: 14px;
+  }
+}

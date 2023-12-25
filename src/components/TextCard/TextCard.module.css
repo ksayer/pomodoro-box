@@ -1,0 +1,30 @@
+.card {
+  padding: var(--card-padding);
+}
+
+.card__title {
+  padding-bottom: 14px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 33px;
+}
+
+.card__text {
+  line-height: 28px;
+}
+
+.card__text--red {
+  color: var(--red);
+}
+
+[data-theme='dark'] .card__text--red {
+  color: var(--pale-red);
+}
+
+@media (max-width: 1024px) {
+  .card__title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 26px;
+  }
+}

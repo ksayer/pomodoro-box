@@ -1,0 +1,23 @@
+.app {
+  padding: 100px 0 100px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto;
+  column-gap: 42px;
+  row-gap: 36px;
+  grid-auto-flow: dense;
+}
+
+@media (max-width: 1024px) {
+  .app {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 560px) {
+  .app {
+    padding-top: 15px;
+    gap: 15px;
+  }
+}

@@ -1,0 +1,105 @@
+.counter-container {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.counter {
+  display: flex;
+  font-size: 150px;
+  font-weight: 200;
+}
+
+.counter--running {
+  color: var(--red);
+}
+
+[data-theme='dark'] .counter--running {
+  color: var(--pale-red);
+}
+
+.counter--break {
+  color: var(--green);
+}
+
+[data-theme='dark'] .counter--break {
+  color: var(--pale-green);
+}
+
+.counter--stop {
+  color: var(--dark-red);
+}
+
+[data-theme='dark'] .counter--stop {
+  color: var(--pale-red);
+}
+
+.number {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  width: 83px;
+}
+
+.transition {
+  transition:
+    all 0.3s,
+    color 0s;
+}
+
+.uptime-btn {
+  position: absolute;
+  transform: translateX(380px);
+}
+
+.uptime-btn .plus-color {
+  transition: all 0.3s;
+}
+
+.uptime-btn:focus {
+  outline: none;
+}
+
+.uptime-btn:focus .plus-color circle,
+.uptime-btn:hover .plus-color circle {
+  fill: var(--semi-dark-green);
+}
+
+.uptime-btn:active .plus-color circle {
+  fill: var(--dark-green);
+}
+
+[data-theme='dark'] .plus-color circle,
+[data-theme='dark'] .uptime-btn:focus .plus-color circle,
+[data-theme='dark'] .uptime-btn:hover .plus-color circle {
+  fill: var(--semi-grey);
+}
+
+[data-theme='dark'] .uptime-btn:focus .plus-color,
+[data-theme='dark'] .uptime-btn:hover .plus-color {
+  border-radius: 50px;
+  box-shadow: 0 0 10px var(--red);
+}
+
+[data-theme='dark'] .uptime-btn:active .plus-color {
+  border-radius: 50px;
+  box-shadow: 0 0 10px 7px var(--very-red);
+}
+
+@media (max-width: 560px) {
+  .counter {
+    font-size: 60px;
+  }
+  .number {
+    width: 38px;
+  }
+
+  .uptime-btn {
+    transform: translateX(170px);
+  }
+
+  .uptime-btn svg {
+    width: 35px;
+    height: 35px;
+  }
+}

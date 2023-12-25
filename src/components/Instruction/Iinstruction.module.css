@@ -1,0 +1,45 @@
+.instruction {
+  grid-column: 1 / 6;
+}
+
+.title {
+  margin-bottom: 3px;
+  color: var(--black);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 33px;
+}
+
+[data-theme='dark'] .title {
+  color: var(--grey);
+}
+
+.list {
+  padding-left: 15px;
+  font-size: 16px;
+  line-height: 33px;
+}
+
+.item::marker {
+  color: var(--dark-red);
+}
+
+@media (max-width: 1024px) {
+  .instruction {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 560px) {
+  .list {
+    line-height: 23px;
+  }
+
+  .title {
+    font-size: 17px;
+    line-height: 24px;
+  }
+  .item {
+    font-size: 14px;
+  }
+}

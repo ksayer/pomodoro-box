@@ -1,0 +1,69 @@
+.bar {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 1.3%;
+  background-color: var(--grey);
+  cursor: pointer;
+  transition: background-color 0.3s;
+  animation: growHeight 0.8s;
+}
+
+@keyframes growHeight {
+  from {
+    height: 10%;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+.bar--filled {
+  background-color: var(--pink);
+}
+
+.bar--selected {
+  background-color: var(--red);
+}
+
+.bar:hover {
+  background-color: var(--red-hover);
+}
+
+.bar:active {
+  background-color: var(--red);
+}
+
+.bar:hover .day {
+  color: var(--red-hover);
+}
+
+.bar:active .day {
+  color: var(--red);
+}
+
+.day {
+  position: absolute;
+  bottom: -35px;
+  color: var(--semi-grey);
+  font-size: 24px;
+  transition: color 0.3s;
+}
+
+.day--selected {
+  color: var(--red);
+}
+
+.day::after {
+  content: '';
+  position: absolute;
+  inset: -8px -20px -8px -20px;
+}
+
+@media (max-width: 480px) {
+  .day {
+    font-size: 14px;
+  }
+}
