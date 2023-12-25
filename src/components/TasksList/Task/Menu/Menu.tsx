@@ -45,7 +45,9 @@ export function Menu({ task, setEditing }: IMenu) {
     {
       name: 'Редактировать',
       iconName: 'edit',
-      onClick: () => setEditing(true),
+      onClick: () => {
+        setTimeout(() => setEditing(true), 0);
+      },
     },
     { name: 'Удалить', iconName: 'delete', onClick: deleteTask },
   ];

@@ -56,7 +56,7 @@ export function Selector() {
             <button
               key={getRandomString()}
               className={styles.btn}
-              onClick={() => handleClickSelector(btn)}
+              onMouseDown={() => handleClickSelector(btn)}
             >
               <span>{btn.name}</span>
             </button>
