@@ -10,6 +10,10 @@ known as "pomodoros" (typically 25 minutes), followed by a short break.
 Users can initiate a timer for a specified duration (typically 25 minutes).
 Visual representation of the remaining time.
 
+#### Tasks:
+
+Users can create a task list and edit it.
+
 #### Breaks:
 
 After completing a pomodoro, the app suggests a short break (usually 5 minutes).
